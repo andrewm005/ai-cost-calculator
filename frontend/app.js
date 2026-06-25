@@ -3,7 +3,7 @@
 // API base is overridable via window.TOKENTALLY_API for non-default deployments.
 // Empty default ('') means "same origin" — works automatically when the API
 // is deployed on Cloudflare Pages as a Pages Function (see /functions/api/).
-const API = (window.TOKENTALLY_API || 'https://aicostcalculator.net').replace(/\/$/, '');
+const API = (window.TOKENTALLY_API || 'https://aicostcalculator.andrewsagents.workers.dev/').replace(/\/$/, '');
 
 // ---- DOM ----------------------------------------------------------------
 const $  = (sel) => document.querySelector(sel);
