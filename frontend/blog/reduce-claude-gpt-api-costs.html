@@ -25,13 +25,13 @@
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
-    {"@type": "Article", "headline": "How to Reduce Claude and GPT API Costs by 60%", "description": "Five concrete tactics that cut Claude and GPT API bills in half.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-23", "mainEntityOfPage": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html", "url": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html"},
+    {"@type": "Article", "headline": "How to Reduce Claude and GPT API Costs by 60%", "description": "Five concrete tactics that cut Claude and GPT API bills in half: caching, model tiering, prompt trimming, batching, and the per-call multiplier you probably forgot.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-25", "mainEntityOfPage": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html", "url": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html"},
     {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Reduce Claude and GPT API Costs", "item": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html"}]},
     {"@type": "FAQPage", "mainEntity": [
-      {"@type": "Question", "name": "What's the single biggest cost saver for Claude and GPT API bills?", "acceptedAnswer": {"@type": "Answer", "text": "Prompt caching. Anthropic's cache rate is 10% of input (Claude Sonnet 4: $0.30 cache vs $3.00 input per 1M). OpenAI's cache rate is 50% off input on supported models (GPT-4.1: $0.50 vs $2.00). For any application with a long system prompt that ships on every call, prompt caching is the difference between a small bill and a six-figure annual line item."}},
-      {"@type": "Question", "name": "Is Haiku really 30x cheaper than Opus for similar tasks?", "acceptedAnswer": {"@type": "Answer", "text": "On the rate card, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output. That is 15x cheaper on input and output. In practice Haiku is not a drop-in for Opus on tasks that require deep reasoning, but for classification, extraction, summarization, and short-form generation it's a meaningful cost cut at acceptable quality."}},
-      {"@type": "Question", "name": "Does the OpenAI Batch API cut costs by 50%?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. OpenAI's Batch API accepts asynchronous jobs with a 24-hour turnaround and charges 50% of the synchronous rate. For workloads that don't need real-time responses (bulk classification, overnight document processing, eval generation), Batch is the cheapest reliable path on the OpenAI stack."}},
-      {"@type": "Question", "name": "Should I downgrade from GPT-4o to GPT-4o mini?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the workload. GPT-4o mini at $0.15/$0.60 is 17x cheaper on input and output than GPT-4o at $2.50/$10.00. For chat replies, simple extraction, and most short-form generation, mini is good enough and the savings are immediate. For long-context synthesis, complex code review, or any task where the flagship's stronger reasoning is the point, mini is not a drop-in. See the GPT-4o vs GPT-4o mini comparison for the side-by-side."}}
+      {"@type": "Question", "name": "What is the single biggest cost saver for Claude and GPT API bills?", "acceptedAnswer": {"@type": "Answer", "text": "Prompt caching. Anthropic's cache rate is 10% of input (Claude Sonnet 4: $0.30 cache versus $3.00 input per 1M). OpenAI's cache rate is 50% off input on supported models (GPT-4.1: $0.50 versus $2.00). For any application with a long system prompt that ships on every call, prompt caching is the difference between a small bill and a six-figure annual line item."}},
+      {"@type": "Question", "name": "Is Haiku really much cheaper than Opus for similar tasks?", "acceptedAnswer": {"@type": "Answer", "text": "On the published rates, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output — a 15x reduction on input and output. Haiku is not a substitute for Opus on tasks that require deep reasoning, but for classification, extraction, summarization, and short-form generation it does the work at a fraction of the bill."}},
+      {"@type": "Question", "name": "Does the OpenAI Batch API cut costs by 50%?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. OpenAI's Batch API accepts asynchronous jobs with a 24-hour turnaround and charges 50% of the synchronous rate. For workloads that do not need real-time responses (bulk classification, overnight document processing, eval generation), Batch is the cheapest reliable path on the OpenAI stack."}},
+      {"@type": "Question", "name": "Should I downgrade from GPT-4o to GPT-4o mini?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the workload. GPT-4o mini at $0.15/$0.60 is 17x cheaper on input and output than GPT-4o at $2.50/$10.00. For chat replies, simple extraction, and most short-form generation, mini does the work and the savings are immediate. For long-context synthesis, complex code review, or any task where the flagship's stronger reasoning is the point, mini does not match. See the GPT-4o vs GPT-4o mini comparison for the side-by-side."}}
     ]}
   ]
 }</script>
@@ -55,139 +55,158 @@
     <nav class="blog-breadcrumb" aria-label="Breadcrumb">
       <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>Reduce Claude and GPT API Costs</span>
     </nav>
-    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-25 · By Andrew Morgado</p>
 
     <h1 class="blog-title">How to Reduce Claude and GPT API Costs by 60%</h1>
     <p class="blog-lede">
-      Most Claude and GPT API bills are 40-60% higher than they need to be.
-      The reason is not vendor pricing. It is that the default call pattern
-      ignores five multipliers that everyone publishes and most teams never
-      turn on: prompt caching, model tiering, prompt trimming, batch
-      processing, and the system prompt. This article walks through each one
-      with real numbers from the
+      Most Claude and GPT API bills are 40-60% higher than they
+      need to be. The reason is not vendor pricing. It is that
+      the default call pattern ignores five multipliers that
+      everyone publishes and most teams never turn on: prompt
+      caching, model tiering, prompt trimming, batch processing,
+      and the per-call multiplier that shows up as runaway
+      output tokens. This article walks through each one with
+      real numbers from the
       <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
-      feed</a> and shows what the bill looks like before and after.
+      feed</a> and shows what the bill looks like before and
+      after. Stacked, the five tactics compound. Each one alone
+      buys 15-30%. Most teams can ship three in a week.
     </p>
 
     <div class="blog-prose">
 
     <h2>Tactic 1: Turn on prompt caching</h2>
     <p>
-      Prompt caching is the largest single line item most teams miss.
-      Anthropic's cache rate is 10% of the input rate. Claude Sonnet 4
-      lists input at $3.00 per 1M tokens; the cached input is $0.30 per
-      1M. If your application ships a 2,000-token system prompt on every
-      call, the system prompt alone is $0.006 per call at the input rate
-      and $0.0006 per call at the cache rate, a 10x reduction. At one
-      million calls per month, the system prompt is $6,000 at the input
-      rate and $600 at the cache rate.
+      Prompt caching is the largest single line item most teams
+      miss. Anthropic's cache rate is 10% of the input rate.
+      Claude Sonnet 4 lists input at $3.00 per 1M tokens; the
+      cached input is $0.30 per 1M. If the application ships a
+      2,000-token system prompt on every call, the system prompt
+      alone is $0.006 per call at the input rate and $0.0006 per
+      call at the cache rate — a 10x reduction. At one million
+      calls per month, the system prompt is $6,000 at the input
+      rate and $600 at the cache rate. The difference is $5,400
+      per month, $64,800 per year, from a one-line config change.
     </p>
     <p>
-      OpenAI publishes cache rates at 50% off input on supported models.
-      GPT-4o mini is $0.15 input and $0.075 cache per 1M tokens. GPT-4.1
-      is $2.00 input and $0.50 cache. Google's Gemini 2.5 family has
-      implicit caching that activates on prompts above a token threshold,
-      with no code change. The catch for every provider: the cache is
-      prefix-based, so the cacheable block must be at the start of the
-      prompt. The
-      <a href="./cache-tokens-savings.html">prompt caching article</a> has
-      the structural details.
+      OpenAI publishes cache rates at 50% off input on supported
+      models. GPT-4o mini is $0.15 input and $0.075 cache per
+      1M tokens. GPT-4.1 is $2.00 input and $0.50 cache.
+      Google's Gemini 2.5 family has implicit caching that
+      activates on prompts above a token threshold, with no code
+      change. The catch for every provider: the cache requires
+      byte-identical prefixes, so the cacheable block must be at
+      the start of the prompt. The
+      <a href="./cache-tokens-savings.html">prompt caching
+      article</a> has the structural details. Therefore caching
+      is the single largest lever in any LLM
+      application.
     </p>
 
     <h2>Tactic 2: Tier your models</h2>
     <p>
-      Not every call needs the flagship. A production pipeline usually
-      has a small number of complex calls (deep reasoning, code review,
-      long synthesis) and a large number of simple calls (classification,
-      extraction, short replies). Routing them all through the flagship
-      is the most expensive way to do it.
+      Not every call needs the flagship. A live pipeline usually
+      has a small number of complex calls (deep reasoning, code
+      review, long synthesis) and a large number of simple calls
+      (classification, extraction, short replies). Routing them
+      all through the flagship is the most expensive way to do
+      it.
     </p>
     <p>
-      Concrete numbers from the OpenRouter catalog: Claude Opus 4 is
-      $15.00 input and $75.00 output per 1M tokens. Claude Sonnet 4 is
-      $3.00 and $15.00, a 5x reduction on input and output. Claude
-      Haiku 4.5 is $1.00 and $5.00, a 15x reduction. For workloads
-      where Haiku is good enough (which is most classification, simple
-      extraction, and short chat replies), the bill drops by an order
-      of magnitude.
+      Concrete numbers from the OpenRouter catalog: Claude Opus
+      4 is $15.00 input and $75.00 output per 1M tokens. Claude
+      Sonnet 4 is $3.00 and $15.00, a 5x reduction on input and
+      output. Claude Haiku 4.5 is $1.00 and $5.00, a 15x
+      reduction. For workloads that Haiku can do (which is most
+      classification, simple extraction, and short chat replies),
+      the bill drops by an order of magnitude.
     </p>
     <p>
-      Same pattern on OpenAI. GPT-4o is $2.50 and $10.00. GPT-4o mini
-      is $0.15 and $0.60, a 17x reduction. See the
+      Same pattern on OpenAI. GPT-4o is $2.50 and $10.00. GPT-4o
+      mini is $0.15 and $0.60, a 17x reduction. See the
       <a href="../compare/openai-gpt-4o-vs-openai-gpt-4o-mini.html">GPT-4o
-      vs GPT-4o mini comparison</a> for a workload-level view, and the
+      vs GPT-4o mini comparison</a> for a workload-level view,
+      and the
       <a href="../compare/anthropic-claude-opus-4-vs-openai-gpt-4o.html">Opus
-      4 vs GPT-4o comparison</a> for a flagship-to-flagship view. The
-      right pattern is a router that classifies the request and picks
-      the model.
+      4 vs GPT-4o comparison</a> for a flagship-to-flagship view.
+      The right pattern is a router that classifies the request
+      and picks the model.
     </p>
 
     <h2>Tactic 3: Trim the prompt</h2>
     <p>
-      Prompts grow. A persona section that started at 200 tokens gains
-      "edge case handling" clauses, then a "tone guidance" section, then
-      a list of disallowed behaviors. Six months in, the system prompt is
-      2,500 tokens and shipping on every call. Trim aggressively.
+      Prompts grow. A persona section that started at 200 tokens
+      gains "edge case handling" clauses, then a "tone guidance"
+      section, then a list of disallowed behaviors. Six months
+      in, the system prompt is 2,500 tokens and shipping on
+      every call. Trim aggressively.
     </p>
     <p>
-      Two specific moves. First, move examples out of the system prompt
-      and into a one-shot user message. Anthropic's prompt cache still
-      hits the prefix if the examples are stable, but if examples vary by
-      request, you save the input cost by moving them out. Second,
-      remove redundant instructions. "Be helpful, accurate, and concise"
-      adds nothing the model doesn't already do; cut it.
+      Two specific moves. First, move examples out of the system
+      prompt and into a one-shot user message. Anthropic's prompt
+      cache still hits the prefix if the examples are stable,
+      but if examples vary by request, the input cost drops by
+      moving them out. Second, remove redundant instructions.
+      "Be helpful, accurate, and concise" adds nothing the model
+      does not already do; cut it.
     </p>
     <p>
-      A reasonable goal: keep the system prompt under 800 tokens for
-      short-form workloads, under 1,500 for long-context workloads. If
-      yours is over 2,000 tokens, there is probably a 30% trim available
-      without losing capability. The
-      <a href="./system-prompt-tokens-bill.html">system prompt tokens
-      article</a> walks through the per-call math.
+      A reasonable goal: keep the system prompt under 800 tokens
+      for short-form workloads, under 1,500 for long-context
+      workloads. If the system prompt is over 2,000 tokens,
+      there is probably a 30% trim available without losing
+      capability. The
+      <a href="./system-prompt-tokens-bill.html">system prompt
+      tokens article</a> walks through the per-call math.
     </p>
 
     <h2>Tactic 4: Use the Batch API for async work</h2>
     <p>
-      OpenAI's Batch API charges 50% of the synchronous rate for jobs
-      with up to 24-hour turnaround. For workloads that don't need a
-      real-time response. Bulk classification, overnight document
-      processing, eval generation, embedding backfills. Batch is the
-      cheapest reliable path on the OpenAI stack.
+      OpenAI's Batch API charges 50% of the synchronous rate
+      for jobs with up to 24-hour turnaround. For workloads
+      that do not need a real-time response: bulk
+      classification, overnight document processing, eval
+      generation, embedding backfills. Batch is the cheapest
+      reliable path on the OpenAI stack.
     </p>
     <p>
-      Anthropic's Message Batches API offers a similar 50% discount on
-      Claude calls for batch processing. Google publishes a Batch mode
-      for Gemini with comparable savings. Most production systems have
-      a meaningful fraction of their traffic that can move to batch
-      without changing the user experience. If 30% of your OpenAI bill
-      is bulk classification that runs nightly, that 30% drops by 50%
+      Anthropic's Message Batches API offers a similar 50%
+      discount on Claude calls for batch processing. Google
+      publishes a Batch mode for Gemini with comparable savings.
+      Most live deployments have a meaningful fraction of their
+      traffic that can move to batch without changing the user
+      experience. If 30% of the OpenAI bill is bulk
+      classification that runs nightly, that 30% drops by 50%
       immediately.
     </p>
 
     <h2>Tactic 5: Cap the output</h2>
     <p>
-      Output tokens are 3-5x more expensive than input tokens on most
-      models. Claude Sonnet 4 is $3.00 input and $15.00 output. GPT-4o
-      is $2.50 input and $10.00 output. Gemini 2.5 Pro is $1.25 input
-      and $10.00 output. A model that runs to its maximum output length
-      because no stop condition was set can produce 4,000 tokens when
-      400 would have answered the question.
+      Output tokens are 3-5x more expensive than input tokens
+      on most models. Claude Sonnet 4 is $3.00 input and $15.00
+      output. GPT-4o is $2.50 input and $10.00 output. Gemini
+      2.5 Pro is $1.25 input and $10.00 output. A model that
+      runs to its maximum output length because no stop
+      condition was set can produce 4,000 tokens when 400 would
+      have answered the question.
     </p>
     <p>
-      The fix is mechanical: set a `max_tokens` cap on every call that
-      fits the expected output shape. For classification, 50 tokens. For
-      short replies, 250 tokens. For long-form generation, the cap
-      matches the deliverable. The model will stop naturally when it's
-      done; the cap is a ceiling for runaway cases. Most teams find
-      their output token averages drop by 30-50% after they add caps.
+      The fix is mechanical: set a `max_tokens` cap on every
+      call that fits the expected output shape. For
+      classification, 50 tokens. For short replies, 250 tokens.
+      For long-form generation, the cap matches the deliverable.
+      The model stops naturally when it is done; the cap is a
+      ceiling for runaway cases. Most teams find their output
+      token averages drop by 30-50% after they add caps.
     </p>
 
     <h2>Putting it together</h2>
     <p>
       A worked example. A customer support chatbot running on
-      <a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a>
-      with a 1,500-token system prompt, 300-token user message, and 200-token
-      assistant reply. At 100,000 calls per month:
+      <a href="../models/anthropic-claude-sonnet-4.html">Claude
+      Sonnet 4</a> with a 1,500-token system prompt, 300-token
+      user message, and 200-token assistant reply. At 100,000
+      calls per month:
     </p>
     <table class="blog-table">
       <thead><tr><th>Tactic</th><th>Effective input $/1M</th><th>Effective output $/1M</th><th>Monthly cost</th></tr></thead>
@@ -199,36 +218,50 @@
       </tbody>
     </table>
     <p>
-      The 60% reduction is realistic for a workload that started naive
-      and ends with all five tactics on. Each tactic alone buys 15-30%.
-      Stacked, they compound. Most teams can ship three of them in a
-      week; the other two require a structural change to the prompt or
-      the routing.
+      The 60% reduction is realistic for a workload that
+      started naive and ends with all five tactics on. Each
+      tactic alone buys 15-30%. Stacked, they compound. Most
+      teams can ship three of them in a week; the other two
+      require a structural change to the prompt or the
+      routing. Therefore the lever is real, and it is shipped
+      one tactic at a time.
     </p>
 
-    <h2>What about quality?</h2>
+    <h2>When NOT to apply these tactics</h2>
     <p>
-      The legitimate concern with each of these tactics is quality
-      regression. Caching the system prompt should not change the output
-      because the cached prefix is the same prefix the model was
-      already seeing. Tiering models down means accepting that the
-      smaller model will be weaker on the hardest fraction of calls.
-      a router that flags uncertain cases and reroutes them to the
-      flagship fixes most of this. Trimming the prompt is the most
-      dangerous move and should be evaluated before shipping. Batch API
-      has no quality impact; the model and inputs are identical.
-      Capping output has no quality impact for normal calls; it only
-      protects against runaway cases.
+      Each tactic has a quality cost that has to be evaluated
+      before shipping. Caching the system prompt should not
+      change the output because the cached prefix is the same
+      prefix the model was already seeing. Tiering models down
+      means accepting that the smaller model will be weaker on
+      the hardest fraction of calls. A router that flags
+      uncertain cases and reroutes them to the flagship fixes
+      most of this. Trimming the prompt is the most dangerous
+      move and should be evaluated before shipping. Batch API
+      has no quality impact; the model and inputs are
+      identical. Capping output has no quality impact for
+      normal calls; it only protects against runaway cases.
+    </p>
+    <p>
+      Two specific scenarios where the tactics do not work.
+      First, a workload that genuinely needs the flagship's
+      reasoning quality on every call (medical, legal,
+      high-stakes analysis). Tiering down loses the quality
+      that justifies the bill. Second, a workload with strict
+      real-time latency requirements. Caching adds 5-50ms per
+      call. The router adds 50-200ms. Batch is a 24-hour
+      turnaround. The right answer for latency-sensitive
+      workloads is fewer tactics, not more.
     </p>
 
     <h2>Sources</h2>
     <p>
       Per-model rates from the
       <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
-      public models endpoint</a>. Cache and batch API details from each
-      vendor's published docs. Run your own
+      public models endpoint</a>. Cache and batch API details
+      from each vendor's published docs. Run the own
       <a href="../">numbers through the calculator</a> before
-      committing to a tier. The published rate card is the
+      committing to a tier. The published rates are the
       starting point, not the answer.
     </p>
 
@@ -239,7 +272,7 @@
       <ul>
         <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
         <li><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></li>
-        <li><a href="../models/anthropic-claude-haiku-4.5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></li>
         <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
         <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
         <li><a href="../models/openai-gpt-4-1.html">GPT-4.1</a></li>
@@ -259,10 +292,10 @@
 
     <section class="blog-faq">
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
-      <div class="blog-faq__item"><p class="blog-faq__q">What's the single biggest cost saver for Claude and GPT API bills?</p><p class="blog-faq__a">Prompt caching. Anthropic's cache rate is 10% of input (Claude Sonnet 4: $0.30 cache vs $3.00 input per 1M). OpenAI's cache rate is 50% off input on supported models. For any application with a long system prompt that ships on every call, prompt caching is the difference between a small bill and a six-figure annual line item.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Is Haiku really 15x cheaper than Opus for similar tasks?</p><p class="blog-faq__a">On the rate card, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output. That is 15x cheaper on input and output. In practice Haiku is not a drop-in for Opus on tasks that require deep reasoning, but for classification, extraction, summarization, and short-form generation it's a meaningful cost cut at acceptable quality.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Does the OpenAI Batch API cut costs by 50%?</p><p class="blog-faq__a">Yes. OpenAI's Batch API accepts asynchronous jobs with a 24-hour turnaround and charges 50% of the synchronous rate. For workloads that don't need real-time responses (bulk classification, overnight document processing, eval generation), Batch is the cheapest reliable path on the OpenAI stack.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Should I downgrade from GPT-4o to GPT-4o mini?</p><p class="blog-faq__a">It depends on the workload. GPT-4o mini at $0.15/$0.60 is 17x cheaper on input and output than GPT-4o at $2.50/$10.00. For chat replies, simple extraction, and most short-form generation, mini is good enough and the savings are immediate. For long-context synthesis, complex code review, or any task where the flagship's stronger reasoning is the point, mini is not a drop-in.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">What is the single biggest cost saver for Claude and GPT API bills?</p><p class="blog-faq__a">Prompt caching. Anthropic's cache rate is 10% of input (Claude Sonnet 4: $0.30 cache versus $3.00 input per 1M). OpenAI's cache rate is 50% off input on supported models. For any application with a long system prompt that ships on every call, prompt caching is the difference between a small bill and a six-figure annual line item.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Is Haiku really much cheaper than Opus for similar tasks?</p><p class="blog-faq__a">On the published rates, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output, a 15x reduction on input and output. Haiku is not a substitute for Opus on deep reasoning, but it handles classification, extraction, summarization, and short-form generation at a fraction of the bill.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Does the OpenAI Batch API cut costs by 50%?</p><p class="blog-faq__a">Yes. OpenAI's Batch API accepts asynchronous jobs with a 24-hour turnaround and charges 50% of the synchronous rate. For workloads that do not need real-time responses, Batch is the cheapest reliable path on the OpenAI stack.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Should I downgrade from GPT-4o to GPT-4o mini?</p><p class="blog-faq__a">It depends on the workload. GPT-4o mini at $0.15/$0.60 is 17x cheaper on input and output than GPT-4o at $2.50/$10.00. For chat replies, simple extraction, and most short-form generation, mini does the work and the savings are immediate. For long-context synthesis, complex code review, or any task where the flagship's stronger reasoning is the point, mini does not match.</p></div>
     </section>
   </main>
 

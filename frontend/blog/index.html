@@ -61,22 +61,26 @@
     <nav class="blog-breadcrumb" aria-label="Breadcrumb">
       <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><span>Blog</span>
     </nav>
-    <p class="blog-byline">Last updated: 2026-06-23 · By Andrew Morgado</p>
+    <p class="blog-byline">Last updated: 2026-06-25 · By Andrew Morgado</p>
 
     <h1 class="blog-title">AI Cost Calculator Blog</h1>
     <p class="blog-lede">
-      Long-form analysis of what LLM API calls actually cost and why.
-      The articles cover the multipliers that shape a production bill
-      . Prompt caching, reasoning tokens, system prompt size, model
-      tiering, and conversation growth in agents, with real numbers from
-      the OpenRouter feed. Updated when the rate card changes.
+      Long-form analysis of what LLM API calls actually cost and
+      why. The articles cover the multipliers that shape a
+      deployed bill — prompt caching, reasoning tokens, system
+      prompt size, model tiering, conversation growth in agents,
+      and the gap between the headline rate and the bill at the
+      end of the month. Real numbers from the OpenRouter feed.
+      Each piece is updated when the published pricing changes
+      meaningfully.
     </p>
 
     <div class="blog-prose">
       <p style="font-size: var(--t-base); color: var(--ink-3); margin-bottom: var(--s-5);">
-        Looking for a specific model? The full rate table is on the
-        <a href="../models/">all models page</a>, with one static page per
-        model at <code>/models/&lt;slug&gt;.html</code>. The
+        Looking for a specific model? The full rate table is on
+        the <a href="../models/">all models page</a>, with one
+        static page per model at
+        <code>/models/&lt;slug&gt;.html</code>. The
         <a href="../">calculator</a> handles the multipliers.
       </p>
     </div>
@@ -85,62 +89,62 @@
       <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-4);">
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./cache-tokens-savings.html" style="color: var(--ink); text-decoration: none;">Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">Anthropic's cache rate is 10% of input. OpenAI's is 50% off. Google's Gemini has implicit caching. Most production apps are eligible for cache hits on the bulk of their input and never turn it on. The math on a 2,000-token cacheable prefix.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Anthropic charges 10% of input on cache hits; OpenAI charges 50% off; Google caches implicitly. A 2,000-token cacheable system prompt on every call is the difference between $6,900/month and $1,500/month on Claude Sonnet 4. Why most teams never turn it on.</p>
           <a href="./cache-tokens-savings.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./system-prompt-tokens-bill.html" style="color: var(--ink); text-decoration: none;">How System Prompt Tokens Show Up on Your Bill</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">A 1,500-token system prompt is a fixed per-call tax. On GPT-4o that's $3,750/month at 1M calls. On Claude Sonnet 4 with cache hits, $450. How to find the tax and shrink it.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">A 1,500-token system prompt on GPT-4o is a fixed $3,750/month line item at 1M calls. On Claude Sonnet 4 with cache hits, the same prompt drops to $450. How to instrument, find, and shrink the tax.</p>
           <a href="./system-prompt-tokens-bill.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./agentic-workflow-token-cost.html" style="color: var(--ink); text-decoration: none;">How Much Does an Agentic Workflow Actually Cost?</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">An agent that loops ten times to complete a task is roughly 15x a single chat call. Tool calls, conversation growth, and reasoning tokens each add a multiplier. The math on a real LangChain-style coding agent.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">A coding agent that loops ten times is roughly 15x a single chat call. The bill grows with loop count, conversation history, and reasoning tokens. The loop-by-loop math on Claude Sonnet 4 with caching on.</p>
           <a href="./agentic-workflow-token-cost.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./cheap-llm-api-for-startups.html" style="color: var(--ink); text-decoration: none;">Cheapest LLM APIs for Startups in 2026</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">A shortlist for cost-conscious early-stage products: Llama 3.1 8B at $0.02/$0.03, Phi-4 at $0.07/$0.14, the 26 free models on OpenRouter. When the cheap tier is enough and when to graduate.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Llama 3.1 8B at $0.02/$0.03 buys two years of runway at the same traffic level. The failure mode that costs real money is staying on the cheap tier when quality matters. The decision rule for when to graduate.</p>
           <a href="./cheap-llm-api-for-startups.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./every-major-llm-cost-table.html" style="color: var(--ink); text-decoration: none;">Every Major LLM in One Cost Table (2026)</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">Twenty models, one table, sorted by total cost for a typical chat call. Flagships from OpenAI, Anthropic, Google, Meta, DeepSeek, Mistral, xAI, Cohere, and Qwen sit side by side.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Twenty-three models, one table, sorted by chat-shaped call cost. Flagships from OpenAI, Anthropic, Google, Meta, DeepSeek, Mistral, xAI, Cohere, and Qwen. The 1,300x gap between Llama 3.1 8B and Claude Opus 4 is structural, not marketing.</p>
           <a href="./every-major-llm-cost-table.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./gpt-4o-vs-claude-sonnet-cost.html" style="color: var(--ink); text-decoration: none;">GPT-4o vs Claude Sonnet 4: Full Cost Breakdown</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">GPT-4o is $2.50/$10.00 per 1M tokens. Claude Sonnet 4 is $3.00/$15.00. Five real workloads, side by side, with the cache rate and context window flips that change the answer.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">GPT-4o is 20-30% cheaper on the headline rate; Claude's 10x cache discount and 1M-token context window flip the comparison on any workload with a long cacheable system prompt. Five workloads, real numbers.</p>
           <a href="./gpt-4o-vs-claude-sonnet-cost.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./reduce-claude-gpt-api-costs.html" style="color: var(--ink); text-decoration: none;">How to Reduce Claude and GPT API Costs by 60%</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">Five concrete tactics that cut Claude and GPT API bills in half: prompt caching, model tiering, prompt trimming, batch API, and the per-call multiplier most teams forget.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Five concrete tactics that cut Claude and GPT API bills in half: caching, model tiering, prompt trimming, batch API, and the output cap. Stacked, they compound. Most teams ship three in a week.</p>
           <a href="./reduce-claude-gpt-api-costs.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./openrouter-pricing-explained.html" style="color: var(--ink); text-decoration: none;">OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">OpenRouter passes through vendor pricing with a small platform fee. How their rate card works, what gets cached, why 26 models are free, and how tool calls are billed.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">One API key, one bill, 334 models. The aggregator passes through vendor pricing with a small platform fee, but the bill is rarely input-times-rate-times-output. Where the multipliers hide and where the savings are.</p>
           <a href="./openrouter-pricing-explained.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./what-is-a-reasoning-token.html" style="color: var(--ink); text-decoration: none;">What Is a Reasoning Token? o1, o3, and DeepSeek-R1 Explained</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">Reasoning tokens are the chain-of-thought a reasoning model emits before the visible answer. They are billed as output, often invisible to the user, sometimes 10x the visible answer's token count.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Reasoning tokens are billed as output but never shown to the user. A 2,000-token chain on o1 can multiply the per-call cost by 5x to 10x. The bill, the thresholds, and how to cap the chain.</p>
           <a href="./what-is-a-reasoning-token.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
         <li>
           <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.625rem; color: var(--ink); margin: 0 0 var(--s-2);"><a href="./how-to-estimate-llm-api-costs.html" style="color: var(--ink); text-decoration: none;">How to Estimate LLM API Costs: A Practical Guide</a></h2>
-          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23</p>
-          <p style="margin: 0 0 var(--s-2);">A four-step method for estimating LLM API costs before you ship: pick the model, count real tokens, apply the right multipliers, and sanity-check with a calculator.</p>
+          <p style="font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-2);">Published: 2026-06-23 · Updated: 2026-06-25</p>
+          <p style="margin: 0 0 var(--s-2);">Four steps to an estimate within 10%: pick the model, count real tokens, apply the three multipliers, sanity-check against a calculator. The common mistakes that throw the estimate off by 5-10x.</p>
           <a href="./how-to-estimate-llm-api-costs.html" style="font-size: var(--t-sm);">Read more →</a>
         </li>
       </ul>
@@ -150,7 +154,7 @@
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">About the data</h2>
       <div class="blog-faq__item"><p class="blog-faq__q">Where do the prices in these articles come from?</p><p class="blog-faq__a">Every number in every article comes from the OpenRouter public models endpoint at <code>https://openrouter.ai/api/v1/models</code>, refreshed every six hours on AI Cost Calculator. The 334-model cache is the same data the calculator uses.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">Are these prices vendor-direct or include a markup?</p><p class="blog-faq__a">The OpenRouter feed adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference is well under 10% of the bill. Vendor-direct pricing pages are linked from each model's page on this site.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">How often are the articles updated?</p><p class="blog-faq__a">Articles are updated when the rate card changes meaningfully. The "Last updated" date at the top of each article is the date of the most recent review. The model pages are the source of truth for the current rate of any specific model.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How often are the articles updated?</p><p class="blog-faq__a">Articles are updated when the published pricing changes meaningfully. The "Last updated" date at the top of each article is the date of the most recent review. The model pages are the source of truth for the current rate of any specific model.</p></div>
     </section>
   </main>
 
