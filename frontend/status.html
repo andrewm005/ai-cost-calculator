@@ -91,7 +91,7 @@
     // Hit /health on the API base and fill the card. The API base is
     // window.TOKENTALLY_API or the production default.
     (async function () {
-      const API = (window.TOKENTALLY_API || 'http://10.10.10.205:8002').replace(/\/$/, '');
+      const API = (window.TOKENTALLY_API || 'https://aicostcalculator.net').replace(/\/$/, '');
       const $ = (s) => document.querySelector(s);
       const setDot = (cls) => $('span', $id => $id.className) // unused; inline below
       const dot = document.querySelector('#backend-status .status-dot');

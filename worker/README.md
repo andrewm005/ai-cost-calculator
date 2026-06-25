@@ -150,8 +150,8 @@ changing `window.TOKENTALLY_API`:
 
 | Backend | `window.TOKENTALLY_API` | URL pattern |
 |---------|-------------------------|-------------|
-| Python FastAPI (home box) | `http://10.10.10.205:8001` | `${API}/calculate` |
-| Hono Node (local dev) | `http://10.10.10.205:8002` | `${API}/calculate` |
+| Python FastAPI (home box) | `https://aicostcalculator.net` | `${API}/calculate` |
+| Hono Node (local dev) | `https://aicostcalculator.net` | `${API}/calculate` |
 | Cloudflare Workers (prod) | (empty — same origin) | `/api/calculate` |
 
 The default in `frontend/app.js:5` is now empty string (`''`) so a

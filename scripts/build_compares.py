@@ -18,7 +18,7 @@ import urllib.error
 from datetime import datetime
 from pathlib import Path
 
-API = os.environ.get("API", "http://10.10.10.205:8001")
+API = os.environ.get("API", "https://aicostcalculator.net")
 OUT_DIR = Path("/home/vboxuser/vaults/star-command/Projects/token-calculator/frontend/compare")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 

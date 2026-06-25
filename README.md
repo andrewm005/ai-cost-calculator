@@ -64,7 +64,7 @@ python3 -m http.server 3018
 ```
 
 The frontend talks to a backend at the URL configured in `app.js:5`
-(default `http://10.10.10.205:8002` for local testing, empty string for
+(default `https://aicostcalculator.net` for local testing, empty string for
 production same-origin).
 
 ### Python backend (`app/`)
