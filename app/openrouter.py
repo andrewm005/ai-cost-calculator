@@ -7,7 +7,7 @@ caller decides whether to keep the stale cache or return 503.
 
 Namespacing: all incoming model ids are prefixed with ``openrouter/`` UNLESS
 they already start with ``openrouter/``. This prevents collisions with the
-hand-curated vendor models in ``config/pricing.json`` (e.g. a live
+hand-curated vendor models in ``worker/config/pricing.json`` (e.g. a live
 ``anthropic/claude-3.5-sonnet`` becomes ``openrouter/anthropic/claude-3.5-sonnet``).
 """
 from __future__ import annotations
@@ -219,7 +219,7 @@ def fetch_models(client: httpx.Client | None = None) -> list[ModelPricing]:
 def refresh_to_disk(cache_path: Path, client: httpx.Client | None = None) -> int:
     """Fetch live models and write them to the cache file as JSON.
 
-    Format matches the hand-curated ``config/pricing.json`` schema so the
+    Format matches the hand-curated ``worker/config/pricing.json`` schema so the
     loader can read both files identically:
 
     .. code-block:: json

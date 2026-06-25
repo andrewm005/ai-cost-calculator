@@ -19,7 +19,7 @@ This module is deliberately independent from ``app/calculator.py`` (which
 handles per-token API pricing). Local inference has no provider billing
 contract; the cost is a function of physical hardware and electricity.
 Per AGENTS.md decision #2, **local Ollama is NOT merged with cloud
-Ollama** — the latter would only land as a normal ``config/pricing.json``
+Ollama** — the latter would only land as a normal ``worker/config/pricing.json``
 entry with ``provider=\"ollama\"`` if/when Ollama publishes public prices.
 """
 from __future__ import annotations

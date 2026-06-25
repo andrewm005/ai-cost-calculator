@@ -3,8 +3,8 @@
 TypeScript port of the FastAPI backend in `../app/`. Runs in **two modes**:
 
 1. **Local dev (Node runtime)** — `npm run dev` starts a Node server on port
-   8002 with pricing loaded from `../config/pricing.json` and the
-   OpenRouter cache from `../config/openrouter.json`. The setInterval
+   8002 with pricing loaded from `config/pricing.json` and the
+   OpenRouter cache from `config/openrouter.json`. The setInterval
    refresh loop mirrors the Python FastAPI lifespan.
 
 2. **Production (Cloudflare Workers runtime)** — `npx wrangler deploy`
@@ -72,8 +72,8 @@ npm run dev             # start on port 8002
 npm run build           # strict TypeScript compile check
 ```
 
-The dev server reads pricing from `../config/pricing.json` and
-`../config/openrouter.json` by default. Override with env vars
+The dev server reads pricing from `config/pricing.json` and
+`config/openrouter.json` by default. Override with env vars
 `PRICING_CONFIG` and `OPENROUTER_CACHE` (relative to the repo root).
 
 ## Run — Cloudflare Workers (production)

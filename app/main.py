@@ -1,7 +1,7 @@
 """FastAPI app exposing the token-cost calculator over HTTP.
 
-Pricing is loaded from ``config/pricing.json`` (hand-curated) merged with
-``config/openrouter.json`` (auto-generated cache). Use ``POST /admin/reload``
+Pricing is loaded from ``worker/config/pricing.json`` (hand-curated) merged with
+``worker/config/openrouter.json`` (auto-generated cache). Use ``POST /admin/reload``
 to re-read from disk, or ``POST /admin/openrouter/refresh`` to fetch fresh
 prices from OpenRouter and rewrite the cache.
 
@@ -57,12 +57,12 @@ log = logging.getLogger(__name__)
 #: Default path to the hand-curated pricing config.
 DEFAULT_PRICING_PATH = os.environ.get(
     "PRICING_CONFIG",
-    str(Path(__file__).resolve().parent.parent / "config" / "pricing.json"),
+    str(Path(__file__).resolve().parent.parent / "worker" / "config" / "pricing.json"),
 )
 
 #: Default path to the auto-generated OpenRouter cache.
 DEFAULT_OPENROUTER_PATH = str(
-    Path(__file__).resolve().parent.parent / "config" / "openrouter.json"
+    Path(__file__).resolve().parent.parent / "worker" / "config" / "openrouter.json"
 )
 
 #: Default background refresh interval (6 hours). 0 disables the scheduler.

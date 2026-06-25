@@ -1,12 +1,12 @@
 """Loads model pricing from one or more JSON config files.
 
 The config file is intentionally a plain JSON object so non-engineers can
-update prices without touching code. See ``config/pricing.json`` for schema.
+update prices without touching code. See ``worker/config/pricing.json`` for schema.
 
 Multi-file merge: ``load_pricing_files(*paths)`` reads multiple files in
 order and returns a single ``{model_id: ModelPricing}`` dict. Later files
-override earlier ones on collision (so ``config/openrouter.json`` loaded
-after ``config/pricing.json`` replaces any placeholder OpenRouter entries
+override earlier ones on collision (so ``worker/config/openrouter.json`` loaded
+after ``worker/config/pricing.json`` replaces any placeholder OpenRouter entries
 with live data).
 """
 from __future__ import annotations
@@ -123,8 +123,8 @@ def load_pricing_files(*paths: PathLike,
 
     Notes
     -----
-    The OpenRouter cache file (``config/openrouter.json``) is intentionally
-    written in the same schema as ``config/pricing.json`` so this loader
+    The OpenRouter cache file (``worker/config/openrouter.json``) is intentionally
+    written in the same schema as ``worker/config/pricing.json`` so this loader
     can read both interchangeably. Order matters — pass hand-curated first,
     then OpenRouter, so live data wins on collisions.
     """

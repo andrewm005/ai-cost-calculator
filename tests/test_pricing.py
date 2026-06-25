@@ -1,4 +1,4 @@
-"""Tests for pricing loader (config/pricing.json + multi-file merge)."""
+"""Tests for pricing loader (worker/config/pricing.json + multi-file merge)."""
 import json
 from pathlib import Path
 import pytest

@@ -2,7 +2,7 @@
 """
 AI Cost Calculator — model page generator (SEO-1)
 
-Reads live OpenRouter pricing from config/openrouter.json and emits one
+Reads live OpenRouter pricing from worker/config/openrouter.json and emits one
 static HTML page per model at frontend/models/<slug>.html, plus a master
 frontend/models/index.html listing all 334, and updates sitemap.xml to
 include all 335 new URLs.
@@ -31,7 +31,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path("/home/vboxuser/vaults/star-command/Projects/token-calculator")
-OPENROUTER_JSON = ROOT / "config" / "openrouter.json"
+OPENROUTER_JSON = ROOT / "worker" / "config" / "openrouter.json"
 OUT_DIR = ROOT / "frontend" / "models"
 MODELS_CSS = ROOT / "frontend" / "models.css"
 SITEMAP = ROOT / "frontend" / "sitemap.xml"
@@ -579,7 +579,7 @@ def generate_prose(model: dict, ctx: dict) -> str:
 # Reference competitor set: well-known models at each price tier. Used for
 # the "X is cheaper than Y by ~Z%" comparison line.
 # (name, input_per_1m, output_per_1m) — prices per operator's own
-# config/pricing.json (hand-curated, PLACEHOLDER-flagged) — but the brief
+# worker/config/pricing.json (hand-curated, PLACEHOLDER-flagged) — but the brief
 # says "use OpenRouter's published prices" so we only use this for the
 # tier ranking, not for a specific dollar comparison. The line uses
 # percentage deltas computed from the model's own OpenRouter-published
@@ -975,7 +975,7 @@ def generate_faq(model: dict, ctx: dict) -> list[tuple[str, str]]:
             f"price tier, see the related models below."
         )
     else:
-        # OpenRouter cache (config/openrouter.json) does not currently publish
+        # OpenRouter cache (worker/config/openrouter.json) does not currently publish
         # a `supports_tools` flag, so every model takes this branch today.
         tool_q = f"Does {name} support tool use / function calling?"
         tool_a = (
