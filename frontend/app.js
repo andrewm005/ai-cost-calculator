@@ -3,7 +3,7 @@
 // API base is overridable via window.TOKENTALLY_API for non-default deployments.
 // Empty default ('') means "same origin" — works automatically when the API
 // is deployed on Cloudflare Pages as a Pages Function (see /functions/api/).
-const API = (window.TOKENTALLY_API || '').replace(/\/$/, '');
+const API = (window.TOKENTALLY_API || 'http://10.10.10.205:8002').replace(/\/$/, '');
 
 // ---- DOM ----------------------------------------------------------------
 const $  = (sel) => document.querySelector(sel);
@@ -121,7 +121,7 @@ const state = {
 // doesn't collide with other apps on the same origin. Read is wrapped in
 // try/catch (Safari private mode, disabled storage, quota errors all
 // throw — we silently degrade to a session-only Set).
-const FAV_KEY = 'tokentally.favorites.v1';
+const FAV_KEY = 'aicostcalculator.favorites.v1';
 function loadFavorites() {
   try {
     const raw = localStorage.getItem(FAV_KEY);

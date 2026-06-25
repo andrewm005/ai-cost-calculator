@@ -83,7 +83,7 @@
             "name": "Do you store my prompts or my results?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. All math runs in your browser against a local API. There is no analytics, no tracking, no signup, no cookies set by this page. Your browser may store localStorage for the optional favorites feature — clear it any time from your browser settings."
+              "text": "No. All math runs in your browser against a local API. There is no analytics, no tracking, no signup, no cookies set by this page. Your browser may store localStorage for the optional favorites feature. Clear it any time from your browser settings."
             }
           },
           {
@@ -91,7 +91,7 @@
             "name": "What's the difference between input, output, cached, and reasoning tokens?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Input is what you send the model. Output is what it sends back. Cached input is input you send repeatedly — some providers (OpenAI, Anthropic) discount this 50-90%. Reasoning tokens are the model's thinking output (o1, o3, Claude extended thinking, Gemini 2.5 Thinking) and are billed at the same rate as output. All four are priced separately in the result."
+              "text": "Input is what you send the model. Output is what it sends back. Cached input is input you send repeatedly. Some providers (OpenAI, Anthropic) discount it 50-90%. Reasoning tokens are the model's thinking output (o1, o3, Claude extended thinking, Gemini 2.5 Thinking) and are billed at the same rate as output. All four are priced separately in the result."
             }
           },
           {
@@ -239,7 +239,7 @@
                     </svg>
                   </span>
                   <input type="text" class="combo__search" id="combo-search"
-                         placeholder="Search any model — Claude, GPT, Llama, Gemini…"
+                         placeholder="Search any model. Try Claude, GPT, Llama, Gemini…"
                          autocomplete="off" spellcheck="false"
                          aria-label="Search any of the 349 models by name, provider, or id"
                          aria-controls="combo-list" aria-autocomplete="list">
@@ -252,7 +252,7 @@
                   </button>
                 </div>
                 <p class="combo__hint" id="combo-hint">
-                  Type to filter all 349 models — by name, provider, or model id.
+                  Type to filter the 349 models by name, provider, or model id.
                 </p>
                 <ul class="combo__list" id="combo-list" role="listbox" aria-label="All models"></ul>
                 <p class="combo__empty" id="combo-empty" hidden>No matches.</p>
@@ -581,7 +581,7 @@
             No. All math runs in your browser against a local API. There is
             no analytics, no tracking, no signup, no cookies set by this
             page. (Your browser may store <code>localStorage</code> for
-            the optional favorites feature — clear it any time from your
+            the optional favorites feature. Clear it any time from your
             browser settings.)
           </p>
         </div>
@@ -592,7 +592,7 @@
           <p>
             <strong>Input</strong> is what you send the model.
             <strong>Output</strong> is what it sends back.
-            <strong>Cached input</strong> is input you send repeatedly — some
+            <strong>Cached input</strong> is input you send repeatedly. Some
             providers (OpenAI, Anthropic) discount this ~50-90%.
             <strong>Reasoning tokens</strong> are the model's "thinking" output
             (o1, o3, Claude with extended thinking, Gemini 2.5 Thinking) and
@@ -619,7 +619,7 @@
             OpenRouter catalogues around 336 models; the picker shows all of
             them. For open-weights models that aren't on OpenRouter yet, you
             can estimate the local self-host cost in the
-            <strong>Also estimate local GPU cost</strong> panel below —
+            <strong>Also estimate local GPU cost</strong> in the panel below.
             it prices electricity + GPU time for a given Ollama model.
           </p>
         </div>

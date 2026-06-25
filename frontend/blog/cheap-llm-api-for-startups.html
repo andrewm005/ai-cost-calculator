@@ -30,7 +30,7 @@
     {"@type": "FAQPage", "mainEntity": [
       {"@type": "Question", "name": "What's the cheapest paid LLM on OpenRouter?", "acceptedAnswer": {"@type": "Answer", "text": "Llama 3.1 8B Instruct from Meta is the cheapest paid production-quality model at $0.02 per 1M input tokens and $0.03 per 1M output tokens. Phi-4 from Microsoft is next at $0.07/$0.14. Both are good at short chat, classification, and extraction; neither is a drop-in for the flagship models on hard reasoning."}},
       {"@type": "Question", "name": "Are free models on OpenRouter safe for production?", "acceptedAnswer": {"@type": "Answer", "text": "Free models (26 of them as of mid-2026) are best treated as prototyping tools. They have tighter rate limits, variable latency, and the labs can take them offline with little notice. They are great for evaluating a model family before committing to a paid tier; they are not reliable enough for production traffic."}},
-      {"@type": "Question", "name": "Is Mistral Small better than Llama 3.1 8B for production workloads?", "acceptedAnswer": {"@type": "Answer", "text": "For most short-form workloads, no — Llama 3.1 8B at $0.02/$0.03 is meaningfully cheaper than Mistral Small 3.1 24B at $0.351/$0.555. Mistral Small wins on multilingual support and a few instruction-following benchmarks, but for plain English chat, classification, and extraction, Llama 3.1 8B is the cheaper default."}},
+      {"@type": "Question", "name": "Is Mistral Small better than Llama 3.1 8B for production workloads?", "acceptedAnswer": {"@type": "Answer", "text": "For most short-form workloads, no. Llama 3.1 8B at $0.02/$0.03 is meaningfully cheaper than Mistral Small 3.1 24B at $0.351/$0.555. Mistral Small wins on multilingual support and a few instruction-following benchmarks, but for plain English chat, classification, and extraction, Llama 3.1 8B is the cheaper default."}},
       {"@type": "Question", "name": "When is a startup ready to move off the cheap models?", "acceptedAnswer": {"@type": "Answer", "text": "When the flagship's quality matters more than the bill. Three signs: customers are complaining about answer quality on tasks the flagship handles better, the workload needs long-context windows the cheap models can't support, or the agent's tool-call accuracy is below 90% on the cheap model and above 95% on the flagship."}}
     ]}
   ]
@@ -61,9 +61,9 @@
     <p class="blog-lede">
       Early-stage products have an unusual budget situation: the bill is
       small in absolute terms but the per-user cost is a real fraction
-      of revenue. Picking the right cheap model — and knowing when to
-      graduate to the flagship — is the difference between a 70% gross
-      margin and a 30% gross margin at scale. This article walks through
+      of revenue. Picking the right cheap model matters. So does
+      knowing when to graduate to the flagship. Together they're
+      the difference between a 70% gross margin and a thin one.
       the cheapest paid models on OpenRouter, the free tier for
       prototyping, and the specific workload shapes where the cheap
       models actually work.
@@ -87,7 +87,7 @@
       The per-call cost on these models is essentially free at low
       volume. A chat-shaped call (1,000 in + 500 out) on Llama 3.1 8B
       is $0.000035. At 1 million calls per month, that's $35. The same
-      call on GPT-4o is $0.0075 — $7,500 per month. The cheap models
+      call on GPT-4o is $0.0075, which is $7,500 per month. The cheap models
       buy a 200x cost reduction at the cost of some quality on hard
       tasks.
     </p>
@@ -101,7 +101,7 @@
     </p>
     <p>
       Free models are prototyping tools, not production tools. The
-      rate limits are tighter than the paid tier — typically a few
+      rate limits are tighter than the paid tier. Typically only a few
       requests per minute rather than a few hundred. Latency varies
       depending on the lab's GPU availability. The labs reserve the
       right to retire the model with little notice. A startup that
@@ -134,7 +134,7 @@
     </p>
     <p>
       <strong>Extraction.</strong> Pulling structured data out of
-      unstructured text — names, dates, amounts, addresses. The
+      unstructured text such as names, dates, amounts, and addresses. The
       cheap models are good enough that the flagship isn't worth
       the premium for most extraction workloads.
     </p>
@@ -158,7 +158,7 @@
       model to read a long document and produce a coherent summary
       or analysis. The 8B and 24B parameter models have weaker
       long-context reasoning than the flagships, and they lack the
-      context window — Llama 3.1 8B tops out at 131K tokens but
+      context window, and Llama 3.1 8B tops out at 131K tokens but
       its quality degrades well before that.
     </p>
     <p>
@@ -166,7 +166,7 @@
       multi-step logic, and any task where the model needs to
       think before answering. The flagships win by a meaningful
       margin here. For reasoning workloads, <a href="../models/deepseek-deepseek-r1.html">DeepSeek R1</a>
-      at $0.70/$2.50 is the cost-conscious pick — roughly 1/24th
+      at $0.70/$2.50 is the cost-conscious pick. Roughly 1/24th
       the cost of OpenAI o1 at comparable quality on most problems.
       See the
       <a href="./what-is-a-reasoning-token.html">reasoning token
@@ -179,7 +179,7 @@
       GPT-4o) hit 90%+ first-try accuracy on most tool-use
       benchmarks. The cheap models hit 70-85%. The difference is
       the difference between a single agent loop and a multi-loop
-      agent with extra API calls per task — which multiplies the
+      agent with extra API calls per task, which multiplies the
       per-task cost by 2-3x.
     </p>
 
@@ -200,7 +200,7 @@
     <p>
       The migration path is mechanical: route the failing workload
       to the flagship, keep the easy workloads on the cheap model.
-      Most production systems end up running 3-4 models — the cheap
+      Most production systems end up running 3-4 models. The cheap
       one for easy traffic, the flagship for the hard 10-20%, and
       sometimes a reasoning model for the hardest 1-2%.
     </p>
@@ -240,7 +240,7 @@
       cheaper model genuinely cannot handle. Switching tiers mid
       quarter is cheap; re-architecting around a model you outgrew
       in week one is expensive. Re-run the cost math every time
-      you change a tier — the rate cards move faster than most
+      you change a tier, the rate cards move faster than most
       teams update their estimates.
     </p>
 
@@ -292,7 +292,7 @@
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
       <div class="blog-faq__item"><p class="blog-faq__q">What's the cheapest paid LLM on OpenRouter?</p><p class="blog-faq__a">Llama 3.1 8B Instruct from Meta is the cheapest paid production-quality model at $0.02 per 1M input tokens and $0.03 per 1M output tokens. Phi-4 from Microsoft is next at $0.07/$0.14. Both are good at short chat, classification, and extraction.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">Are free models on OpenRouter safe for production?</p><p class="blog-faq__a">Free models (26 as of mid-2026) are best treated as prototyping tools. They have tighter rate limits, variable latency, and the labs can take them offline with little notice. They are great for evaluating a model family; they are not reliable enough for production traffic.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Is Mistral Small better than Llama 3.1 8B?</p><p class="blog-faq__a">For most short-form workloads, no — Llama 3.1 8B at $0.02/$0.03 is meaningfully cheaper than Mistral Small 3.1 24B at $0.351/$0.555. Mistral Small wins on multilingual support and a few instruction-following benchmarks, but for plain English chat, classification, and extraction, Llama 3.1 8B is the cheaper default.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Is Mistral Small better than Llama 3.1 8B?</p><p class="blog-faq__a">For most short-form workloads, no. Llama 3.1 8B at $0.02/$0.03 is meaningfully cheaper than Mistral Small 3.1 24B at $0.351/$0.555. Mistral Small wins on multilingual support and a few instruction-following benchmarks, but for plain English chat, classification, and extraction, Llama 3.1 8B is the cheaper default.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">When is a startup ready to move off the cheap models?</p><p class="blog-faq__a">When the flagship's quality matters more than the bill. Three signs: customers complain about answer quality, the workload needs long-context windows the cheap models can't support, or the agent's tool-call accuracy is below 90% on the cheap model.</p></div>
     </section>
   </main>

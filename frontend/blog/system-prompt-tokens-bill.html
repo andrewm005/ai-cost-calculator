@@ -9,14 +9,14 @@
   <meta name="theme-color" content="#f7f3ec">
   <link rel="canonical" href="https://aicostcalculator.net/blog/system-prompt-tokens-bill.html">
   <meta property="og:title" content="How System Prompt Tokens Show Up on Your Bill | AI Cost Calculator">
-  <meta property="og:description" content="The hidden per-call tax from system prompt tokens — what it costs and how to reduce it.">
+  <meta property="og:description" content="The hidden per-call tax from system prompt tokens. What it costs and how to reduce it.">
   <meta property="og:url" content="https://aicostcalculator.net/blog/system-prompt-tokens-bill.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Cost Calculator">
   <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="How System Prompt Tokens Show Up on Your Bill | AI Cost Calculator">
-  <meta name="twitter:description" content="The hidden per-call tax from system prompt tokens — what it costs and how to reduce it.">
+  <meta name="twitter:description" content="The hidden per-call tax from system prompt tokens. What it costs and how to reduce it.">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,7 +61,7 @@
     <p class="blog-lede">
       The system prompt is the instruction block that ships on every
       call to the model. Persona, examples, tool definitions, retrieved
-      context — every word is a token billed at the input rate. A
+      context. Every word is a token billed at the input rate. A
       1,500-token system prompt on GPT-4o is a fixed $0.00375 per
       call. At one million calls per month, that prompt is a $3,750
       line item on its own, before the user message, before the
@@ -98,7 +98,7 @@
       per call. On <a href="../models/anthropic-claude-sonnet-4.html">Claude
       Sonnet 4</a> at $3.00 per 1M, the same prompt is $0.00450. On
       <a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a>
-      at $1.25 per 1M, the same prompt is $0.00188 — the cheapest
+      at $1.25 per 1M, the same prompt is $0.00188. The cheapest
       flagship on input by a meaningful margin.
     </p>
     <p>
@@ -142,7 +142,7 @@
       cache rate is 10% of input. Claude Sonnet 4's input is $3.00,
       so the cache is $0.30. A 1,500-token system prompt on every
       call, cached, is $0.00045 per call vs $0.00450 without
-      caching — a 10x reduction. At 1M calls per month, that's
+      caching, a 10x reduction. At 1M calls per month, that's
       $4,050/month saved. OpenAI's cache rate is 50% off input on
       the GPT-4.1 family; GPT-4o does not have a published cache
       rate on OpenRouter as of mid-2026. The
@@ -167,7 +167,7 @@
       code-review agent that ships the project's coding conventions
       plus the file tree plus the diff plus the prior review history
       might have a 5,000-token system prompt on every call. That is
-      not waste — that is the agent's working memory.
+      not waste. That is the agent's working memory.
     </p>
     <p>
       The right framing for these workloads is to make sure the

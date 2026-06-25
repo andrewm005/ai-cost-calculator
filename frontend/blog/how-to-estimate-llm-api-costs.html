@@ -153,7 +153,7 @@
       one million tokens. Most chat messages are 200 to 2,000 input tokens and
       100 to 1,000 output tokens. Retrieval-augmented generation runs in the
       thousands for input (the retrieved chunks) and hundreds for output (the
-      final answer). Coding agents are heavier on both ends — the prompt carries
+      final answer. Coding agents are heavier on both ends. The prompt carries
       tool definitions, retrieved code, and prior conversation history; the
       response carries generated code, tool call requests, and natural language
       explanations.
@@ -213,7 +213,7 @@
       The four-line sanity check is: pick the model, pick a workload shape,
       multiply by the per-million rates, compare to the price the calculator
       spits out. If the numbers are within 10%, your estimate is probably
-      right. If they're off by 5x, something is wrong — usually an undercount
+      right. If they're off by 5x, something is wrong. Usually an undercount
       of output tokens, or a missed reasoning tier, or a system prompt that
       ships 1,500 tokens of instructions on every call without being cached.
     </p>
@@ -244,7 +244,7 @@
     <p>
       The second most common mistake is forgetting that streaming changes
       nothing about billing. Some teams assume streaming is cheaper because
-      the user sees tokens as they arrive. It's not — you pay for the same
+      the user sees tokens as they arrive. It's not. You pay for the same
       number of output tokens regardless of whether they arrive in a single
       batch or one at a time.
     </p>

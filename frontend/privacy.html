@@ -134,7 +134,7 @@
       cookies, we don't run third-party analytics, and we don't store the
       prompts or numbers you put into the calculator.</strong> The only
       thing we ask your browser to remember is an optional list of models
-      you've starred as favorites — and you can clear that any time.
+      you've starred as favorites. You can clear them any time.
     </p>
     <p>
       The rest of this page spells out exactly what that means in legal
@@ -149,16 +149,17 @@
       <li>
         <strong>Optional: a list of model IDs you star as "favorites."</strong>
         This is stored only in your browser's <code>localStorage</code>
-        under the key <code>tokentally.favorites.v1</code>. It is not
+        under the key <code>aicostcalculator.favorites.v1</code>. It is not
         transmitted to our servers. Clear it any time from your browser
         settings or by clicking the ☆ button until all favorites are removed.
       </li>
       <li>
         <strong>Server access logs.</strong> When your browser fetches a
-        price list or calculates a cost, our backend (running on a private
-        server you reach over Twingate) records the standard HTTP request
-        metadata: timestamp, path, status code, and IP address. These logs
-        are used only to debug errors and to apply rate limits. We do not
+        price list or calculates a cost, the request goes through
+        Cloudflare's edge network and reaches our backend. Cloudflare
+        and our backend each record standard HTTP request metadata:
+        timestamp, path, status code, and IP address. These logs are
+        used only to debug errors and to apply rate limits. We do not
         sell, share, or analyze them.
       </li>
     </ul>
@@ -188,7 +189,7 @@
     <ul>
       <li>Diagnose errors (e.g. "why is the OpenRouter refresh failing for
           this one user").</li>
-      <li>Detect abuse — automated scrapers hammering the API, or someone
+      <li>Detect abuse, including automated scrapers hammering the API or someone
           trying to break in. When that happens we may block the IP at
           the network layer.</li>
       <li>Cap request rates so a single user can't accidentally DoS the
@@ -203,7 +204,11 @@
 
     <h2 id="cookies">Cookies, localStorage, and tracking</h2>
     <p>
-      <strong>Cookies:</strong> this site does not set any cookies.
+      <strong>Cookies:</strong> as of June 2026, this site does not set
+      any cookies itself. We may add Google AdSense for ad-supported
+      operation in the future; if we do, AdSense will set its own
+      cookies for ad personalization. We will update this section
+      before activating any advertising.
     </p>
     <p>
       <strong>localStorage:</strong> the only thing we use localStorage for
@@ -213,15 +218,11 @@
       site data) any time.
     </p>
     <p>
-      <strong>Tracking pixels, beacons, third-party scripts:</strong> none.
-      The only cross-origin requests this page makes are:
+      <strong>Tracking pixels, beacons, third-party scripts:</strong> none
+      today. Same AdSense caveat as above: if we add advertising, ads
+      load with their own tracking. We will not add any other third-party
+      trackers, retargeting pixels, or session-replay tools.
     </p>
-    <ul>
-      <li>Google Fonts CSS + woff2 font files (so the page uses the DM Serif
-          Display typeface).</li>
-      <li>OpenRouter's public API, called by our server (not by your
-          browser) every 6 hours to refresh the price cache.</li>
-    </ul>
 
     <h2 id="third-parties">Third-party services</h2>
     <p>
@@ -230,7 +231,7 @@
     </p>
     <ul>
       <li>
-        <strong>Google Fonts</strong> (<a href="https://fonts.google.com" rel="noopener">fonts.google.com</a>) —
+        <strong>Google Fonts</strong> (<a href="https://fonts.google.com" rel="noopener">fonts.google.com</a>). It serves the DM Serif
         serves the DM Serif Display font CSS and font files. Google may
         log your IP address when these are requested. You can avoid this
         by using a browser extension that blocks third-party requests,
@@ -238,16 +239,19 @@
         fall back to system fonts).
       </li>
       <li>
-        <strong>OpenRouter</strong> (<a href="https://openrouter.ai" rel="noopener">openrouter.ai</a>) —
-        our backend pulls their public model catalog every 6 hours to
+        <strong>OpenRouter</strong> (<a href="https://openrouter.ai" rel="noopener">openrouter.ai</a>).
+        Our backend pulls their public model catalog every 6 hours to
         keep our pricing data current. We do not send any user data
         (prompts, results, identifiers) to OpenRouter.
       </li>
       <li>
-        <strong>Twingate</strong> — provides the private network tunnel
-        that lets you reach the server this site runs on. Twingate sees
-        your connection metadata (your IP, the destination) but not
-        the page contents.
+        <strong>Cloudflare</strong> (<a href="https://cloudflare.com" rel="noopener">cloudflare.com</a>).
+        It hosts the static site on its edge network and runs the backend
+        on Cloudflare Workers. Cloudflare sees connection metadata (your
+        IP, the path you requested, the response status, TLS handshake
+        details) but not the contents of your calculations. Cloudflare's
+        own privacy policy applies to what they log:
+        <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">cloudflare.com/privacypolicy</a>.
       </li>
     </ul>
     <p>
@@ -288,12 +292,12 @@
       <li><strong>Right to deletion:</strong> the only thing you might
           want deleted is your server access log entries, which already
           auto-delete after 30 days. Your localStorage favorites are
-          entirely under your control — clear them from your browser
+          entirely under your control. Clear them from your browser
           any time.</li>
       <li><strong>Right to portability:</strong> your favorites list is
           already in your browser in a plain JSON format. You can copy
           it out of devtools (Application → Local Storage →
-          <code>tokentally.favorites.v1</code>) any time.</li>
+          <code>aicostcalculator.favorites.v1</code>) any time.</li>
       <li><strong>Right to object:</strong> we don't do automated
           decision-making or profiling, so there's nothing to object to.</li>
       <li><strong>Right to lodge a complaint with a supervisory
@@ -335,14 +339,14 @@
     <h2 id="contact">Contact</h2>
     <p>
       Questions, complaints, or data requests:
-      <a href="mailto:privacy@aicostcalculator.net">privacy@aicostcalculator.net</a>.
+      <a href="mailto:andrewsagents@gmail.com">andrewsagents@gmail.com</a>.
       We aim to respond within 7 days.
     </p>
 
     <p class="legal__updated">
       This policy was written by hand for AI Cost Calculator, not generated by
       a privacy-policy template service. If anything here is unclear,
-      tell us — we'll fix it.
+      tell us. We'll fix it.
     </p>
   </main>
 

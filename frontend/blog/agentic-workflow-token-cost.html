@@ -9,14 +9,14 @@
   <meta name="theme-color" content="#f7f3ec">
   <link rel="canonical" href="https://aicostcalculator.net/blog/agentic-workflow-token-cost.html">
   <meta property="og:title" content="How Much Does an Agentic Workflow Actually Cost? | AI Cost Calculator">
-  <meta property="og:description" content="The real cost of a multi-tool agent — tool calls, reasoning tokens, and conversation growth.">
+  <meta property="og:description" content="The real cost of a multi-tool agent. Tool calls, reasoning tokens, and conversation growth.">
   <meta property="og:url" content="https://aicostcalculator.net/blog/agentic-workflow-token-cost.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Cost Calculator">
   <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="How Much Does an Agentic Workflow Actually Cost? | AI Cost Calculator">
-  <meta name="twitter:description" content="The real cost of a multi-tool agent — tool calls, reasoning tokens, and conversation growth.">
+  <meta name="twitter:description" content="The real cost of a multi-tool agent. Tool calls, reasoning tokens, and conversation growth.">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,9 +29,9 @@
     {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "How Much Does an Agentic Workflow Actually Cost", "item": "https://aicostcalculator.net/blog/agentic-workflow-token-cost.html"}]},
     {"@type": "FAQPage", "mainEntity": [
       {"@type": "Question", "name": "How much does a single agent loop cost?", "acceptedAnswer": {"@type": "Answer", "text": "A single agent loop is one model call plus one tool call. On Claude Sonnet 4 at $3.00 input / $15.00 output, a typical loop with 4,000 input tokens and 1,000 output tokens is $0.012 + $0.015 = $0.027. An agent that loops ten times to complete a task is $0.27, before any reasoning tokens."}},
-      {"@type": "Question", "name": "Why does conversation history matter for cost?", "acceptedAnswer": {"@type": "Answer", "text": "Most agent frameworks send the full conversation history on every model call — the system prompt, every prior user message, every prior assistant response, every tool call request, and every tool result. By turn five of an agent loop, the conversation is often 10x the size of the original prompt, and every subsequent call re-bills the entire history at the input rate."}},
+      {"@type": "Question", "name": "Why does conversation history matter for cost?", "acceptedAnswer": {"@type": "Answer", "text": "Most agent frameworks send the full conversation history on every model call. That includes the system prompt, every prior user message, every prior assistant response, every tool call request, and every tool result. By turn five of an agent loop, the conversation is often 10x the size of the original prompt, and every subsequent call re-bills the entire history at the input rate."}},
       {"@type": "Question", "name": "Do reasoning models make agents more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, often by 3x to 10x. A reasoning model like OpenAI o1 at $60 per 1M output spends 1,000 to 3,000 reasoning tokens per loop before producing the visible answer. An agent that loops ten times on o1 is paying $6 to $18 just for reasoning tokens. DeepSeek R1 at $2.50 per 1M output is the cost-conscious pick for reasoning agents."}},
-      {"@type": "Question", "name": "What's the cheapest way to run an agent?", "acceptedAnswer": {"@type": "Answer", "text": "Use a cheap, fast model for the easy loops (file lookups, simple tool calls, classification) and the flagship only for the loops that genuinely need it. Use prompt caching aggressively on the system prompt and tool definitions — both are stable across loops. Cap the conversation history so the model does not re-bill the entire prior transcript on every turn."}}
+      {"@type": "Question", "name": "What's the cheapest way to run an agent?", "acceptedAnswer": {"@type": "Answer", "text": "Use a cheap, fast model for the easy loops (file lookups, simple tool calls, classification) and the flagship only for the loops that genuinely need it. Use prompt caching aggressively on the system prompt and tool definitions. Both are stable across loops. Cap the conversation history so the model does not re-bill the entire prior transcript on every turn."}}
     ]}
   ]
 }</script>
@@ -81,8 +81,7 @@
       and the bill scales with the step count.
     </p>
     <p>
-      The popular agent frameworks — LangChain, AutoGen, CrewAI,
-      Claude Code, Cursor's agent mode, Devin — all follow the
+      The popular agent frameworks all follow the
       same pattern. The model gets a system prompt with a list of
       available tools, looks at the user request, picks a tool,
       reads the result, picks the next tool, and loops until it
@@ -128,7 +127,7 @@
     </p>
     <p>
       Loop 3: 2,650 × $3.00/M + 300 × $15.00/M = $0.00795 + $0.0045
-      = $0.01245. Wait — that's higher than loops 1 and 2. The
+      = $0.01245. Wait, that's higher than loops 1 and 2. The
       reason: the conversation history is no longer mostly cache.
       The first 1,500 tokens still hit the cache, but the next
       1,150 tokens (user message + prior assistant + tool calls +
@@ -161,9 +160,9 @@
 
     <h2>Reasoning tokens on top</h2>
     <p>
-      If the agent runs on a reasoning model — OpenAI o1,
+      If the agent runs on a reasoning model such as OpenAI o1,
       Claude with extended thinking, Gemini 2.5 Pro, DeepSeek
-      R1 — every loop pays the reasoning tax. A 10-loop agent
+      R1. Every loop pays the reasoning tax. A 10-loop agent
       on OpenAI o1 with 2,000 reasoning tokens per loop is
       paying $0.12 per loop just for reasoning tokens. Total
       per task: $1.20 before any visible output.
@@ -192,7 +191,7 @@
       Second, use a sliding window of the most recent tool
       results and drop the rest. Third, use Anthropic's prompt
       caching aggressively on the system prompt and tool
-      definitions — both are stable across loops. The
+      definitions, both are stable across loops. The
       <a href="../compare/anthropic-claude-sonnet-4-vs-anthropic-claude-haiku-4.html">Sonnet
       4 vs Haiku 4</a> comparison is useful when the easy loops
       in an agent can be routed to the cheaper model.
@@ -212,7 +211,7 @@
       Claude Haiku 4.5 (easy loops): roughly 50% reduction on
       the easy-loop portion of the bill. On a 10-loop agent
       that does 3 hard loops and 7 easy loops, the savings are
-      roughly $0.05 per task — meaningful at 10,000 tasks/month.
+      roughly $0.05 per task. Meaningful at 10,000 tasks/month.
     </p>
 
     <h2>The calculator</h2>
@@ -276,7 +275,7 @@
     <section class="blog-faq">
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
       <div class="blog-faq__item"><p class="blog-faq__q">How much does a single agent loop cost?</p><p class="blog-faq__a">A single agent loop is one model call plus one tool call. On Claude Sonnet 4 at $3.00 input / $15.00 output, a typical loop with 4,000 input tokens and 1,000 output tokens is $0.012 + $0.015 = $0.027. An agent that loops ten times to complete a task is $0.27, before any reasoning tokens.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Why does conversation history matter for cost?</p><p class="blog-faq__a">Most agent frameworks send the full conversation history on every model call — the system prompt, every prior user message, every prior assistant response, every tool call request, and every tool result. By turn five of an agent loop, the conversation is often 10x the size of the original prompt.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Why does conversation history matter for cost?</p><p class="blog-faq__a">Most agent frameworks send the full conversation history on every model call. That includes the system prompt, every prior user message, every prior assistant response, every tool call request, and every tool result. By turn five of an agent loop, the conversation is often 10x the size of the original prompt.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">Do reasoning models make agents more expensive?</p><p class="blog-faq__a">Yes, often by 3x to 10x. A reasoning model like OpenAI o1 at $60 per 1M output spends 1,000 to 3,000 reasoning tokens per loop before producing the visible answer. An agent that loops ten times on o1 is paying $6 to $18 just for reasoning tokens.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">What's the cheapest way to run an agent?</p><p class="blog-faq__a">Use a cheap, fast model for the easy loops (file lookups, simple tool calls, classification) and the flagship only for the loops that genuinely need it. Use prompt caching aggressively on the system prompt and tool definitions. Cap the conversation history so the model does not re-bill the entire prior transcript on every turn.</p></div>
     </section>
