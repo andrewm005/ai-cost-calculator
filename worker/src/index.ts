@@ -92,9 +92,6 @@ const merged = {
 
   const openrouterModelCount = (): number =>
     loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
-  refreshOpenrouter: async () => refreshToKV(env.PRICING, env.PRICING_KEY ?? 'cache'),
-  const openrouterModelCount = (): number =>
-    loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
 
   return {
     loader,
