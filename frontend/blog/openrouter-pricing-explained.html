@@ -52,7 +52,7 @@
           "name": "Does OpenRouter charge a markup over vendor pricing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes — OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor."
+            "text": "Yes. OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor."
           }
         },
         {
@@ -68,7 +68,7 @@
           "name": "How does OpenRouter's prompt caching work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m field at 10% of the input rate (Claude Sonnet 4 input is $3.00, cache is $0.30). OpenAI publishes cache rates at 50% off input on supported models (GPT-4.1 cache is $0.50 versus $2.00 input). Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes — you have to put the cacheable block at the start of the prompt."
+            "text": "OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m field at 10% of the input rate (Claude Sonnet 4 input is $3.00, cache is $0.30). OpenAI publishes cache rates at 50% off input on supported models (GPT-4.1 cache is $0.50 versus $2.00 input). Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes. you have to put the cacheable block at the start of the prompt."
           }
         },
         {
@@ -76,7 +76,7 @@
           "name": "Do tool calls cost extra?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On OpenRouter, most models have a tool_call_cost of $0 — the tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number. Anthropic, Google, and OpenAI generally do not charge per tool call."
+            "text": "On OpenRouter, most models have a tool_call_cost of $0. The tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number. Anthropic, Google, and OpenAI generally do not charge per tool call."
           }
         }
       ]
@@ -109,8 +109,8 @@
     <p class="blog-lede">
       OpenRouter is the easiest way to call 350+ language models from one
       API. The pricing is mostly pass-through from the upstream vendors
-      plus a small platform fee, but there are enough quirks — cache
-      prefixes, system prompt reuse, free tiers, per-tool-call surcharges —
+      plus a small platform fee. There are enough quirks ( cache
+      prefixes, system prompt reuse, free tiers, per-tool-call surcharges).
       that a production bill is rarely a simple input-times-rate-times-output
       calculation. This article walks through what the rate card actually
       charges for, and where the savings are.
@@ -123,9 +123,9 @@
       OpenRouter is an aggregator. You sign up for one account, get one
       API key, and call any of the 350+ models behind it using the same
       OpenAI-compatible chat completions endpoint. Behind the scenes,
-      OpenRouter routes your request to the upstream provider — Anthropic
+      OpenRouter routes your request to the upstream provider (Anthropic
       if you asked for Claude, OpenAI if you asked for GPT-4o, DeepSeek
-      if you asked for R1 — and passes the response back. The pricing on
+      if you asked for R1) and passes the response back. The pricing on
       each model is the upstream vendor's list price plus a small
       platform fee.
     </p>
@@ -151,7 +151,7 @@
       the model page.
     </p>
     <p>
-      Free models are not charity. The labs publish them for a reason —
+      Free models are not charity. The labs publish them for a reason:
       usually to drive adoption for a new model family, or because the
       inference cost is subsidized by an investor, or because the model
       is genuinely cheap to run (a 1.2B parameter model on a single GPU
@@ -165,7 +165,7 @@
     <p>
       The largest single source of variance in a production LLM bill is
       the cache rate. Anthropic's Claude Sonnet 4 lists input at $3.00
-      per 1M tokens and cached input at $0.30 per 1M tokens — a 10x
+      per 1M tokens and cached input at $0.30 per 1M tokens, a 10x
       discount. Claude Haiku 4.5 is $1.00 input, $0.10 cache. OpenAI's
       GPT-4.1 is $2.00 input and $0.50 cache. GPT-4o mini is $0.15
       input and $0.075 cache, a 50% discount. Google's Gemini 2.5 Pro
@@ -180,14 +180,14 @@
       cache hit on the system portion only. If you append the user
       message to the start and the system prompt to the end, the cache
       misses every time. AI Cost Calculator's calculator assumes cacheable
-      structure by default — see the
+      structure by default. See the
       <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o vs Claude Sonnet 4 comparison</a>
       for an example of how cache hits change the per-call cost.
     </p>
 
     <h2>System prompts and the per-call tax</h2>
     <p>
-      Most production prompts include a system prompt — persona
+      Most production prompts include a system prompt (persona,
       instructions, examples, tool definitions, retrieved context. A
       typical system prompt runs 500 to 3,000 tokens. That is a fixed
       per-call cost on every request the system makes.
@@ -212,7 +212,7 @@
       going into the call (your prompt plus the tool definitions) and
       the output tokens coming back (the model's response plus the
       tool call request). A handful of models publish non-zero tool
-      call surcharges — usually older or specialty models — and those
+      call surcharges, usually older or specialty models. Those
       show up as a separate line item on the bill.
     </p>
     <p>
@@ -229,8 +229,8 @@
 
     <h2>Reasoning tokens</h2>
     <p>
-      Reasoning-capable models — 101 of the 334 on OpenRouter as of
-      mid-2026 — emit internal chain-of-thought tokens that are billed
+      Reasoning-capable models (101 of the 334 on OpenRouter as of
+      mid-2026) emit internal chain-of-thought tokens that are billed
       as output. OpenRouter surfaces the upstream vendor's reasoning
       field where the vendor publishes one. OpenAI's o-series bills
       reasoning at the output rate. Anthropic's extended thinking
@@ -302,10 +302,10 @@
 
     <section class="blog-faq">
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
-      <div class="blog-faq__item"><p class="blog-faq__q">Does OpenRouter charge a markup over vendor pricing?</p><p class="blog-faq__a">Yes — OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Does OpenRouter charge a markup over vendor pricing?</p><p class="blog-faq__a">Yes. OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">Why are some models free on OpenRouter?</p><p class="blog-faq__a">Labs sometimes publish preview or experimental models with a $0 rate to drive adoption, and a few community-trained open-weights models are routed through providers that subsidize the inference. As of mid-2026 there are 26 free models on OpenRouter. Treat them as best-effort: rate limits are tighter, latency is variable, and the labs can take them offline without notice.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">How does OpenRouter's prompt caching work?</p><p class="blog-faq__a">OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m at 10% of the input rate. OpenAI publishes cache rates at 50% off input on supported models. Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes — you have to put the cacheable block at the start of the prompt.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Do tool calls cost extra?</p><p class="blog-faq__a">On OpenRouter, most models have a tool_call_cost of $0 — the tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How does OpenRouter's prompt caching work?</p><p class="blog-faq__a">OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m at 10% of the input rate. OpenAI publishes cache rates at 50% off input on supported models. Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes. you have to put the cacheable block at the start of the prompt.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Do tool calls cost extra?</p><p class="blog-faq__a">On OpenRouter, most models have a tool_call_cost of $0. The tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number.</p></div>
     </section>
   </main>
 

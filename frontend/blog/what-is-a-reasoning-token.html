@@ -9,14 +9,14 @@
   <meta name="theme-color" content="#f7f3ec">
   <link rel="canonical" href="https://aicostcalculator.net/blog/what-is-a-reasoning-token.html">
   <meta property="og:title" content="What Is a Reasoning Token? o1, o3, and DeepSeek-R1 Explained | AI Cost Calculator">
-  <meta property="og:description" content="The chain-of-thought tokens reasoning models emit before the visible answer — and how they show up on your bill.">
+  <meta property="og:description" content="The chain-of-thought tokens reasoning models emit before the visible answer. How they show up on your bill.">
   <meta property="og:url" content="https://aicostcalculator.net/blog/what-is-a-reasoning-token.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="AI Cost Calculator">
   <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="What Is a Reasoning Token? o1, o3, and DeepSeek-R1 Explained | AI Cost Calculator">
-  <meta name="twitter:description" content="The chain-of-thought tokens reasoning models emit before the visible answer — and how they show up on your bill.">
+  <meta name="twitter:description" content="The chain-of-thought tokens reasoning models emit before the visible answer. How they show up on your bill.">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
     {
       "@type": "Article",
       "headline": "What Is a Reasoning Token? o1, o3, and DeepSeek-R1 Explained",
-      "description": "Reasoning tokens are the chain-of-thought a reasoning model emits before its visible answer — and they're billed as output.",
+      "description": "Reasoning tokens are the chain-of-thought a reasoning model emits before its visible answer. They're billed as output.",
       "author": {"@type": "Person", "name": "Andrew Morgado"},
       "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"},
       "datePublished": "2026-06-23",
@@ -68,7 +68,7 @@
           "name": "Is DeepSeek R1 cheaper than o1?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, substantially. DeepSeek R1 is priced at $0.70 per 1M input tokens and $2.50 per 1M output tokens — roughly 20x cheaper than o1 on input and 24x cheaper on output. The catch is reasoning quality on hard math and coding tasks, where o1 still has a meaningful lead on the most difficult problems."
+            "text": "Yes, substantially. DeepSeek R1 is priced at $0.70 per 1M input tokens and $2.50 per 1M output tokens. That's roughly 20x cheaper than o1 on input and 24x cheaper on output. The catch is reasoning quality on hard math and coding tasks, where o1 still has a meaningful lead on the most difficult problems."
           }
         },
         {
@@ -76,7 +76,7 @@
           "name": "Can I turn reasoning off?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On OpenRouter you can switch from a reasoning model to a non-reasoning one — o1 to GPT-4o, for example. Within a reasoning model, Anthropic's Claude extended thinking lets you set a thinking budget in tokens. OpenAI's o-series gives you a 'reasoning_effort' parameter (low, medium, high) that controls how aggressively the model thinks. Setting it to low cuts both the token count and the bill."
+            "text": "On OpenRouter you can switch from a reasoning model to a non-reasoning one. o1 to GPT-4o, for example. Within a reasoning model, Anthropic's Claude extended thinking lets you set a thinking budget in tokens. OpenAI's o-series gives you a 'reasoning_effort' parameter (low, medium, high) that controls how aggressively the model thinks. Setting it to low cuts both the token count and the bill."
           }
         },
         {
@@ -84,7 +84,7 @@
           "name": "Why don't all providers publish a separate reasoning price?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Some don't separate it because reasoning tokens fall into the same output bucket as the final answer. OpenAI's o-series bills reasoning at the output rate. Anthropic's extended thinking uses a per-token thinking rate that mirrors the output rate. Google publishes a reasoning_per_1m field for Gemini 2.5 Pro but it's currently null in many providers' cached views — the bill arrives under output."
+            "text": "Some don't separate it because reasoning tokens fall into the same output bucket as the final answer. OpenAI's o-series bills reasoning at the output rate. Anthropic's extended thinking uses a per-token thinking rate that mirrors the output rate. Google publishes a reasoning_per_1m field for Gemini 2.5 Pro but it's currently null in many providers' cached views. The bill arrives under output either way."
           }
         }
       ]
@@ -141,8 +141,8 @@
       "thinking" and surfaces it through the reasoning_per_1m field on
       Gemini 2.5 Pro. DeepSeek calls its R1 model exactly what it is: a
       model that thinks out loud, with the thinking billed as output. The
-      design pattern is the same — produce a chain of intermediate tokens
-      before the final answer — but the pricing differs enough that you
+      design pattern is the same. Produce a chain of intermediate tokens
+      before the final answer, but the pricing differs enough that you
       should know the rates before picking one.
     </p>
 
@@ -175,7 +175,7 @@
       provider as of mid-2026. The user-visible answer might be 300 tokens;
       the bill might be 3,300 tokens if the model spent 3,000 reasoning
       tokens working up to it. For workloads where the visible answer is the
-      deliverable — a one-paragraph email, a single SQL query — reasoning
+      deliverable (a one-paragraph email, a single SQL query). Reasoning
       tokens can multiply the effective cost-per-output by 5x to 10x.
     </p>
     <p>
@@ -219,7 +219,7 @@
       A subtler case is tasks where the visible answer needs to be precise
       in a way that the model can't reliably produce in a single pass.
       Generating a legal contract clause, producing a unit-tested code
-      function, writing a multi-step data pipeline — these all benefit from
+      function, or writing a multi-step data pipeline. These all benefit from
       a chain-of-thought that lets the model verify its own work as it
       goes. The reasoning tokens are an insurance policy against the
       embarrassing failure mode of an LLM producing fluent, plausible, but
@@ -239,7 +239,7 @@
     <p>
       Routing matters here. A production system should not route every
       request through a reasoning model. The right pattern is a router that
-      classifies the request — short chat and extraction go to a cheap,
+      classifies the request. Short chat and extraction go to a cheap,
       fast model; multi-step reasoning goes to a reasoning model. OpenAI's
       o3 at $2.00 input / $8.00 output is the mid-tier reasoning option
       that makes sense for problems where reasoning helps but you don't need
@@ -258,7 +258,7 @@
       values `low`, `medium`, and `high`. Setting it to `low` produces
       shorter reasoning chains and a cheaper bill, at some cost to
       accuracy on hard problems. Anthropic exposes a `thinking_budget`
-      parameter on extended thinking Claude — you can cap the reasoning
+      parameter on extended thinking Claude. You can cap the reasoning
       at, say, 2,000 tokens, and the model will commit to its final
       answer when it hits that cap. Google's Gemini 2.5 Pro has a
       thinking budget in the API call.
@@ -269,7 +269,7 @@
       a multi-step refactor, 4,000 reasoning tokens is a reasonable
       default. For a customer support chat that needs just enough thinking
       to verify a policy lookup, 500 tokens is plenty. The model will
-      still spend what it spends — the budget is a ceiling, not a target —
+      still spend what it spends. The budget is a ceiling, not a target.
       but it stops runaway chains from generating 10,000 reasoning tokens
       on a single user request.
     </p>
@@ -325,8 +325,8 @@
       <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
       <div class="blog-faq__item"><p class="blog-faq__q">What is a reasoning token?</p><p class="blog-faq__a">A reasoning token is one of the internal chain-of-thought tokens that a reasoning model like OpenAI's o1 or o3, Anthropic's Claude with extended thinking, Google's Gemini 2.5 Pro, or DeepSeek's R1 emits before producing the visible answer. Reasoning tokens are billed as output but are not shown to the user.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">How much does reasoning cost on o1?</p><p class="blog-faq__a">OpenAI's o1 is priced at $15.00 per 1M input tokens and $60.00 per 1M output tokens on OpenRouter. Reasoning tokens count as output, so a long chain-of-thought can push a single o1 call to several cents even when the visible answer is short.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Is DeepSeek R1 cheaper than o1?</p><p class="blog-faq__a">Yes, substantially. DeepSeek R1 is priced at $0.70 per 1M input tokens and $2.50 per 1M output tokens — roughly 20x cheaper than o1 on input and 24x cheaper on output. The catch is reasoning quality on hard math and coding tasks, where o1 still has a meaningful lead on the most difficult problems.</p></div>
-      <div class="blog-faq__item"><p class="blog-faq__q">Can I turn reasoning off?</p><p class="blog-faq__a">On OpenRouter you can switch from a reasoning model to a non-reasoning one — o1 to GPT-4o, for example. Within a reasoning model, Anthropic's Claude extended thinking lets you set a thinking budget in tokens. OpenAI's o-series gives you a 'reasoning_effort' parameter (low, medium, high) that controls how aggressively the model thinks.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Is DeepSeek R1 cheaper than o1?</p><p class="blog-faq__a">Yes, substantially. DeepSeek R1 is priced at $0.70 per 1M input tokens and $2.50 per 1M output tokens. That's roughly 20x cheaper than o1 on input and 24x cheaper on output. The catch is reasoning quality on hard math and coding tasks, where o1 still has a meaningful lead on the most difficult problems.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Can I turn reasoning off?</p><p class="blog-faq__a">On OpenRouter you can switch from a reasoning model to a non-reasoning one. o1 to GPT-4o, for example. Within a reasoning model, Anthropic's Claude extended thinking lets you set a thinking budget in tokens. OpenAI's o-series gives you a 'reasoning_effort' parameter (low, medium, high) that controls how aggressively the model thinks.</p></div>
       <div class="blog-faq__item"><p class="blog-faq__q">Why don't all providers publish a separate reasoning price?</p><p class="blog-faq__a">Some don't separate it because reasoning tokens fall into the same output bucket as the final answer. OpenAI's o-series bills reasoning at the output rate. Anthropic's extended thinking uses a per-token thinking rate that mirrors the output rate. Google publishes a reasoning_per_1m field but it often arrives null in cached views.</p></div>
     </section>
   </main>
