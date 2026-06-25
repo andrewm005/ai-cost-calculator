@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "schema_version": "1.0",
+    "source": "PLACEHOLDER — compiled from GigaGPU, Mustafa.net, NVIDIA NIM benchmarks cited in findings.md §5. Verify against current vendor benchmarks before quoting.",
+    "last_updated": "2026-06-22",
+    "notes": "Throughput figures are Q4_K_M quantized-class estimates for an 8B-parameter model on each GPU at typical consumer/cloud serving settings. Larger models run slower — see data/local_model_profiles.json for per-model overrides. Power costs (electricity, amortization) are operator-supplied at request time and are NOT stored here."
+  },
+  "gpus": {
+    "nvidia-rtx-4090": {
+      "display_name": "NVIDIA RTX 4090",
+      "tdp_watts": 450.0,
+      "vram_gb": 24.0,
+      "default_tokens_per_second": 135.0,
+      "notes": "PLACEHOLDER — GigaGPU LLaMA 3 8B @ ~135 tok/s, peak ~245 tok/s"
+    },
+    "nvidia-rtx-4080": {
+      "display_name": "NVIDIA RTX 4080",
+      "tdp_watts": 320.0,
+      "vram_gb": 16.0,
+      "default_tokens_per_second": 95.0,
+      "notes": "PLACEHOLDER — typical 8B throughput ~95 tok/s"
+    },
+    "nvidia-rtx-3090": {
+      "display_name": "NVIDIA RTX 3090",
+      "tdp_watts": 350.0,
+      "vram_gb": 24.0,
+      "default_tokens_per_second": 85.0,
+      "notes": "PLACEHOLDER — Mustafa.net LLaMA 3 8B @ 95 tok/s, GigaGPU 85 tok/s"
+    },
+    "nvidia-rtx-4060-ti-16gb": {
+      "display_name": "NVIDIA RTX 4060 Ti 16GB",
+      "tdp_watts": 165.0,
+      "vram_gb": 16.0,
+      "default_tokens_per_second": 52.0,
+      "notes": "PLACEHOLDER — 16GB VRAM keeps 8B fully resident"
+    },
+    "nvidia-a100-80gb": {
+      "display_name": "NVIDIA A100 80GB",
+      "tdp_watts": 400.0,
+      "vram_gb": 80.0,
+      "default_tokens_per_second": 180.0,
+      "notes": "PLACEHOLDER — Lambda Labs benchmarks ~180 tok/s for 8B; scales linearly for batch"
+    },
+    "nvidia-h100-80gb": {
+      "display_name": "NVIDIA H100 80GB",
+      "tdp_watts": 700.0,
+      "vram_gb": 80.0,
+      "default_tokens_per_second": 350.0,
+      "notes": "PLACEHOLDER — NVIDIA NIM 51 tok/s for Llama-3.3-70B at 1 user; ~350 tok/s for 8B"
+    },
+    "nvidia-l40s": {
+      "display_name": "NVIDIA L40S",
+      "tdp_watts": 350.0,
+      "vram_gb": 48.0,
+      "default_tokens_per_second": 160.0,
+      "notes": "PLACEHOLDER — Ada-generation data-center inference card"
+    },
+    "nvidia-rtx-3060-12gb": {
+      "display_name": "NVIDIA RTX 3060 12GB",
+      "tdp_watts": 170.0,
+      "vram_gb": 12.0,
+      "default_tokens_per_second": 28.0,
+      "notes": "PLACEHOLDER — budget 8B serving card"
+    },
+    "amd-mi300x": {
+      "display_name": "AMD MI300X",
+      "tdp_watts": 750.0,
+      "vram_gb": 192.0,
+      "default_tokens_per_second": 280.0,
+      "notes": "PLACEHOLDER — 192GB HBM3 keeps 70B-class models fully resident"
+    },
+    "apple-m2-ultra": {
+      "display_name": "Apple M2 Ultra",
+      "tdp_watts": 60.0,
+      "vram_gb": 192.0,
+      "default_tokens_per_second": 35.0,
+      "notes": "PLACEHOLDER — unified memory allows large models; slower per-token than discrete GPUs"
+    },
+    "apple-m3-max": {
+      "display_name": "Apple M3 Max",
+      "tdp_watts": 56.0,
+      "vram_gb": 128.0,
+      "default_tokens_per_second": 40.0,
+      "notes": "PLACEHOLDER — Mustafa.net LLaMA 3 8B @ ~40 tok/s via MLX"
+    },
+    "apple-m4-max": {
+      "display_name": "Apple M4 Max",
+      "tdp_watts": 60.0,
+      "vram_gb": 128.0,
+      "default_tokens_per_second": 55.0,
+      "notes": "PLACEHOLDER — newer generation, faster than M3 Max"
+    },
+    "cpu-only-xeon-32core": {
+      "display_name": "CPU-only (32-core Xeon)",
+      "tdp_watts": 200.0,
+      "vram_gb": 0.0,
+      "default_tokens_per_second": 3.0,
+      "notes": "PLACEHOLDER — fallback when no GPU available; expect 5-10 tok/s for quantized 7B"
+    }
+  }
+}

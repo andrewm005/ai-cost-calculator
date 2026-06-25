@@ -1,0 +1,396 @@
+/* =========================================================================
+   AI Cost Calculator — model page styles (v3 — SEO-1)
+   --------------------------------------------------------------------------
+   Shared styles for /models/<slug>.html pages. Read-only reference to
+   app.css color tokens; we copy them here so model pages can stand alone
+   (they don't import app.css, keeping the bundle light for crawlers).
+
+   Source of truth for tokens: frontend/app.css :root.
+   This file MUST stay in sync if app.css tokens change.
+   ========================================================================= */
+
+:root {
+  /* Surface — warm tinted neutrals (copied from app.css) */
+  --paper:        #f7f3ec;
+  --paper-2:      #efe9dc;
+  --paper-3:      #e7dfcd;
+  --ink:          #1f1c17;
+  --ink-2:        #4a4439;
+  --ink-3:        #807868;
+  --ink-4:        #b5ac9a;
+  --rule:         #d8cfba;
+
+  /* Accent — deep teal (copied from app.css) */
+  --teal:         #0c4a52;
+  --teal-deep:    #093438;
+  --teal-soft:    #dde8ea;
+  --teal-ink:     #062b30;
+
+  /* Functional */
+  --ok:           #2f8a4f;
+  --warn:         #b15c00;
+
+  /* Type */
+  --display:      'DM Serif Display', 'Iowan Old Style', 'Palatino Linotype', 'Charter', Georgia, serif;
+  --sans:         ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --mono:         ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* Scale */
+  --t-xs:   0.78rem;
+  --t-sm:   0.875rem;
+  --t-base: 1rem;
+  --t-lg:   1.125rem;
+  --t-xl:   1.375rem;
+  --t-2xl:  1.75rem;
+  --t-3xl:  2.25rem;
+  --t-4xl:  3rem;
+
+  /* Spacing */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+
+  /* Radii */
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  14px;
+  --r-pill: 999px;
+
+  /* Shadow */
+  --shadow-1: 0 1px 2px rgba(31, 28, 23, 0.04), 0 2px 8px rgba(31, 28, 23, 0.04);
+  --shadow-2: 0 2px 6px rgba(31, 28, 23, 0.06), 0 8px 28px rgba(31, 28, 23, 0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body { margin: 0; }
+
+/* Top bar (mirror of app.css .topbar so model pages look like part of the site) */
+.model-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-5);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.model-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--display);
+  font-size: 1.25rem;
+}
+.model-brand__mark { display: block; }
+.model-brand__word { font-weight: 400; letter-spacing: -0.01em; }
+.model-topbar__nav {
+  margin-left: auto;
+  display: flex;
+  gap: var(--s-4);
+  font-size: var(--t-sm);
+}
+.model-topbar__nav a { color: var(--ink-2); text-decoration: none; }
+.model-topbar__nav a:hover { color: var(--teal); }
+
+/* Page wrapper */
+.model-page { max-width: 880px; margin: 0 auto; padding: var(--s-3) var(--s-5) var(--s-8); }
+.model-page__back {
+  display: inline-block;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  text-decoration: none;
+  margin-bottom: var(--s-5);
+}
+.model-page__back:hover { color: var(--teal); }
+
+.model-page__title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 var(--s-2);
+  line-height: 1.1;
+}
+.model-page__sub {
+  font-size: var(--t-base);
+  color: var(--ink-2);
+  margin: 0 0 var(--s-4);
+  line-height: 1.5;
+  max-width: 60ch;
+}
+.model-page__updated {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin: 0 0 var(--s-6);
+  font-variant-numeric: tabular-nums;
+}
+.model-page__updated strong { color: var(--ok); }
+.model-page__updated a { color: var(--teal); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--teal) 40%, transparent); }
+
+/* Breadcrumb (also a visible element, not just schema.org) */
+.model-breadcrumb {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin: 0 0 var(--s-3);
+}
+.model-breadcrumb a { color: var(--teal); text-decoration: none; }
+.model-breadcrumb a:hover { text-decoration: underline; }
+.model-breadcrumb__sep { color: var(--ink-4); margin: 0 var(--s-1); }
+
+/* Tables — used for live pricing and workload costs */
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin: 0 0 var(--s-6);
+}
+.model-table th, .model-table td {
+  padding: var(--s-3) var(--s-4);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--paper-2);
+}
+.model-table thead th {
+  background: var(--paper-2);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+.model-table tr:last-child td { border-bottom: 0; }
+.model-table td.model-cost {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.model-table td.model-cost--free { color: var(--ok); font-weight: 600; }
+.model-table .model-wl__label {
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+.model-table .model-wl__desc {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+/* Section */
+.model-section { margin-top: var(--s-7); }
+.model-section h2 {
+  font-family: var(--display);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--s-4);
+}
+.model-section p {
+  font-size: var(--t-base);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 var(--s-3);
+  max-width: 65ch;
+}
+.model-section a { color: var(--teal); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--teal) 40%, transparent); text-underline-offset: 3px; }
+.model-section a:hover { color: var(--teal-deep); }
+.model-section strong { color: var(--ink); font-weight: 600; }
+.model-section ul { margin: 0 0 var(--s-3); padding-left: var(--s-5); }
+.model-section li { font-size: var(--t-base); line-height: 1.65; color: var(--ink-2); margin-bottom: var(--s-1); max-width: 65ch; }
+
+/* Related models */
+.model-related {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+}
+.model-related ul { list-style: none; padding: 0; margin: 0; }
+.model-related li {
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--t-sm);
+  max-width: none;
+}
+.model-related li:last-child { border-bottom: 0; }
+.model-related a { color: var(--teal); text-decoration: none; }
+.model-related a:hover { text-decoration: underline; }
+.model-related__price {
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  margin-left: var(--s-2);
+}
+
+/* FAQ */
+.model-faq {
+  border-top: 1px solid var(--rule);
+}
+.model-faq__item {
+  border-bottom: 1px solid var(--rule);
+  padding: var(--s-3) 0;
+}
+.model-faq__q {
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--s-1);
+}
+.model-faq__a {
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Verdict / highlight box */
+.model-verdict {
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+  margin: 0 0 var(--s-6);
+  font-size: var(--t-base);
+  line-height: 1.5;
+  color: var(--teal-ink);
+}
+.model-verdict strong { color: var(--teal-deep); font-weight: 600; }
+
+/* SEO-6 (t_52219b65): template-specific structural elements
+   used by Templates B (Use-Case First) and C (Comparison-First). */
+
+/* Template B — lead use-case cards */
+.model-usecases { display: grid; gap: var(--s-3); margin: var(--s-3) 0; }
+.model-usecase {
+  background: white;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+}
+.model-usecase__title {
+  font-family: var(--display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--s-1);
+}
+.model-usecase__shape {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  margin: 0 0 var(--s-2);
+  line-height: 1.5;
+}
+.model-usecase__cost {
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-base);
+  color: var(--teal-deep);
+}
+.model-usecase__cost strong { font-family: var(--display); font-size: 1.25rem; font-weight: 600; }
+.model-usecase__per {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  margin-left: var(--s-2);
+}
+.model-usecase__rationale {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+/* Template B/C — comparison snapshot table */
+.model-snap thead th { background: var(--paper-2); }
+.model-snap tbody tr.model-snap__self {
+  background: color-mix(in srgb, var(--teal) 8%, white);
+}
+.model-snap tbody tr.model-snap__self td { font-weight: 600; color: var(--teal-deep); }
+.model-snap__you {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--ink-3);
+  margin-left: var(--s-1);
+}
+
+/* Template B — capabilities one-liner */
+.model-caps {
+  font-size: var(--t-base);
+  color: var(--ink-2);
+  margin: 0;
+  font-family: var(--sans);
+}
+
+/* Template C — enrichment note (notable observation) */
+.model-section--note {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+}
+.model-section--note h2 {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--s-2);
+}
+.model-section--note p {
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0 0 var(--s-2);
+  max-width: 65ch;
+}
+.model-section--note p:last-child { margin-bottom: 0; }
+
+/* Footer (mirror) */
+.model-foot {
+  text-align: center;
+  padding: var(--s-6) var(--s-5);
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule);
+  margin-top: var(--s-8);
+}
+.model-foot a { color: var(--ink-2); text-decoration: none; }
+.model-foot a:hover { color: var(--teal); }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .model-page { padding: var(--s-3) var(--s-4) var(--s-7); }
+  .model-table th, .model-table td { padding: var(--s-2) var(--s-3); }
+  .model-table .model-wl__label { font-size: var(--t-xs); }
+  .model-table .model-wl__desc { display: none; }
+}

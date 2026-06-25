@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Status: AI Cost Calculator</title>
+  <meta name="description" content="Live status of the AI Cost Calculator calculator. Model count, last successful OpenRouter refresh, backend health.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/status.html">
+  <meta property="og:title" content="Status: AI Cost Calculator">
+  <meta property="og:description" content="Live status of the AI Cost Calculator calculator backend and pricing data.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="./app.css">
+  <style>
+    .status-page { max-width: 640px; margin: 0 auto; padding: var(--s-4) var(--s-5) var(--s-8); }
+    .status-page__back { display: inline-block; font-size: var(--t-sm); color: var(--ink-2); text-decoration: none; margin-bottom: var(--s-5); }
+    .status-page__back:hover { color: var(--teal); }
+    .status-page__title { font-family: var(--display); font-size: var(--t-4xl); font-weight: 400; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 var(--s-2); line-height: 1.1; }
+    .status-page__sub { font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-6); }
+    .status-card { background: white; border: 1px solid var(--rule); border-radius: var(--r-md); padding: var(--s-5); margin-bottom: var(--s-4); }
+    .status-card__row { display: flex; justify-content: space-between; align-items: baseline; padding: var(--s-3) 0; border-bottom: 1px solid var(--paper-2); }
+    .status-card__row:last-child { border-bottom: 0; }
+    .status-card__label { font-size: var(--t-sm); color: var(--ink-3); }
+    .status-card__value { font-family: var(--mono); font-size: var(--t-sm); color: var(--ink); font-variant-numeric: tabular-nums; }
+    .status-dot { display: inline-block; width: 9px; height: 9px; border-radius: 999px; margin-right: 6px; vertical-align: middle; }
+    .status-dot--ok { background: var(--ok); }
+    .status-dot--warn { background: var(--warn); }
+    .status-dot--err { background: color-mix(in srgb, var(--teal-deep) 80%, #c00); }
+    .status-note { font-size: var(--t-sm); color: var(--ink-3); line-height: 1.6; margin-top: var(--s-5); }
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <a class="brand" href="./" aria-label="AI Cost Calculator (home)">
+      <img class="brand__mark" src="./logo.svg" alt="" width="44" height="22">
+      <span class="brand__word">AI Cost Calculator</span>
+    </a>
+  </header>
+
+  <main class="status-page">
+    <a class="status-page__back" href="./">← Back to the calculator</a>
+    <h1 class="status-page__title">Service status</h1>
+    <p class="status-page__sub">Live checks of the AI Cost Calculator calculator backend and pricing data freshness.</p>
+
+    <div class="status-card" id="status-card">
+      <div class="status-card__row">
+        <span class="status-card__label">Calculator backend</span>
+        <span class="status-card__value" id="backend-status">
+          <span class="status-dot status-dot--ok"></span>checking…
+        </span>
+      </div>
+      <div class="status-card__row">
+        <span class="status-card__label">Models loaded</span>
+        <span class="status-card__value" id="models-loaded">—</span>
+      </div>
+      <div class="status-card__row">
+        <span class="status-card__label">OpenRouter models in feed</span>
+        <span class="status-card__value" id="openrouter-models">—</span>
+      </div>
+      <div class="status-card__row">
+        <span class="status-card__label">Pricing refresh interval</span>
+        <span class="status-card__value" id="refresh-seconds">—</span>
+      </div>
+      <div class="status-card__row">
+        <span class="status-card__label">Last page load</span>
+        <span class="status-card__value" id="last-check">—</span>
+      </div>
+    </div>
+
+    <p class="status-note">
+      Pricing data is pulled from <a href="https://openrouter.ai" rel="noopener">OpenRouter's public catalog</a>
+      on a background interval (default: every 6 hours) and cached on the
+      backend. This page calls <code>/health</code> on the calculator
+      backend and reports the response. If the dot is red, the calculator
+      itself will show an error message; bookmark this page to check
+      whether the issue is on our end or upstream.
+    </p>
+  </main>
+
+  <footer class="foot">
+    <p>
+      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./about.html">About</a> · <a href="./privacy.html">Privacy</a> · <a href="./status.html">Status</a>
+    </p>
+  </footer>
+
+  <script>
+    // Hit /health on the API base and fill the card. The API base is
+    // window.TOKENTALLY_API or the production default.
+    (async function () {
+      const API = (window.TOKENTALLY_API || 'http://10.10.10.205:8001').replace(/\/$/, '');
+      const $ = (s) => document.querySelector(s);
+      const setDot = (cls) => $('span', $id => $id.className) // unused; inline below
+      const dot = document.querySelector('#backend-status .status-dot');
+      const val = $('#backend-status');
+      const fmt = (n) => n ? `${(n/3600).toFixed(1)}h` : '—';
+      const now = new Date();
+      $('#last-check').textContent = now.toLocaleString();
+      try {
+        const r = await fetch(`${API}/health`, { headers: { 'Accept': 'application/json' } });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const d = await r.json();
+        dot.className = 'status-dot status-dot--ok';
+        val.innerHTML = '<span class="status-dot status-dot--ok"></span>operational';
+        $('#models-loaded').textContent = `${d.models_loaded} models`;
+        $('#openrouter-models').textContent = `${d.openrouter_models} from OpenRouter`;
+        $('#refresh-seconds').textContent = fmt(d.refresh_seconds);
+      } catch (err) {
+        dot.className = 'status-dot status-dot--err';
+        val.innerHTML = '<span class="status-dot status-dot--err"></span>unreachable';
+      }
+    })();
+  </script>
+</body>
+</html>

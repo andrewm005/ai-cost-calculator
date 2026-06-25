@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls | AI Cost Calculator</title>
+  <meta name="description" content="OpenRouter passes through vendor pricing with a small margin. Here's how their rate card works, what gets cached, and how the free models stay free.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/openrouter-pricing-explained.html">
+  <meta property="og:title" content="OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls | AI Cost Calculator">
+  <meta property="og:description" content="How OpenRouter prices 350+ models: the rate card, cache discounts, free tier, and tool call billing.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/openrouter-pricing-explained.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls | AI Cost Calculator">
+  <meta name="twitter:description" content="How OpenRouter prices 350+ models: the rate card, cache discounts, free tier, and tool call billing.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls",
+      "description": "OpenRouter passes through vendor pricing with a small margin. Here's how their rate card works, what gets cached, and how the free models stay free.",
+      "author": {"@type": "Person", "name": "Andrew Morgado"},
+      "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"},
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "mainEntityOfPage": "https://aicostcalculator.net/blog/openrouter-pricing-explained.html",
+      "url": "https://aicostcalculator.net/blog/openrouter-pricing-explained.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "OpenRouter Pricing Explained", "item": "https://aicostcalculator.net/blog/openrouter-pricing-explained.html"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does OpenRouter charge a markup over vendor pricing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are some models free on OpenRouter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Labs sometimes publish preview or experimental models with a $0 rate to drive adoption, and a few community-trained open-weights models are routed through providers that subsidize the inference. As of mid-2026 there are 26 free models on OpenRouter including Llama 3.2 3B, several Gemma 4 variants, and Liquid's LFM 2.5 1.2B. Treat them as best-effort: rate limits are tighter, latency is variable, and the labs can take them offline without notice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does OpenRouter's prompt caching work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m field at 10% of the input rate (Claude Sonnet 4 input is $3.00, cache is $0.30). OpenAI publishes cache rates at 50% off input on supported models (GPT-4.1 cache is $0.50 versus $2.00 input). Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes — you have to put the cacheable block at the start of the prompt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do tool calls cost extra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On OpenRouter, most models have a tool_call_cost of $0 — the tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number. Anthropic, Google, and OpenAI generally do not charge per tool call."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>OpenRouter Pricing Explained</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">OpenRouter Pricing Explained: Cache, System Prompts, Tool Calls</h1>
+    <p class="blog-lede">
+      OpenRouter is the easiest way to call 350+ language models from one
+      API. The pricing is mostly pass-through from the upstream vendors
+      plus a small platform fee, but there are enough quirks — cache
+      prefixes, system prompt reuse, free tiers, per-tool-call surcharges —
+      that a production bill is rarely a simple input-times-rate-times-output
+      calculation. This article walks through what the rate card actually
+      charges for, and where the savings are.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>What OpenRouter does</h2>
+    <p>
+      OpenRouter is an aggregator. You sign up for one account, get one
+      API key, and call any of the 350+ models behind it using the same
+      OpenAI-compatible chat completions endpoint. Behind the scenes,
+      OpenRouter routes your request to the upstream provider — Anthropic
+      if you asked for Claude, OpenAI if you asked for GPT-4o, DeepSeek
+      if you asked for R1 — and passes the response back. The pricing on
+      each model is the upstream vendor's list price plus a small
+      platform fee.
+    </p>
+    <p>
+      The platform fee is the part that surprises people who read the
+      OpenRouter pricing page next to the vendor's pricing page and see
+      the rates are close but not identical. For most models the
+      difference is well under 10% of the bill. The trade-off is one
+      bill, one key, and one consistent interface across every model
+      family. If you call Anthropic, OpenAI, Google, DeepSeek, Mistral,
+      Cohere, and Qwen directly, you have seven separate accounts,
+      seven separate bills, and seven SDKs to maintain. OpenRouter
+      consolidates that.
+    </p>
+
+    <h2>The free tier</h2>
+    <p>
+      As of mid-2026, 26 models on OpenRouter publish a $0 input and $0
+      output rate. The list includes Llama 3.2 3B Instruct, several
+      Gemma 4 variants, Liquid's LFM 2.5 1.2B, and a handful of
+      community-finetuned variants. They appear in the OpenRouter
+      catalog with a `:free` suffix on the slug and a $0.00 price on
+      the model page.
+    </p>
+    <p>
+      Free models are not charity. The labs publish them for a reason —
+      usually to drive adoption for a new model family, or because the
+      inference cost is subsidized by an investor, or because the model
+      is genuinely cheap to run (a 1.2B parameter model on a single GPU
+      costs cents per million tokens). Treat free models as best-effort:
+      rate limits are tighter than paid models, latency is variable, and
+      the labs reserve the right to take them offline with little notice.
+      They are great for prototyping, terrible for production.
+    </p>
+
+    <h2>Cache pricing</h2>
+    <p>
+      The largest single source of variance in a production LLM bill is
+      the cache rate. Anthropic's Claude Sonnet 4 lists input at $3.00
+      per 1M tokens and cached input at $0.30 per 1M tokens — a 10x
+      discount. Claude Haiku 4.5 is $1.00 input, $0.10 cache. OpenAI's
+      GPT-4.1 is $2.00 input and $0.50 cache. GPT-4o mini is $0.15
+      input and $0.075 cache, a 50% discount. Google's Gemini 2.5 Pro
+      is $1.25 input and $0.125 cache.
+    </p>
+    <p>
+      The catch is that caching is prefix-based. The model has to see
+      the same opening tokens to count them as cached. A 2,000-token
+      system prompt sent on every call is a 2,000-token cache hit every
+      time, as long as you don't change the prompt. A 2,000-token
+      system prompt with the user message appended to the end is a
+      cache hit on the system portion only. If you append the user
+      message to the start and the system prompt to the end, the cache
+      misses every time. AI Cost Calculator's calculator assumes cacheable
+      structure by default — see the
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o vs Claude Sonnet 4 comparison</a>
+      for an example of how cache hits change the per-call cost.
+    </p>
+
+    <h2>System prompts and the per-call tax</h2>
+    <p>
+      Most production prompts include a system prompt — persona
+      instructions, examples, tool definitions, retrieved context. A
+      typical system prompt runs 500 to 3,000 tokens. That is a fixed
+      per-call cost on every request the system makes.
+    </p>
+    <p>
+      Concrete math: a 2,000-token system prompt on GPT-4o at $2.50 per
+      1M is $0.005 per call. At 1 million calls per month, that
+      system prompt alone is $5,000 per month. On Claude Sonnet 4 at
+      $3.00 per 1M, the same system prompt costs $6,000 per month. If
+      the prompt is cacheable and Anthropic's prefix cache hits, that
+      drops to $600 per month. The structure of your prompt and where
+      you place the cacheable block is the difference between a $5,000
+      line item and a $600 line item. See the
+      <a href="./system-prompt-tokens-bill.html">system prompt tokens
+      article</a> for the full breakdown.
+    </p>
+
+    <h2>Tool calls</h2>
+    <p>
+      On most OpenRouter models, the tool_call_cost field is $0. The
+      tool call itself is free; what you pay for is the input tokens
+      going into the call (your prompt plus the tool definitions) and
+      the output tokens coming back (the model's response plus the
+      tool call request). A handful of models publish non-zero tool
+      call surcharges — usually older or specialty models — and those
+      show up as a separate line item on the bill.
+    </p>
+    <p>
+      The cost driver for tool-using agents is not the tool call itself
+      but the conversation growth. Each tool call adds the tool
+      definition, the tool call request, and the tool result to the
+      conversation history. By turn five of an agentic loop, the
+      conversation is often 10x the size of the original prompt, and
+      every subsequent call re-bills the entire history at the input
+      rate. See the
+      <a href="./agentic-workflow-token-cost.html">agentic workflow
+      article</a> for the multi-step math.
+    </p>
+
+    <h2>Reasoning tokens</h2>
+    <p>
+      Reasoning-capable models — 101 of the 334 on OpenRouter as of
+      mid-2026 — emit internal chain-of-thought tokens that are billed
+      as output. OpenRouter surfaces the upstream vendor's reasoning
+      field where the vendor publishes one. OpenAI's o-series bills
+      reasoning at the output rate. Anthropic's extended thinking
+      bills at the output rate. Google's Gemini 2.5 Pro publishes a
+      reasoning_per_1m field that mirrors the output rate. DeepSeek's
+      R1 publishes $0.70 input and $2.50 output, and reasoning tokens
+      fall in the output bucket.
+    </p>
+    <p>
+      The full breakdown of how reasoning tokens multiply the bill is
+      in the
+      <a href="./what-is-a-reasoning-token.html">reasoning token article</a>.
+      The short version: reasoning is a multiplier on the per-call cost
+      that is invisible in the user-visible answer.
+    </p>
+
+    <h2>How to read the rate card</h2>
+    <p>
+      The OpenRouter public endpoint at <code>/api/v1/models</code>
+      returns a JSON object with the current rate for every model it
+      serves. AI Cost Calculator refreshes its cache every six hours, so the
+      numbers on each model page are never more than a few hours behind
+      vendor list prices. The fields that matter for an estimate are
+      input_per_1m, output_per_1m, cached_input_per_1m,
+      reasoning_per_1m, and tool_call_cost. Multiply by your expected
+      token counts, add a small buffer for cache misses, and you have
+      the bill.
+    </p>
+    <p>
+      The calculator at <a href="../">aicostcalculator.net</a> handles all of
+      this in one place: pick a model, pick a workload shape, get a
+      number that includes the multipliers. The math is the same one
+      you'd do by hand, but with one less place to make a transcription
+      error.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      Per-model rates from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a>. Cache and reasoning field semantics
+      follow each upstream vendor's published docs.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the models cited here</h2>
+      <ul>
+        <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
+        <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4.5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+        <li><a href="../models/deepseek-deepseek-r1.html">DeepSeek R1</a></li>
+        <li><a href="../models/meta-llama-llama-3-1-8b-instruct.html">Llama 3.1 8B</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./how-to-estimate-llm-api-costs.html"><strong>How to Estimate LLM API Costs: A Practical Guide</strong><span>The four-step method.</span></a></li>
+        <li><a href="./cache-tokens-savings.html"><strong>Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</strong><span>Make the prefix cache hit every time.</span></a></li>
+        <li><a href="./system-prompt-tokens-bill.html"><strong>How System Prompt Tokens Show Up on Your Bill</strong><span>The hidden per-call tax.</span></a></li>
+        <li><a href="./reduce-claude-gpt-api-costs.html"><strong>How to Reduce Claude and GPT API Costs by 60%</strong><span>Tactics that actually work.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">Does OpenRouter charge a markup over vendor pricing?</p><p class="blog-faq__a">Yes — OpenRouter adds a small platform fee on top of the upstream vendor's list price, usually a few percent. For most models the difference between OpenRouter's rate and the vendor's direct rate is well under 10% of the bill. The trade-off is one API key, one bill, and 350+ models instead of negotiating separately with every vendor.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Why are some models free on OpenRouter?</p><p class="blog-faq__a">Labs sometimes publish preview or experimental models with a $0 rate to drive adoption, and a few community-trained open-weights models are routed through providers that subsidize the inference. As of mid-2026 there are 26 free models on OpenRouter. Treat them as best-effort: rate limits are tighter, latency is variable, and the labs can take them offline without notice.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How does OpenRouter's prompt caching work?</p><p class="blog-faq__a">OpenRouter surfaces the upstream vendor's prompt cache. Anthropic publishes a cached_input_per_1m at 10% of the input rate. OpenAI publishes cache rates at 50% off input on supported models. Google's Gemini 2.5 family has implicit caching on prompts over a certain length. The cache only matches prefixes — you have to put the cacheable block at the start of the prompt.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Do tool calls cost extra?</p><p class="blog-faq__a">On OpenRouter, most models have a tool_call_cost of $0 — the tool result tokens are billed at the regular input rate when they come back. A handful of models publish a non-zero tool_call_cost; check the model's price table on AI Cost Calculator or the OpenRouter feed for the specific number.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

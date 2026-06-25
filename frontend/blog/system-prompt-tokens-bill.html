@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>How System Prompt Tokens Show Up on Your Bill | AI Cost Calculator</title>
+  <meta name="description" content="A 1,500-token system prompt is a fixed per-call tax. On GPT-4o, that's $3,750/month at 1M calls. Here's how to find the tax and shrink it.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/system-prompt-tokens-bill.html">
+  <meta property="og:title" content="How System Prompt Tokens Show Up on Your Bill | AI Cost Calculator">
+  <meta property="og:description" content="The hidden per-call tax from system prompt tokens — what it costs and how to reduce it.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/system-prompt-tokens-bill.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How System Prompt Tokens Show Up on Your Bill | AI Cost Calculator">
+  <meta name="twitter:description" content="The hidden per-call tax from system prompt tokens — what it costs and how to reduce it.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type": "Article", "headline": "How System Prompt Tokens Show Up on Your Bill", "description": "A 1,500-token system prompt is a fixed per-call tax. On GPT-4o, that's $3,750/month at 1M calls. Here's how to find the tax and shrink it.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-23", "mainEntityOfPage": "https://aicostcalculator.net/blog/system-prompt-tokens-bill.html", "url": "https://aicostcalculator.net/blog/system-prompt-tokens-bill.html"},
+    {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "How System Prompt Tokens Show Up on Your Bill", "item": "https://aicostcalculator.net/blog/system-prompt-tokens-bill.html"}]},
+    {"@type": "FAQPage", "mainEntity": [
+      {"@type": "Question", "name": "What is a system prompt?", "acceptedAnswer": {"@type": "Answer", "text": "The system prompt is the instruction block the application sends to the model on every API call. It usually contains persona instructions, examples, tool definitions, retrieved context, and any other persistent guidance the model needs to do its job. It is sent as part of the input and is billed at the input token rate."}},
+      {"@type": "Question", "name": "How much does a typical system prompt cost?", "acceptedAnswer": {"@type": "Answer", "text": "On GPT-4o at $2.50 per 1M input tokens, a 1,500-token system prompt costs $0.00375 per call. At 1M calls per month, that system prompt alone is $3,750/month. On Claude Sonnet 4 at $3.00 per 1M, the same prompt is $4,500/month. With prompt caching on Claude, it drops to $450/month."}},
+      {"@type": "Question", "name": "Do all system prompts get cached?", "acceptedAnswer": {"@type": "Answer", "text": "No. Caching is prefix-based: the model has to see the same opening tokens to count them as cached. If the system prompt comes before the user message in the prompt array, the system portion is cacheable. If the user message comes first and the system prompt is appended at the end, the cache misses every call. The structure of the prompt is the difference between a $4,500/month line item and a $450/month line item."}},
+      {"@type": "Question", "name": "What's the right size for a system prompt?", "acceptedAnswer": {"@type": "Answer", "text": "For short-form workloads (chat, classification, extraction), keep the system prompt under 800 tokens. For long-context workloads (RAG, multi-file code review), under 1,500 tokens. Beyond 2,000 tokens, there is usually a 30% trim available without losing capability."}}
+    ]}
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>System Prompt Tokens on Your Bill</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">How System Prompt Tokens Show Up on Your Bill</h1>
+    <p class="blog-lede">
+      The system prompt is the instruction block that ships on every
+      call to the model. Persona, examples, tool definitions, retrieved
+      context — every word is a token billed at the input rate. A
+      1,500-token system prompt on GPT-4o is a fixed $0.00375 per
+      call. At one million calls per month, that prompt is a $3,750
+      line item on its own, before the user message, before the
+      output, before the cache. This article is about that line item.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>What a system prompt actually contains</h2>
+    <p>
+      A typical production system prompt has five sections. A persona
+      block that tells the model what role to play (50-200 tokens).
+      A tone block that adjusts style (50-100 tokens). A few-shot
+      examples block that demonstrates the desired output shape
+      (200-2,000 tokens). A tool definitions block that lists the
+      tools the model can call (200-1,000 tokens). And a retrieved
+      context block that injects the document chunks the model needs
+      to answer (variable, often 1,000-10,000 tokens).
+    </p>
+    <p>
+      Each section grew incrementally. The persona started at 50
+      tokens and gained edge-case clauses until it was 200. The
+      examples block started at two examples and grew to six. The
+      tool definitions grew from one tool to seven. Six months into
+      production, the system prompt is 3,500 tokens and nobody on
+      the team remembers why each clause is there. This is the
+      normal growth pattern, and it is the source of the hidden tax.
+    </p>
+
+    <h2>The per-call math</h2>
+    <p>
+      On <a href="../models/openai-gpt-4o.html">GPT-4o</a> at $2.50
+      per 1M input tokens, a 1,500-token system prompt costs $0.00375
+      per call. On <a href="../models/anthropic-claude-sonnet-4.html">Claude
+      Sonnet 4</a> at $3.00 per 1M, the same prompt is $0.00450. On
+      <a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a>
+      at $1.25 per 1M, the same prompt is $0.00188 — the cheapest
+      flagship on input by a meaningful margin.
+    </p>
+    <p>
+      At volume, the per-call tax scales linearly. One million calls
+      per month on GPT-4o is $3,750. Ten million calls is $37,500.
+      One hundred million calls is $375,000. The system prompt
+      alone, with no user message and no output, is a budget line.
+    </p>
+
+    <h2>Why this is invisible in the bill</h2>
+    <p>
+      Most LLM bills break down by model and date, not by prompt
+      section. The system prompt tokens are mixed in with the user
+      message and any retrieved context, billed at the input rate.
+      A team looking at the bill sees "input tokens: 3,500 average
+      per call, $0.00875 per call on GPT-4o." They do not see that
+      2,000 of those tokens are the system prompt and could be
+      cached, trimmed, or moved to a different model.
+    </p>
+    <p>
+      The fix is instrumentation. Most production systems can
+      instrument the per-call input token count by section: system
+      prompt tokens, retrieved context tokens, user message tokens.
+      A few hours of work surfaces the tax directly. A team that
+      sees the system prompt is 60% of input tokens can act on it.
+      A team that doesn't, doesn't.
+    </p>
+
+    <h2>Three ways to reduce the tax</h2>
+    <p>
+      <strong>Trim the prompt.</strong> The cheapest fix. Move
+      examples out of the system prompt into one-shot user messages.
+      Remove redundant instructions. Combine clauses that say the
+      same thing twice. A reasonable goal: cut the system prompt by
+      30% without changing the model's behavior. For a 1,500-token
+      prompt, that's 450 tokens saved, or $1,125/month at 1M calls
+      on GPT-4o.
+    </p>
+    <p>
+      <strong>Cache the prompt.</strong> The biggest fix. Anthropic's
+      cache rate is 10% of input. Claude Sonnet 4's input is $3.00,
+      so the cache is $0.30. A 1,500-token system prompt on every
+      call, cached, is $0.00045 per call vs $0.00450 without
+      caching — a 10x reduction. At 1M calls per month, that's
+      $4,050/month saved. OpenAI's cache rate is 50% off input on
+      the GPT-4.1 family; GPT-4o does not have a published cache
+      rate on OpenRouter as of mid-2026. The
+      <a href="./cache-tokens-savings.html">prompt caching article</a>
+      has the structural details.
+    </p>
+    <p>
+      <strong>Route the prefix.</strong> Move the system prompt out
+      of the per-call API request entirely. Some production systems
+      use Anthropic's prompt caching with a long TTL on the system
+      prefix, then send only the user message and the retrieved
+      context per call. The model still sees the system prompt
+      (cached), but the application does not re-send it. This is
+      mechanically the same as prompt caching but easier to reason
+      about in a multi-tenant system where the prefix varies by
+      customer.
+    </p>
+
+    <h2>When the system prompt needs to be long</h2>
+    <p>
+      Some workloads genuinely need a long system prompt. A
+      code-review agent that ships the project's coding conventions
+      plus the file tree plus the diff plus the prior review history
+      might have a 5,000-token system prompt on every call. That is
+      not waste — that is the agent's working memory.
+    </p>
+    <p>
+      The right framing for these workloads is to make sure the
+      prompt is structured for cache hits. A 5,000-token prefix that
+      hits the cache every call is dramatically cheaper than the
+      same 5,000 tokens re-billed at the input rate. Anthropic's
+      prompt caching supports up to four cache breakpoints per
+      prompt, so a long system prompt can be split into the stable
+      prefix (cacheable, hits every time) and the variable suffix
+      (per-call, billed at input rate). The stable prefix is the
+      bulk of the system prompt for most long-context workloads.
+    </p>
+
+      The
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o
+      vs Claude Sonnet 4 comparison</a> shows the same prefix treated
+      by both models with very different effective input rates.
+    </p>
+
+    <h2>A concrete example</h2>
+    <p>
+      A customer support chatbot running on Claude Sonnet 4 ships
+      a 2,000-token system prompt (persona + tone + 8 few-shot
+      examples + 3 tool definitions) on every call. The user
+      message averages 200 tokens. The assistant's reply averages
+      300 tokens. At 100,000 calls per month:
+    </p>
+    <table class="blog-table">
+      <thead><tr><th>Configuration</th><th>Effective input $/M</th><th>Output $/M</th><th>Monthly input cost</th><th>Monthly output cost</th><th>Monthly total</th></tr></thead>
+      <tbody>
+        <tr><td>No caching, full prefix</td><td>$3.00</td><td>$15.00</td><td>$660</td><td>$450</td><td>$1,110</td></tr>
+        <tr><td>Cache hits on the 2,000-token system prompt</td><td>$0.30 (2K) + $3.00 (0.2K)</td><td>$15.00</td><td>$120</td><td>$450</td><td>$570</td></tr>
+        <tr><td>+ trim system prompt to 1,200 tokens</td><td>$0.30 (1.2K) + $3.00 (0.2K)</td><td>$15.00</td><td>$96</td><td>$450</td><td>$546</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Caching alone cuts the bill in half. Trimming adds another 4%.
+      The combined effect is a 50% reduction on the input line and
+      a 50% reduction on the total bill, with no change in the
+      model's behavior on the user-visible side.
+    </p>
+
+    <h2>The audit</h2>
+    <p>
+      A 30-minute audit reveals the tax. Step one: log the system
+      prompt token count on a representative sample of production
+      calls. Step two: multiply by the input rate and the monthly
+      volume. Step three: compare to the line items on the bill.
+      Step four: if the system prompt is more than 40% of input
+      tokens, treat it as a structural problem and ship a fix.
+    </p>
+    <p>
+      The fix is usually cache + trim, in that order. Caching buys
+      the 10x reduction with no behavior change. Trimming buys the
+      30% reduction with a behavior risk that has to be evaluated.
+      Most teams find that 70% of the system prompt is genuinely
+      necessary, 20% is redundant and trimmable, and 10% is
+      actively harmful (instructions that confuse the model or
+      fight the model's defaults).
+    </p>
+
+    <h2>The calculator</h2>
+    <p>
+      The <a href="../">AI Cost Calculator calculator</a> lets you set a
+      cacheable prefix length and see the effective input rate.
+      For Claude Sonnet 4 with a 1,500-token cacheable system
+      prompt and a 300-token user message on a typical call, the
+      effective input rate drops from $3.00 per 1M to about $0.65
+      per 1M (1,500 × $0.30 + 300 × $3.00, divided by 1,800). At
+      1M calls per month, the input line item drops from $5,400 to
+      $1,170.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      Per-model rates from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a>. Anthropic cache pricing per the
+      published prompt caching docs.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the models cited here</h2>
+      <ul>
+        <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
+        <li><a href="../models/openai-gpt-4-1.html">GPT-4.1</a></li>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+        <li><a href="../models/deepseek-deepseek-chat-v3-0324.html">DeepSeek V3</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./cache-tokens-savings.html"><strong>Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</strong><span>The 10x discount nobody uses.</span></a></li>
+        <li><a href="./reduce-claude-gpt-api-costs.html"><strong>How to Reduce Claude and GPT API Costs by 60%</strong><span>Caching, tiering, trimming.</span></a></li>
+        <li><a href="./agentic-workflow-token-cost.html"><strong>How Much Does an Agentic Workflow Actually Cost?</strong><span>Multi-step token growth.</span></a></li>
+        <li><a href="./how-to-estimate-llm-api-costs.html"><strong>How to Estimate LLM API Costs</strong><span>The four-step method.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">What is a system prompt?</p><p class="blog-faq__a">The system prompt is the instruction block the application sends to the model on every API call. It usually contains persona instructions, examples, tool definitions, retrieved context, and any other persistent guidance the model needs to do its job. It is sent as part of the input and is billed at the input token rate.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How much does a typical system prompt cost?</p><p class="blog-faq__a">On GPT-4o at $2.50 per 1M input tokens, a 1,500-token system prompt costs $0.00375 per call. At 1M calls per month, that system prompt alone is $3,750/month. On Claude Sonnet 4 at $3.00 per 1M, the same prompt is $4,500/month. With prompt caching on Claude, it drops to $450/month.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Do all system prompts get cached?</p><p class="blog-faq__a">No. Caching is prefix-based: the model has to see the same opening tokens to count them as cached. If the system prompt comes before the user message in the prompt array, the system portion is cacheable. If the user message comes first and the system prompt is appended at the end, the cache misses every call.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">What's the right size for a system prompt?</p><p class="blog-faq__a">For short-form workloads (chat, classification, extraction), keep the system prompt under 800 tokens. For long-context workloads (RAG, multi-file code review), under 1,500 tokens. Beyond 2,000 tokens, there is usually a 30% trim available without losing capability.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

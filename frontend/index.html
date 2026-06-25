@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Free AI Cost Calculator: Live OpenRouter Pricing for 349 Models</title>
+  <meta name="description" content="Free AI cost calculator with live OpenRouter pricing across 349 models. Compare Claude vs GPT, Gemini, Llama, DeepSeek costs side-by-side. Token pricing per million, agentic workflow cost, RAG pipeline estimates. No signup, refreshed every 6 hours.">
+  <meta name="keywords" content="AI token calculator, LLM token calculator, GPT pricing calculator, Claude cost calculator, OpenRouter pricing, compare LLM costs, AI API pricing, token cost estimator, GPT-4o cost, Claude Sonnet pricing, Gemini pricing, Llama cost, DeepSeek pricing">
+  <meta name="author" content="AI Cost Calculator">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#f7f3ec">
+
+  <!-- Canonical — set to the production domain. Update when domain is finalized. -->
+  <link rel="canonical" href="https://aicostcalculator.net/">
+
+  <!-- Open Graph (Facebook, LinkedIn, Slack previews) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free AI Cost Calculator: Live OpenRouter Pricing for 349 Models | AI Cost Calculator</title>
+  <meta property="og:description" content="Free token calculator with live OpenRouter pricing across 349 models. Compare GPT, Claude, Gemini, Llama, and DeepSeek side-by-side. No signup.">
+  <meta property="og:url" content="https://aicostcalculator.net/">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free AI Cost Calculator: Live OpenRouter Pricing for 349 Models | AI Cost Calculator</title>
+  <meta name="twitter:description" content="Free token calculator with live OpenRouter pricing across 349 models. Compare GPT, Claude, Gemini side-by-side.">
+  <meta name="twitter:image" content="https://aicostcalculator.net/og-image.png">
+
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="./app.css">
+
+  <!-- JSON-LD: WebApplication (the calculator itself) + FAQPage (the FAQ section
+       = Google rich snippets, big click-magnet in search results) +
+       Organization (brand). Update the "url" / "name" when domain is finalized. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "AI Cost Calculator: AI Token Calculator",
+        "url": "https://aicostcalculator.net/",
+        "description": "Free AI token calculator with live OpenRouter pricing across 349 models. Compare GPT, Claude, Gemini, Llama, and DeepSeek costs side-by-side.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any (web browser)",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Live OpenRouter pricing for 349 models",
+          "Compare 2-5 models side-by-side",
+          "Project presets (LangChain, RAG, AutoGen, code review)",
+          "Cached input and reasoning token pricing",
+          "Local GPU cost estimation (Ollama)"
+        ]
+      },
+      {
+        "@type": "Organization",
+        "name": "AI Cost Calculator",
+        "url": "https://aicostcalculator.net/",
+        "logo": "https://aicostcalculator.net/logo.svg"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How accurate are the prices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Live from OpenRouter's API, refreshed every 6 hours. Hand-curated prices are checked against each vendor's pricing page on every refresh."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you store my prompts or my results?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All math runs in your browser against a local API. There is no analytics, no tracking, no signup, no cookies set by this page. Your browser may store localStorage for the optional favorites feature — clear it any time from your browser settings."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the difference between input, output, cached, and reasoning tokens?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Input is what you send the model. Output is what it sends back. Cached input is input you send repeatedly — some providers (OpenAI, Anthropic) discount this 50-90%. Reasoning tokens are the model's thinking output (o1, o3, Claude extended thinking, Gemini 2.5 Thinking) and are billed at the same rate as output. All four are priced separately in the result."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I compare two models side-by-side?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Toggle to Compare above the model picker and pick 2-5 models. The same workload is priced against each, sorted cheapest first."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why are some models missing from the list?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenRouter catalogues around 336 models; the picker shows all of them. For open-weights models that aren't on OpenRouter yet, you can estimate the local self-host cost in the Also estimate local GPU cost panel below."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to pay or sign up?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Free to use, no account. The only optional sign-up is to OpenRouter itself if you decide to actually call the models through their unified API."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calc">Skip to calculator</a>
+
+  <header class="topbar" role="banner">
+    <a class="brand" href="./" aria-label="Token Cost Calculator (home)">
+      <img class="brand__mark" src="./logo.svg" alt="" width="44" height="22">
+      <span class="brand__word">AI Cost Calculator</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Primary">
+      <a href="./">Calculator</a>
+      <a href="./models/">All models</a>
+      <a href="./compare/">Compare</a>
+      <a href="./blog/">Blog</a>
+      <a href="./about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="page" id="top">
+    <section class="hero" aria-labelledby="hero-headline">
+      <img class="hero__mark" src="./logo.svg" alt="" width="168" height="84">
+      <h1 class="hero__headline" id="hero-headline">
+        How much will that LLM call cost?
+      </h1>
+      <p class="hero__sub">
+        Live prices across 350 models
+      </p>
+    </section>
+
+    <section class="calc" id="calc" aria-labelledby="calc-heading">
+      <h2 class="section-heading" id="calc-heading">Estimate</h2>
+
+      <!-- v2.9: mode toggle (Single vs Compare). Pinned right below the
+           Estimate heading so it stays in place when switching modes —
+           the selection-bar (single) and compare-tray (compare) below
+           it swap, but the toggle itself never moves. Default = single. -->
+      <div class="mode-toggle" role="tablist" aria-label="Calculator mode">
+        <button type="button" class="mode-toggle__pill is-on" id="mode-single"
+                role="tab" aria-selected="true" aria-controls="calc-form">
+          Single
+        </button>
+        <button type="button" class="mode-toggle__pill" id="mode-compare"
+                role="tab" aria-selected="false" aria-controls="calc-form">
+          Compare
+        </button>
+      </div>
+
+      <!-- v2.1 selection bar — prominent "what you picked" indicator,
+           shown only in single mode. The compare-tray below replaces
+           this visually when in compare mode. -->
+      <div class="selection-bar" id="selection-bar" aria-live="polite">
+        <span class="selection-bar__label">Selected</span>
+        <span class="selection-bar__name" id="selection-bar-name">—</span>
+        <span class="selection-bar__provider" id="selection-bar-provider"></span>
+        <span class="selection-bar__price" id="selection-bar-price"></span>
+      </div>
+
+      <!-- v2.9: compare-tray. Visible only in Compare mode. Shows the
+           chips of selected models, an "Add model" hint pointing at the
+           picker below, and a "Remove all" link. Re-rendered by JS on
+           every add/remove. -->
+      <div class="compare-tray" id="compare-tray" hidden aria-live="polite">
+        <span class="compare-tray__label">Comparing</span>
+        <span class="compare-tray__chips" id="compare-tray-chips"></span>
+        <button type="button" class="compare-tray__clear" id="compare-tray-clear">Remove all</button>
+      </div>
+
+      <form id="calc-form" class="form" novalidate>
+
+        <!-- ============================================================
+             TWO-TIER MODEL PICKER
+             Row 1: Popular (8 large click-targets, one per big company)
+             Row 2: Searchable "All models" combobox (escape hatch)
+             ============================================================ -->
+        <fieldset class="picker" aria-labelledby="picker-heading">
+          <legend class="picker__legend" id="picker-heading">
+            <span class="picker__step">1</span>
+            <span>Model</span>
+          </legend>
+
+          <!-- Row 1 — Popular (v2.4: one-click default model selection;
+               v2.2 was a per-company popover; v2.1 was a horizontal scroll strip).
+               Each card is a <button> rendered by renderPopular() in app.js.
+               v2.9: label now reads "Popular · 8 of 349" so the row reads as
+               a curated subset, not the whole catalog. The denominator is
+               updated by setPopularCount() after loadAll() so the number
+               tracks the live OpenRouter feed. -->
+          <div class="picker__row" role="group" aria-label="Popular model companies">
+            <p class="picker__row-label">
+              <span>Popular</span>
+              <span class="picker__row-meta" id="popular-count">8 of 348</span>
+            </p>
+            <div class="popular" id="popular-row"><!-- populated by app.js --></div>
+          </div>
+
+          <!-- Row 2 — All models (searchable). v2.1: label promoted for visibility -->
+          <div class="picker__row picker__row--search">
+            <p class="picker__row-label picker__row-label--primary">
+              <span>All models</span>
+              <span class="picker__row-meta" id="all-count">336 models</span>
+            </p>
+            <div class="combo" id="combo">
+              <button type="button" class="combo__button" id="combo-button"
+                      aria-haspopup="listbox" aria-expanded="false" aria-controls="combo-list">
+                <span class="combo__button-text" id="combo-button-text">Pick a model…</span>
+                <span class="combo__chev" aria-hidden="true"></span>
+              </button>
+              <div class="combo__panel" id="combo-panel" hidden>
+                <div class="combo__search-wrap">
+                  <span class="combo__search-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <circle cx="7" cy="7" r="5"/>
+                      <path d="M11 11l3 3"/>
+                    </svg>
+                  </span>
+                  <input type="text" class="combo__search" id="combo-search"
+                         placeholder="Search any model — Claude, GPT, Llama, Gemini…"
+                         autocomplete="off" spellcheck="false"
+                         aria-label="Search any of the 349 models by name, provider, or id"
+                         aria-controls="combo-list" aria-autocomplete="list">
+                  <button type="button" class="combo__clear" id="combo-clear" aria-label="Clear search" hidden>×</button>
+                  <button type="button" class="fav-toggle" id="fav-toggle"
+                          aria-pressed="false" aria-label="Show favorites only">
+                    <span class="fav-toggle__star" aria-hidden="true">★</span>
+                    <span class="fav-toggle__label">Favorites</span>
+                    <span class="fav-toggle__count" id="fav-count" hidden>0</span>
+                  </button>
+                </div>
+                <p class="combo__hint" id="combo-hint">
+                  Type to filter all 349 models — by name, provider, or model id.
+                </p>
+                <ul class="combo__list" id="combo-list" role="listbox" aria-label="All models"></ul>
+                <p class="combo__empty" id="combo-empty" hidden>No matches.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="field__hint" id="model-hint">&nbsp;</p>
+        </fieldset>
+
+        <!-- ============================================================
+             PROJECT + THINKING (v2.7b — simplified main form)
+             Casual users see only Model + Project + Thinking + Calculate.
+             Iterations / token overrides / num runs live in the
+             "Customize" disclosure below. A live assumption caption
+             under the Project dropdown previews the current Workflow
+             overhead so the user can spot why a number changed without
+             opening Customize.
+             ============================================================ -->
+        <div class="form-row form-row--2">
+
+          <!-- 2 — Project -->
+          <div class="field">
+            <label class="field__label" for="project_id">
+              <span class="picker__step">2</span> Project
+            </label>
+            <div class="proj-picker" id="project-picker">
+            <button type="button" class="proj-picker__trigger" id="proj-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="proj-picker__current" id="proj-current-label">Custom (manual tokens)</span>
+              <span class="proj-picker__chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="proj-picker__panel" id="proj-panel" hidden>
+              <button type="button" class="proj-picker__custom" id="proj-custom-btn" data-id="custom" role="option">
+                <span class="proj-picker__custom-name">Custom</span>
+                <span class="proj-picker__custom-hint">Enter tokens manually</span>
+              </button>
+              <div class="proj-tabs" role="tablist" aria-label="Project categories">
+                <button type="button" class="proj-tab is-on" data-tab="web" role="tab" aria-selected="true">Web</button>
+                <button type="button" class="proj-tab" data-tab="games" role="tab" aria-selected="false">Games</button>
+                <button type="button" class="proj-tab" data-tab="code" role="tab" aria-selected="false">Code</button>
+                <button type="button" class="proj-tab" data-tab="data" role="tab" aria-selected="false">Data</button>
+              </div>
+              <ul class="proj-list" id="proj-list" role="listbox" aria-label="Projects"></ul>
+            </div>
+          </div>
+          <input type="hidden" id="project_id" name="project_id" value="custom">
+            <p class="field__hint" id="project-hint">Auto-fills input/output tokens + Iterations from typical workload.</p>
+          </div>
+
+          <!-- 3 — Thinking -->
+          <div class="field">
+            <label class="field__label" for="thinking_level">
+              <span class="picker__step">3</span> Thinking
+            </label>
+            <select id="thinking_level" name="thinking_level" class="field__select">
+              <option value="off">Off</option>
+              <option value="low" selected>Low · 1.0×</option>
+              <option value="medium">Medium · 1.2×</option>
+              <option value="high">High · 1.5×</option>
+              <option value="extreme">Extreme · 2.5×</option>
+            </select>
+            <p class="field__hint" id="thinking-hint">Reasoning tokens are output. Default = Low for reasoning models.</p>
+          </div>
+
+        </div>
+
+        <!-- v2.7b: live assumption caption. Previews what the current
+             Project + Workflow type + Iterations combination assumes
+             (sys prompt tokens, tool calls, retry multiplier). Updates
+             whenever any Customize input changes. -->
+        <p class="field__hint" id="assumption-hint" role="status" aria-live="polite">
+          Assuming single chat · no sys prompt · no tool calls · 1× retries.
+        </p>
+
+        <!-- ============================================================
+             CUSTOMIZE (v2.7b — replaces "Advanced")
+             Replaces the old Task size dropdown + task_type dropdown
+             + Agentic toggle from prior briefs with a single Workflow
+             type dropdown. Each preset bundles sys prompt tokens +
+             tool call overhead + retry multiplier (matches backend
+             AGENTIC_DEFAULT_* + AGENTIC_MULTIPLIER constants).
+             Iterations, input/output token overrides, and num_runs
+             remain here as editable fields.
+             ============================================================ -->
+        <details class="advanced">
+          <summary class="advanced__toggle">
+            <span class="advanced__chev" aria-hidden="true"></span>
+            Customize
+          </summary>
+          <div class="advanced__panel">
+
+            <!-- v2.7b: Workflow type. Replaces Task size + task_type +
+                 the prior brief's Agentic toggle. The dropdown's value
+                 maps on submit to backend agentic: bool +
+                 system_prompt_tokens: int + tool_call_count: int. -->
+            <div class="field">
+              <label class="field__label" for="workflow_type">Workflow type</label>
+              <select id="workflow_type" name="workflow_type" class="field__select">
+                <option value="single-chat" selected>Single chat · No overhead</option>
+                <option value="coding-assistant">Coding assistant · +2k sys · 5 tools · 1.2×</option>
+                <option value="rag-pipeline">RAG pipeline · +800 sys · 1.1×</option>
+                <option value="agentic">Agentic workflow · +2k sys · 5 tools · 1.4×</option>
+                <option value="multi-agent">Multi-agent orchestrator · +12k sys · 20 tools · 1.6×</option>
+              </select>
+              <p class="field__hint" id="workflow-hint">
+                Picks the real-world overhead for your workflow: system-prompt tokens, tool calls, and retry multiplier.
+              </p>
+            </div>
+
+            <!-- Iterations (moved from the main form in v2.7b). Auto-filled
+                 from project preset on change; user can override. -->
+            <div class="field">
+              <label class="field__label" for="iterations">Iterations</label>
+              <input id="iterations" name="iterations" class="field__input" type="number" min="1" step="1" value="1">
+              <p class="field__hint" id="iterations-hint">Auto-filled from project preset; edit if your scope differs.</p>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label class="field__label" for="input_tokens">Input tokens</label>
+                <input id="input_tokens" name="input_tokens" class="field__input"
+                       type="number" min="0" step="100" placeholder="from project preset">
+              </div>
+              <div class="field">
+                <label class="field__label" for="output_tokens">Output tokens</label>
+                <input id="output_tokens" name="output_tokens" class="field__input"
+                       type="number" min="0" step="100" placeholder="from project preset">
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label class="field__label" for="num_runs">Number of runs</label>
+                <input id="num_runs" name="num_runs" class="field__input"
+                       type="number" min="1" step="1" value="1">
+              </div>
+            </div>
+
+            <!-- Token counter (heuristic: chars ÷ 4, no library).
+                 Pure client-side UX helper — textarea content is never sent
+                 to the backend. "Use this number" writes the estimate into
+                 the existing input_tokens field above. -->
+            <div class="field token-counter">
+              <label class="field__label" for="prompt-text">Token counter (optional)</label>
+              <textarea id="prompt-text" class="field__input token-counter__textarea"
+                        rows="4"
+                        placeholder="Paste your prompt here to estimate its token count…"
+                        aria-describedby="token-counter-disclaimer"></textarea>
+              <p class="field__hint" id="token-counter-disclaimer">
+                Approximate count (chars ÷ 4). Actual tokens depend on the model and content.
+              </p>
+              <div class="token-counter__row">
+                <span class="token-counter__readout" id="token-counter-readout" aria-live="polite">
+                  <span class="token-counter__num" id="token-counter-num">0</span> tokens
+                  <span class="token-counter__sep">·</span>
+                  <span class="token-counter__chars" id="token-counter-chars">0</span> chars
+                </span>
+                <button type="button" class="token-counter__apply" id="token-counter-apply" disabled>
+                  Use this number
+                </button>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <button type="submit" class="calc-btn" id="calc-btn">
+          <span class="calc-btn__label">Calculate</span>
+          <span class="calc-btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <output class="result" id="result" aria-live="polite" hidden>
+        <p class="result__eyebrow" id="result-eyebrow">Per call</p>
+        <p class="result__amount" id="result-amount">$0.0000</p>
+        <p class="result__breakdown" id="result-breakdown"></p>
+        <p class="result__multiline" id="result-multiline"></p>
+        <p class="result__caveat" id="result-caveat"></p>
+      </output>
+
+      <!-- v2.9: compare-results. Horizontal row of 3-5 cards, sorted by
+           total_cost ascending, cheapest card teal-bordered with badge.
+           Hidden by default; JS renders into it after /calculate/compare. -->
+      <output class="compare-results" id="compare-results" aria-live="polite" hidden>
+        <p class="compare-results__eyebrow" id="compare-results-eyebrow">Per call · ranked cheapest</p>
+        <div class="compare-results__grid" id="compare-results-grid"></div>
+        <p class="compare-results__caveat" id="compare-results-caveat"></p>
+      </output>
+
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+    </section>
+
+    <!-- ad slot: 728x90 leaderboard, served by ad network TBD.
+         v2.1: moved BELOW the result panel so Calculate stays above the fold. -->
+    <aside class="ad-slot ad-slot--top" id="ad-slot-top" aria-label="Advertisement slot (below result)">
+      <span class="ad-slot__label">Advertisement</span>
+      <span class="ad-slot__size">728 × 90 leaderboard</span>
+    </aside>
+
+    <!-- ad slot: 300x250 medium rectangle, sidebar on desktop / in-flow on mobile -->
+    <aside class="ad-slot ad-slot--side" id="ad-slot-side" aria-label="Advertisement slot (sidebar)">
+      <span class="ad-slot__label">Advertisement</span>
+      <span class="ad-slot__size">300 × 250 medium rectangle</span>
+    </aside>
+
+    <section class="local" aria-labelledby="local-heading">
+      <button class="local__toggle" id="local-toggle" type="button"
+              aria-expanded="false" aria-controls="local-panel">
+        <span class="local__chev" aria-hidden="true"></span>
+        <span>Also estimate <strong>local GPU cost</strong> · self-hosted Ollama</span>
+      </button>
+      <div class="local__panel" id="local-panel" hidden>
+        <form id="local-form" class="form" novalidate>
+          <div class="grid-2">
+            <div class="field">
+              <label class="field__label" for="local_gpu">GPU</label>
+              <select id="local_gpu" name="local_gpu" class="field__select"></select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="local_model">Ollama model</label>
+              <select id="local_model" name="local_model" class="field__select"></select>
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="field">
+              <label class="field__label" for="local_task_size">Task size</label>
+              <select id="local_task_size" name="local_task_size" class="field__select">
+                <option value="tiny">Tiny (×0.04)</option>
+                <option value="small">Small (×0.2)</option>
+                <option value="medium" selected>Medium (×1)</option>
+                <option value="large">Large (×4)</option>
+                <option value="huge">Huge (×20)</option>
+                <option value="website">Website (15k tokens)</option>
+                <option value="webapp">Webapp (50k tokens)</option>
+                <option value="codebase-small">Codebase Small (60k)</option>
+                <option value="codebase-medium">Codebase Medium (300k)</option>
+                <option value="codebase-large">Codebase Large (1.2M)</option>
+                <option value="mobile-app">Mobile App (120k)</option>
+                <option value="ml-pipeline">ML Pipeline (70k)</option>
+                <option value="game-2d">Game 2D (80k)</option>
+                <option value="game-3d">Game 3D (500k)</option>
+                <option value="refactor-large">Refactor Large (800k)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="gpu_cost">GPU $/hr</label>
+              <input id="gpu_cost" name="gpu_cost" class="field__input"
+                     type="number" min="0" step="0.01" value="0">
+            </div>
+            <div class="field">
+              <label class="field__label" for="power_cost">Power $/kWh</label>
+              <input id="power_cost" name="power_cost" class="field__input"
+                     type="number" min="0" step="0.01" value="0.15">
+            </div>
+          </div>
+          <button type="submit" class="calc-btn calc-btn--ghost" id="local-btn">
+            <span class="calc-btn__label">Estimate local cost</span>
+            <span class="calc-btn__arrow" aria-hidden="true">→</span>
+          </button>
+        </form>
+        <output class="result result--compact" id="local-result" aria-live="polite" hidden>
+          <p class="result__eyebrow" id="local-eyebrow">Per run</p>
+          <p class="result__amount" id="local-amount">$0.00</p>
+          <p class="result__breakdown" id="local-breakdown"></p>
+          <p class="result__caveat" id="local-caveat"></p>
+        </output>
+      </div>
+    </section>
+
+    <section class="blurb">
+      <h2 class="blurb__heading">Why this matters</h2>
+      <p>
+        LLM pricing is fragmented across 300+ models, hidden in cached tiers,
+        and inflated by reasoning tokens and retries.
+        AI Cost Calculator pulls <strong>live OpenRouter prices</strong> for 336 models
+        and combines them with hand-curated pricing for the major hosted APIs,
+        so you can sanity-check a number before you ship a feature that calls
+        an LLM at scale.
+      </p>
+      <p>
+        Pick a project from the preset dropdown to skip the math entirely:
+        LangChain agents, AutoGen group chat, RAG pipelines, code review, and
+        more. The math is open: every multiplier, every preset, and the
+        calculator source are linked below. All hand-curated prices are
+        <strong>placeholders</strong>; OpenRouter prices are live. Verify
+        against vendor pages before quoting.
+      </p>
+      <p>
+        <strong>Popular head-to-head comparisons:</strong>
+        <a href="./compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o vs Claude Sonnet 4</a> ·
+        <a href="./compare/openai-gpt-4o-mini-vs-anthropic-claude-haiku-4.html">GPT-4o mini vs Claude Haiku</a> ·
+        <a href="./compare/openai-gpt-4o-vs-openrouter-meta-llama-llama-3.3-70b-instruct.html">GPT-4o vs Llama 3.3 70B</a> ·
+        <a href="./compare/openai-gpt-4o-vs-deepseek-deepseek-chat.html">GPT-4o vs DeepSeek V3</a> ·
+        <a href="./compare/anthropic-claude-opus-4-vs-openai-gpt-4o.html">Claude Opus 4 vs GPT-4o</a> ·
+        <a href="./compare/">see all 12 →</a>
+      </p>
+      <p>
+        <strong>From the blog:</strong>
+        <a href="./blog/how-to-estimate-llm-api-costs.html">How to estimate LLM API costs</a> ·
+        <a href="./blog/cheap-llm-api-for-startups.html">Cheap LLM API for startups</a> ·
+        <a href="./blog/gpt-4o-vs-claude-sonnet-cost.html">GPT-4o vs Claude Sonnet cost</a> ·
+        <a href="./blog/reduce-claude-gpt-api-costs.html">Reduce your Claude or GPT bill</a>
+      </p>
+      <ul class="blurb__links">
+        <li><a href="https://api.aicostcalculator.net/docs" rel="noopener">API docs (Swagger UI) →</a></li>
+        <li><a href="https://api.aicostcalculator.net/models" rel="noopener">Raw model list (JSON) →</a></li>
+      </ul>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-heading">
+      <h2 class="faq__heading" id="faq-heading">Common questions</h2>
+      <details class="faq__item">
+        <summary>How accurate are the prices?</summary>
+        <div class="faq__body">
+          <p>
+            Live from <a href="https://openrouter.ai" rel="noopener">OpenRouter's</a> API,
+            refreshed every 6 hours. Hand-curated prices are checked against
+            each vendor's pricing page on every refresh. See the
+            <a href="https://api.aicostcalculator.net/models" rel="noopener">raw model list</a>
+            for the source of each entry.
+          </p>
+        </div>
+      </details>
+      <details class="faq__item">
+        <summary>Do you store my prompts or my results?</summary>
+        <div class="faq__body">
+          <p>
+            No. All math runs in your browser against a local API. There is
+            no analytics, no tracking, no signup, no cookies set by this
+            page. (Your browser may store <code>localStorage</code> for
+            the optional favorites feature — clear it any time from your
+            browser settings.)
+          </p>
+        </div>
+      </details>
+      <details class="faq__item">
+        <summary>What's the difference between input, output, cached, and reasoning tokens?</summary>
+        <div class="faq__body">
+          <p>
+            <strong>Input</strong> is what you send the model.
+            <strong>Output</strong> is what it sends back.
+            <strong>Cached input</strong> is input you send repeatedly — some
+            providers (OpenAI, Anthropic) discount this ~50-90%.
+            <strong>Reasoning tokens</strong> are the model's "thinking" output
+            (o1, o3, Claude with extended thinking, Gemini 2.5 Thinking) and
+            are billed at the same rate as output. All four are priced
+            separately in the result.
+          </p>
+        </div>
+      </details>
+      <details class="faq__item">
+        <summary>Can I compare two models side-by-side?</summary>
+        <div class="faq__body">
+          <p>
+            Yes. Toggle to <strong>Compare</strong> above the model picker
+            and pick 2-5 models. The same workload (project preset, task
+            size, thinking) is priced against each, sorted cheapest first.
+            Useful for the "should I use GPT-4o or Llama 3.3 70B" question.
+          </p>
+        </div>
+      </details>
+      <details class="faq__item">
+        <summary>Why are some models missing from the list?</summary>
+        <div class="faq__body">
+          <p>
+            OpenRouter catalogues around 336 models; the picker shows all of
+            them. For open-weights models that aren't on OpenRouter yet, you
+            can estimate the local self-host cost in the
+            <strong>Also estimate local GPU cost</strong> panel below —
+            it prices electricity + GPU time for a given Ollama model.
+          </p>
+        </div>
+      </details>
+      <details class="faq__item">
+        <summary>Do I need to pay or sign up?</summary>
+        <div class="faq__body">
+          <p>
+            No. Free to use, no account. The only optional sign-up is
+            <em>to OpenRouter itself</em> if you decide to actually call the
+            models through their unified API (which is the easiest way to
+            use many of them with one key).
+          </p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>
+      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./blog/">Blog</a> · <a href="./about.html">About</a> · <a href="./privacy.html">Privacy</a> · <a href="./status.html">Status</a>
+    </p>
+  </footer>
+
+  <!-- v2.9.1: app.js?v=2.9.1 is a deliberate cache buster. The browser
+       caches ./app.js aggressively; without a versioned URL, a stale tab
+       keeps running the OLD JS even after the file changes on disk, which
+       is why auto-fill (typical_iterations / typical_task_size) appeared
+       not to work in any tab opened before the change. The no-cache
+       dev server doesn't help with in-memory cache for the same URL.
+       Bump v whenever app.js makes a meaningful change.
+
+       v2.9.2 specifically: Iterations and Task size input listeners
+       no longer call applyProjectPreset (which was overwriting the
+       user's edits with the preset's typical value). They now just
+       recompute the math without touching the field values themselves. -->
+  <script src="./app.js?v=2.9.2" type="module"></script>
+</body>
+</html>

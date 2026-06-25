@@ -1,0 +1,2104 @@
+/* =========================================================================
+   AI Cost Calculator — frontend stylesheet (v2)
+   --------------------------------------------------------------------------
+   Palette: warm paper, warm ink, deep teal accent (v2.4 — was softened
+            coral/terra-cotta through v2.3; Andrew said the coral looked
+            "like Claude's" and asked to swap it for something distinct).
+   Type:    DM Serif Display (display) + system-ui (body). v2.4 swap from
+            Fraunces — Andrew said the hero "feels a little bit off".
+   Layout:  centered column, 720px max, generous whitespace.
+   Motion:  ease-out-quart on transform/opacity only.
+   v2 adds: two-tier model picker (popular row + searchable combobox),
+            project presets, thinking dropdown, ad slot placeholders.
+   v2.4:    font swap (Fraunces → DM Serif Display), color swap
+            (coral/terra-cotta → deep teal #0c4a52), selected-model
+            highlight moved from per-card brand color to teal, hero
+            tightened so Calculate is above the fold at 1366×768.
+   ========================================================================= */
+
+:root {
+  /* Surface — warm tinted neutrals (never pure white/black) */
+  --paper:        #f7f3ec;
+  --paper-2:      #efe9dc;
+  --paper-3:      #e7dfcd;
+  --ink:          #1f1c17;
+  --ink-2:        #4a4439;
+  --ink-3:        #807868;
+  --ink-4:        #b5ac9a;
+  --rule:         #d8cfba;
+
+  /* Accent — deep teal (v2.4, replacing v2.3's softened coral).
+     Andrew said "literally the one that claude uses" — the coral was Claude's
+     brand color. Swapped to #0c4a52 (deep teal): cool, professional, distinct
+     from every LLM brand. Warm paper / cool accent tension preserved.
+     The popular-row card top-strips keep their per-company brand colors
+     (OpenAI black, Anthropic terra cotta, Google blue, etc.) — only the
+     page-wide accent role (Calculate, selection bar, selected highlight,
+     result number) moves to teal. */
+  --teal:         #0c4a52;
+  --teal-deep:    #093438;
+  --teal-soft:    #dde8ea;
+  --teal-ink:     #062b30;
+
+  /* Functional */
+  --ok:           #2f8a4f;
+  --warn:         #b15c00;
+
+  /* Type — v2.4 swap from Fraunces to DM Serif Display (high-contrast Didone).
+     Andrew said the Fraunces hero "feels a little bit off" and asked for a new font.
+     DM Serif Display is a single-weight (400) display serif with strong vertical
+     contrast — the editorial / Vogue-class look. Heavier stroke weight than Fraunces
+     at the same body size; the result number reads as a real focal point. */
+  --display:      'DM Serif Display', 'Iowan Old Style', 'Palatino Linotype', 'Charter', Georgia, serif;
+  --sans:         ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --mono:         ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* Scale */
+  --t-xs:   0.78rem;
+  --t-sm:   0.875rem;
+  --t-base: 1rem;
+  --t-lg:   1.125rem;
+  --t-xl:   1.375rem;
+  --t-2xl:  1.75rem;
+  --t-3xl:  2.25rem;
+  --t-4xl:  3rem;
+  --t-5xl:  4.25rem;
+  --t-6xl:  5.5rem;
+
+  /* Spacing */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* Radii */
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  14px;
+  --r-xl:  20px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgba(31, 28, 23, 0.04), 0 2px 8px rgba(31, 28, 23, 0.04);
+  --shadow-2: 0 2px 6px rgba(31, 28, 23, 0.06), 0 8px 28px rgba(31, 28, 23, 0.06);
+  --shadow-pop: 0 6px 24px rgba(31, 28, 23, 0.10), 0 2px 6px rgba(31, 28, 23, 0.06);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Layout */
+  --col: 720px;
+  --col-wide: 880px;    /* v2.3: reverted from 1200px (v2.2) — the popular
+                            row is now CONTAINED inside .calc again, so
+                            the page only needs to be as wide as the
+                            widest container element. */
+}
+
+/* -------------------------------------------------------------------------
+   Reset + base
+   ------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse at 50% -10%, #fff7eb 0%, var(--paper) 55%) fixed,
+    var(--paper);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: var(--s-3) var(--s-4);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--r-md);
+  font-weight: 600;
+}
+.skip-link:focus { left: var(--s-3); top: var(--s-3); }
+
+/* Selection */
+::selection { background: var(--teal); color: white; }
+
+/* Honor hidden attribute (default display: block on <output> would override it) */
+[hidden] { display: none !important; }
+
+/* -------------------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand__mark {
+  width: 44px;
+  height: 22px;
+  color: var(--teal);
+  flex: none;
+}
+.brand__word {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--t-lg);
+  letter-spacing: -0.01em;
+}
+
+.topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-size: var(--t-sm);
+}
+
+.topbar__nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.topbar__nav a:hover {
+  color: var(--teal);
+}
+/* v2.9: topbar now only contains the brand wordmark — the meta-strip
+   ("N models (M live via OpenRouter) · refresh 6h" + green dot) was
+   removed because it read as an "AI status pill" and duplicated the
+   hero subtext + picker label. */
+
+/* -------------------------------------------------------------------------
+   Page + hero
+   ------------------------------------------------------------------------- */
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--col-wide);
+  margin: 0 auto;
+  padding: var(--s-4) var(--s-5) var(--s-7);   /* v2.4: down from var(--s-5) var(--s-5) var(--s-8) */
+}
+
+.hero {
+  text-align: center;
+  padding: var(--s-4) 0 var(--s-3);   /* v2.4: tightened from var(--s-5) 0 var(--s-5) to
+                                          keep Calculate above the fold on common
+                                          laptop viewports (1366×768 + chrome). */
+}
+.hero__mark {
+  width: 132px;       /* v2.4: down from 168px — smaller, still readable, ~36px less vertical */
+  height: 66px;
+  color: var(--teal);
+  margin-bottom: var(--s-2);   /* v2.4: was var(--s-3) */
+  animation: hero-fade-in 700ms var(--ease-out-quart) both;
+}
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero__eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 var(--s-2);   /* was var(--s-3) */
+}
+.hero__headline {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3.5vw, 2.125rem);   /* v2.4: down from clamp(1.625rem, 4vw, 2.5rem) */
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0 0 var(--s-2);   /* v2.4: down from var(--s-3) */
+  color: var(--ink);
+}
+.hero__sub {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(0.95rem, 1.3vw, 1.0625rem);   /* v2.4: down from clamp(0.95rem, 1.4vw, 1.125rem) */
+  line-height: 1.45;
+  color: var(--ink-2);
+  margin: 0 auto;
+  max-width: 38em;
+}
+.hero__sub strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------------------------
+   Ad slots (placeholders — ad injection is operator's job)
+   ------------------------------------------------------------------------- */
+.ad-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin: var(--s-4) auto;   /* v2.1: down from var(--s-5) */
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      color-mix(in srgb, var(--rule) 50%, transparent) 8px 9px
+    );
+  border: 1px dashed var(--ink-4);
+  border-radius: var(--r-md);
+  color: var(--ink-3);
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  user-select: none;
+}
+.ad-slot--top {
+  width: 100%;
+  max-width: 728px;
+  aspect-ratio: 728 / 90;
+  min-height: 56px;   /* v2.1: down from 64px — below the fold so a bit shorter is fine */
+  padding: var(--s-3);
+}
+.ad-slot--side {
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 300 / 250;
+  min-height: 200px;
+  padding: var(--s-4);
+}
+.ad-slot__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.ad-slot__size {
+  font-size: 0.66rem;
+  color: var(--ink-3);
+}
+
+/* -------------------------------------------------------------------------
+   Form sections
+   ------------------------------------------------------------------------- */
+.section-heading {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--t-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 var(--s-2);   /* v2.4: tighter (was var(--s-3)) */
+}
+
+/* -------------------------------------------------------------------------
+   Selection bar — prominent "selected model" indicator (v2.1).
+   v2.4: tightened padding (var(--s-2) var(--s-3)) and a single-row
+   layout (white-space:nowrap + overflow-x:auto on small screens).
+   Uses --teal-soft so it ties to the accent without being aggressive.
+   ------------------------------------------------------------------------- */
+.selection-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-2) var(--s-3);   /* v2.4: tighter (was var(--s-3) var(--s-4)) */
+  margin: 0 0 var(--s-3);            /* v2.4: tighter (was var(--s-4)) */
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 22%, transparent);
+  border-radius: var(--r-md);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.selection-bar__label {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--teal-deep);
+  flex: none;
+}
+.selection-bar__name {
+  font-family: var(--display);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+/* v2.8: gold star prefix on the selection bar when the selected model
+   is a favorite. Same gold used by .combo__option-star.is-on so the
+   visual language is consistent. */
+.selection-bar__star {
+  color: #d99a00;
+  font-family: var(--sans);
+  font-size: 0.95em;
+  margin-right: 2px;
+  font-weight: 700;
+}
+.selection-bar__provider {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+.selection-bar__price {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--teal-deep);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 540px) {
+  .selection-bar__price { margin-left: 0; width: 100%; }
+}
+
+.calc {
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-xl);
+  padding: clamp(var(--s-3), 1.8vw, var(--s-5));   /* v2.4: tighter (was clamp(var(--s-4), 2.4vw, var(--s-6))) */
+  margin-bottom: var(--s-4);                        /* v2.4: down from var(--s-5) */
+  box-shadow: var(--shadow-1);
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);   /* v2.4: tighter (was var(--s-4)) */
+}
+
+/* Inline form rows — 2-col, 3-col, etc. Saves vertical space. */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+/* v2.7b: 2-col variant for the simplified Project + Thinking row.
+   Reuses the existing 1.4fr 1fr weight from form-row--3 (Project gets
+   the wider column for long preset names). Mobile breakpoint collapses
+   to 1fr via the shared rule below. */
+.form-row--2 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-2);
+}
+.form-row--3 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;   /* Project gets the wider column for long preset names */
+  gap: var(--s-2);   /* v2.4: tighter (was var(--s-3)) */
+}
+/* v2.9: 4-col variant for Project | Quantity | Task size | Thinking.
+   Project still gets the wider column; Quantity is a narrow number input. */
+.form-row--4 {
+  display: grid;
+  grid-template-columns: 1.6fr 0.7fr 1fr 1fr;
+  gap: var(--s-2);
+}
+@media (max-width: 880px) {
+  .form-row--4 { grid-template-columns: 1.4fr 0.7fr 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .form-row--2,
+  .form-row--3,
+  .form-row--4 { grid-template-columns: 1fr; }
+}
+
+.field { display: flex; flex-direction: column; gap: var(--s-1); }   /* v2.4: down from var(--s-2) */
+.field__label {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.field__hint {
+  margin: 0;
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  min-height: 1em;   /* v2.4: down from 1.2em — tight hint lines save ~3px per row */
+  line-height: 1.35;
+}
+.field__hint.is-warn { color: var(--warn); }
+
+.field__select,
+.field__input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--s-4);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  font: inherit;
+  font-size: var(--t-base);
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.field__select { padding-right: 44px; }
+.field__input::placeholder { color: var(--ink-4); }
+.field__select:focus-visible,
+.field__input:focus-visible {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent);
+}
+.field__select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%231f1c17' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px 8px;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--s-4); }
+@media (max-width: 640px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* -------------------------------------------------------------------------
+   Picker — two-tier model picker (v2 headline change)
+   ------------------------------------------------------------------------- */
+.picker {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);   /* v2.4: tighter (was var(--s-3)) */
+  /* v2.3: min-width: 0 lets the column flex container shrink below its
+     content's intrinsic width. The .popular row is 1150px wide (8 cards ×
+     135 + 7 × 10) and the .calc is only 832px; without this, every column
+     flex container up the chain (.picker → .picker__row → .popular) would
+     expand to fit the cards, making the .calc overflow horizontally. */
+  min-width: 0;
+}
+.picker__legend {
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-1);
+  padding: 0;
+}
+.picker__selected {
+  /* v2.1: removed from HTML — selection-bar is the prominent "selected model" indicator now. */
+}
+.picker__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex: none;
+}
+
+.picker__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  /* v2.3: min-width: 0 lets the column flex container shrink below its
+     content's intrinsic width. Without this, the .popular's 8-card row
+     (1150px) would force .picker__row to expand past the .calc (832px)
+     and the cards would visually overflow the form. */
+  min-width: 0;
+}
+.picker__row-label {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+/* v2.1: "All models" label promoted — primary affordance for the escape hatch. */
+.picker__row-label--primary {
+  font-family: var(--display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  align-items: baseline;
+}
+.picker__row-label--primary .picker__row-meta {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.picker__row-meta {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-4);
+  font-weight: 400;
+}
+
+/* Popular row — v2.4: one-click default model selection.
+   Each card represents a COMPANY and is the primary affordance for
+   picking a model. The card body shows:
+     - brand-color shape icon + company name (head)
+     - the company's default model name (small, truncated)
+     - that default model's price (in / out per 1M)
+     - a "see all N models" link that opens the searchable combobox
+       pre-filtered to that provider (escape hatch for power users).
+   8 cards × ~150px + 7 × 10px gaps = ~1270px row, overflows the
+   832px .calc content area on desktop, so the row scrolls horizontally
+   inside the .calc border. On narrow viewports (≤720px) the row wraps
+   to a 2×4 grid for a usable phone layout. */
+.popular {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  /* min-width: 0 so the .popular (a flex item inside the column-flex
+     .picker__row) can shrink below its content's intrinsic width. This is
+     the third link in the min-width: 0 chain (.picker → .picker__row → .popular)
+     that lets the .popular sit inside the 832px .calc and scroll internally. */
+  min-width: 0;
+  /* Subtle fade on the right edge to hint that more cards scroll in.
+     Pure decoration — uses an inset mask so the gradient sits on top
+     of the cards without intercepting clicks. */
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+          mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+}
+.pop {
+  appearance: none;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: var(--s-2) var(--s-3) var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  position: relative;
+  width: 132px;             /* v2.4: down from 150px (8 × 132 + 7 × 10 = 1126px,
+                               still scrolls horizontally inside the .calc) */
+                            /* 8 × 132 + 7 × 10 = 1126px row vs ~832px .calc area,
+                               so the row scrolls horizontally */
+  min-height: 116px;        /* v2.6: bumped from 100px (v2.5) to fit the new
+                                .pop__avg cost label under the per-card <select>.
+                                3px strip + head (~26) + gap + select (~32)
+                                + gap + avg (~16) + padding (12) = 93px; 116px
+                                gives ~20px of breathing room. */
+  /* flex-shrink: 0 keeps each card at its full 150px width inside
+     the .popular row. Without it, the flex default (flex-shrink: 1) would
+     squish the 8 cards to fit the .calc content area, hiding the
+     horizontal-scroll behavior we want. */
+  flex-shrink: 0;
+  overflow: hidden;          /* contains the brand-color top strip */
+  transition: transform 120ms var(--ease-out),
+              border-color 160ms var(--ease-out),
+              background-color 160ms var(--ease-out),
+              box-shadow 160ms var(--ease-out);
+}
+/* Brand-color top accent strip — the visual signature of each company.
+   Uses background-image on the ::before so the brand color is per-card
+   via the --pop-brand CSS variable set inline by JS. */
+.pop::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--pop-brand, var(--teal));
+}
+.pop:hover {
+  border-color: var(--ink-3);
+  background: white;
+  transform: translateY(-1px);
+}
+.pop:active { transform: translateY(0); }
+.pop:focus-visible {
+  outline: none;
+  border-color: var(--pop-brand, var(--teal));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pop-brand, var(--teal)) 22%, transparent);
+}
+/* v2.4: the SELECTED state uses the page-wide teal accent, NOT the
+   per-card brand color. Andrew said "follow through with that color in
+   the selected model highlight as well" — every card's selected state
+   should look the same (consistent teal ring + soft teal bg), even
+   though each card's top strip + shape icon keep their own brand color.
+   This gives the page one coherent accent voice for "you picked this"
+   while preserving the per-company brand identity at rest. */
+.pop.is-selected {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--teal) 25%, transparent) inset;
+}
+.pop.is-empty {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.pop.is-empty:hover { transform: none; background: var(--paper); border-color: var(--rule); }
+
+.pop__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: 4px;        /* leave room for the top strip */
+}
+.pop__icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pop-brand, var(--teal));
+}
+.pop__icon svg { display: block; }
+.pop__name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* v2.5: the v2.4 .pop__model and .pop__price decorative spans are removed.
+   The per-card <select> is the single model-info element on the card; the
+   selection-bar at the top of the page shows the current pick's price.
+   See .pop__select below for the new picker styling. */
+/* v2.5: per-card <select> replaces the v2.4 "see all N models" button.
+   Native <select> with appearance:none + a custom chevron (background-image
+   SVG, encoded so no extra DOM). Compact to fit inside the 132px-wide card.
+   Brand-tinted focus ring + teal-soft selected-state matching the rest of
+   the page's accent vocabulary. The trigger's text is the <select>'s own
+   selected <option>'s textContent (which we set in JS to "{name} · $price"),
+   so no JS-driven label updates are needed when state changes — the browser
+   re-renders the closed state from the <option>'s text on .value change. */
+.pop__select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  min-height: 28px;
+  margin-top: auto;          /* push to bottom of the card */
+  padding: 4px 22px 4px 8px;
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' width='10' height='6'><path d='M1 1l4 4 4-4' fill='none' stroke='%231f1c17' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px 6px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  text-overflow: ellipsis;
+  /* Native selects don't honor text-overflow on the trigger reliably across
+     browsers; the option-list open state always shows full text. */
+}
+.pop__select:hover {
+  border-color: var(--ink-3);
+  background-color: white;
+}
+.pop__select:focus-visible {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent);
+}
+.pop.is-selected .pop__select {
+  border-color: var(--teal);
+  background-color: white;
+}
+.pop__select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--paper);
+}
+
+/* v2.6 (t_c2b63a6e): avg-cost-per-model label on each popular card.
+   Computed client-side (5k in + 2k out, no reasoning, 1 run) and shown
+   beneath the per-card <select>. Gives users an at-a-glance cost anchor
+   for each company without picking a specific model first. The teal-ink
+   color makes it scannable but quieter than the Calculate CTA. */
+.pop__avg {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  text-align: right;
+  padding: 0 var(--s-1);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pop__avg.is-free {
+  color: var(--ok);
+  font-weight: 600;
+}
+.pop__avg-suffix {
+  color: var(--ink-3);
+  font-weight: 400;
+  font-size: 0.62rem;
+}
+
+/* Narrow viewports: wrap the popular row to a 2×4 grid instead of
+   horizontal-scrolling, because phones don't have a horizontal scroll
+   affordance and the user shouldn't have to swipe to see cards. The
+   brand-color top strip and shape icons stay readable at 2-up. */
+@media (max-width: 720px) {
+  .popular {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+}
+@media (max-width: 560px) {
+  .pop { width: calc((100% - 10px) / 2); }   /* 2 per row on phone */
+}
+
+/* -------------------------------------------------------------------------
+   Searchable combobox (the "all models" escape hatch)
+   ------------------------------------------------------------------------- */
+.combo {
+  position: relative;
+}
+.combo__button {
+  appearance: none;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--s-4);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  font: inherit;
+  font-size: var(--t-base);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out),
+              background-color 160ms var(--ease-out);
+}
+.combo__button:hover { border-color: var(--ink-3); background: white; }
+.combo__button:focus-visible,
+.combo__button.is-open {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent);
+  background: white;
+}
+.combo__button-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+.combo__button-text.is-placeholder {
+  color: var(--ink-4);
+}
+.combo__chev {
+  width: 10px;
+  height: 10px;
+  border-right: 1.6px solid var(--ink-2);
+  border-bottom: 1.6px solid var(--ink-2);
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ease-out);
+  flex: none;
+}
+.combo__button.is-open .combo__chev { transform: rotate(-135deg); }
+
+.combo__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-pop);
+  display: flex;
+  flex-direction: column;
+  max-height: 360px;
+  overflow: hidden;
+}
+.combo__search-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+.combo__search-icon {
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+}
+.combo__search {
+  flex: 1;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--t-base);
+  color: var(--ink);
+  outline: none;
+  padding: 0;
+  min-width: 0;
+}
+.combo__search::placeholder { color: var(--ink-4); }
+.combo__clear {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--ink-3);
+  cursor: pointer;
+  padding: 0 var(--s-1);
+  border-radius: var(--r-sm);
+}
+.combo__clear:hover { color: var(--ink); background: var(--paper-2); }
+.combo__clear:focus-visible {
+  outline: none;
+  color: var(--ink);
+  box-shadow: 0 0 0 2px var(--teal);
+}
+
+.combo__list {
+  list-style: none;
+  margin: 0;
+  padding: var(--s-2) 0;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+}
+.combo__list::-webkit-scrollbar { width: 8px; }
+.combo__list::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 999px; }
+
+.combo__option {
+  padding: var(--s-3) var(--s-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background-color 100ms var(--ease-out);
+}
+.combo__option:hover,
+.combo__option.is-active {
+  background: var(--paper-2);
+}
+.combo__option.is-selected {
+  border-left-color: var(--teal);
+  background: var(--teal-soft);
+}
+.combo__option.is-active.is-selected {
+  background: color-mix(in srgb, var(--teal) 18%, var(--paper-2));
+}
+.combo__option-name {
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+}
+.combo__option-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex: none;
+}
+.combo__option-provider {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+.combo__option-price {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.combo__option-price.is-free { color: var(--ok); font-weight: 600; }
+/* v2.6 (t_c2b63a6e): avg-cost-per-model label on each combobox option.
+   Same metric as .pop__avg (5k in + 2k out, no reasoning) so users see
+   consistent numbers across both affordances. Right-aligned, mono, smaller
+   than the price badge — secondary info, the per-1M price is the headline. */
+.combo__option-avg {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--teal-ink);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+  min-width: 7.5ch;
+  text-align: right;
+  white-space: nowrap;
+}
+.combo__option-avg.is-free { color: var(--ok); font-weight: 600; }
+.combo__option.is-placeholder .combo__option-name::after {
+  content: " (PLACEHOLDER)";
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--warn);
+  letter-spacing: 0.05em;
+}
+.combo__option.is-reasoning .combo__option-name::before {
+  content: "✦ ";
+  color: var(--teal);
+  font-weight: 700;
+}
+.combo__empty {
+  margin: 0;
+  padding: var(--s-5);
+  text-align: center;
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+}
+
+/* v2.8.1: panel foot — hint + favorites toggle.
+   Sits between the search bar and the option list. The hint makes the
+   "search any model" affordance explicit (was just placeholder text
+   before; users missed the escape-hatch). The toggle is the v2.8
+   primary control for filtering to favorites — designed to feel like
+   a deliberate action even in the OFF state: teal-soft border, teal
+   text, gold star. The bar background was --paper-2 (muted beige,
+   read as a "section divider"); it now uses --paper to continue the
+   search-row surface and keep the toggle visually centered. */
+/* v2.8.2: hint is a small caption BELOW the search-wrap (was inside a
+   beige footer bar; Andrew found it visually heavy). Inline with the
+   panel surface, slightly muted, no background. */
+.combo__hint {
+  margin: 0;
+  padding: 6px var(--s-4);
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  line-height: 1.4;
+  background: transparent;
+}
+/* v2.8.2: toggle moved inline into the search-wrap. Off state is a
+   ghost button (transparent bg, gold star + teal text); on state is a
+   filled teal pill (white text, gold star). Border suppressed so it
+   doesn't compete with the search input. */
+.fav-toggle {
+  appearance: none;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--teal);
+  font: inherit;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  padding: 4px 11px 4px 9px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  transition: background-color 140ms var(--ease-out),
+              border-color 140ms var(--ease-out),
+              color 140ms var(--ease-out);
+}
+.fav-toggle:hover {
+  border-color: var(--teal-soft);
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+}
+.fav-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--teal);
+}
+.fav-toggle__star {
+  color: #d99a00;
+  font-size: 0.98rem;
+  line-height: 1;
+  transition: color 140ms var(--ease-out);
+}
+.fav-toggle.is-on {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.fav-toggle.is-on .fav-toggle__star { color: #ffd86b; }
+.fav-toggle.is-on:hover { background: var(--teal-deep); border-color: var(--teal-deep); }
+.fav-toggle__count {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+  padding: 1px 6px;
+  border-radius: var(--r-pill);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.3;
+}
+.fav-toggle.is-on .fav-toggle__count {
+  background: rgba(255,255,255,0.22);
+  color: white;
+}
+/* v2.8.2: at narrow widths, trim the toggle so search + toggle still
+   share one row. Hint stays on its own line below — it's a caption,
+   not a footer, so it doesn't need to fit beside the toggle. */
+@media (max-width: 480px) {
+  .combo__search-wrap {
+    padding: var(--s-2) var(--s-3);
+    gap: var(--s-2);
+  }
+  .combo__hint {
+    padding: 4px var(--s-3) 6px;
+    font-size: 0.7rem;
+  }
+  .fav-toggle {
+    font-size: 0.7rem;
+    padding: 3px 9px 3px 7px;
+    gap: 4px;
+  }
+  .fav-toggle__count {
+    font-size: 0.62rem;
+    padding: 1px 5px;
+    min-width: 14px;
+  }
+}
+
+/* v2.8: star button on each combo option. Right-edge icon, click
+   stops propagation so picking a favorite doesn't also select the model.
+   Empty star = not favorited, filled star = favorited. */
+.combo__option-star {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 4px 6px;
+  margin: -4px -6px -4px 0;
+  cursor: pointer;
+  color: var(--ink-4);
+  font-size: 1.05rem;
+  line-height: 1;
+  border-radius: var(--r-sm);
+  flex: none;
+  transition: color 120ms var(--ease-out), background-color 120ms var(--ease-out);
+}
+.combo__option-star:hover {
+  color: var(--warn);
+  background: var(--paper);
+}
+.combo__option-star:focus-visible {
+  outline: none;
+  color: var(--ink);
+  box-shadow: 0 0 0 2px var(--teal);
+}
+.combo__option-star.is-on {
+  color: #d99a00;
+}
+.combo__option-star.is-on:hover {
+  color: #b87d00;
+}
+
+/* v2.8: per-card <select> default marker. The flagship is now sorted
+   to the top of the dropdown (instead of pure alphabetical) so the
+   "most popular model" is the first thing the user sees. We add a
+   small "Default" tag inline so the meaning is explicit. */
+.pop__select option.is-default {
+  font-weight: 600;
+  color: var(--ink);
+}
+.pop__select option.is-default::before {
+  content: "★  ";
+  color: #d99a00;
+  font-weight: 700;
+}
+
+/* -------------------------------------------------------------------------
+   Thinking dropdown — disabled state for non-off options
+   ------------------------------------------------------------------------- */
+.field__select.is-thinking-locked option[value="low"],
+.field__select.is-thinking-locked option[value="medium"],
+.field__select.is-thinking-locked option[value="high"],
+.field__select.is-thinking-locked option[value="extreme"] {
+  color: var(--ink-4);
+}
+
+/* -------------------------------------------------------------------------
+   Advanced (collapsible override panel)
+   ------------------------------------------------------------------------- */
+.advanced {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+.advanced[open] { background: var(--paper-2); }
+.advanced__toggle {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--s-2) var(--s-3);   /* v2.4: tighter (was var(--s-3) var(--s-4)) */
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-weight: 600;
+  font-size: var(--t-sm);
+  color: var(--ink);
+  user-select: none;
+}
+.advanced__toggle::-webkit-details-marker { display: none; }
+.advanced__chev {
+  width: 10px;
+  height: 10px;
+  border-right: 1.6px solid var(--ink-2);
+  border-bottom: 1.6px solid var(--ink-2);
+  transform: rotate(-45deg);
+  transition: transform 200ms var(--ease-out);
+  margin-right: 2px;
+}
+.advanced[open] .advanced__chev { transform: rotate(45deg); }
+.advanced__panel {
+  padding: var(--s-4) var(--s-4) var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* Token counter — heuristic chars÷4 estimator (no library, no WASM).
+   Pure client-side UX helper: textarea content is never sent to the API. */
+.token-counter__textarea {
+  resize: vertical;
+  min-height: 88px;
+  font-family: inherit;
+  line-height: 1.45;
+  padding-top: var(--s-2);
+  padding-bottom: var(--s-2);
+}
+.token-counter__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.token-counter__readout {
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.token-counter__num { font-weight: 600; color: var(--ink); }
+.token-counter__chars { color: var(--ink-3); }
+.token-counter__sep { margin: 0 var(--s-1); color: var(--ink-4); }
+.token-counter__apply {
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), border-color 160ms var(--ease-out);
+}
+.token-counter__apply:hover:not([disabled]) {
+  background: var(--ink);
+  color: var(--paper);
+}
+.token-counter__apply:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 35%, transparent);
+}
+.token-counter__apply[disabled] {
+  border-color: var(--rule);
+  color: var(--ink-4);
+  cursor: not-allowed;
+}
+/* Brief teal flash on input_tokens after "Use this number", so the user
+   sees the value land — especially on long pages where the input_tokens
+   field is far from the counter button. The animation overrides the
+   field's background just long enough to draw the eye. */
+.field__input.is-flash {
+  animation: token-counter-flash 600ms var(--ease-out);
+}
+@keyframes token-counter-flash {
+  0%   { background: color-mix(in srgb, var(--teal) 25%, var(--paper)); border-color: var(--teal); }
+  100% { background: var(--paper); border-color: var(--rule); }
+}
+
+/* -------------------------------------------------------------------------
+   CTA — Calculate button (the bold accent surface)
+   ------------------------------------------------------------------------- */
+.calc-btn {
+  appearance: none;
+  border: 0;
+  width: 100%;
+  min-height: 60px;   /* v2.4: down from 64px */
+  background: var(--teal);
+  color: white;
+  font: inherit;
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  transition: transform 120ms var(--ease-out), background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+}
+.calc-btn:hover { background: var(--teal-deep); }
+.calc-btn:active { transform: translateY(1px); box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.12); }
+.calc-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 35%, transparent),
+              0 1px 0 rgba(0, 0, 0, 0.06), inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+}
+.calc-btn[disabled] {
+  background: var(--paper-3);
+  color: var(--ink-3);
+  cursor: progress;
+  box-shadow: none;
+}
+.calc-btn__arrow {
+  font-size: 1.4em;
+  line-height: 1;
+  transition: transform 220ms var(--ease-out-quart);
+}
+.calc-btn:hover .calc-btn__arrow { transform: translateX(4px); }
+
+.calc-btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  box-shadow: none;
+  min-height: 52px;
+}
+.calc-btn--ghost:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.calc-btn--ghost:active {
+  box-shadow: none;
+}
+
+/* -------------------------------------------------------------------------
+   Result panel — focal point
+   ------------------------------------------------------------------------- */
+.result {
+  display: block;
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  animation: result-in 460ms var(--ease-out-quart) both;
+}
+@keyframes result-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result--compact {
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  text-align: left;
+}
+.result__eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 var(--s-2);
+}
+.result__amount {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3.25rem, 10vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--teal);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.result--compact .result__amount {
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--ink);
+}
+.result__breakdown {
+  font-size: var(--t-base);
+  color: var(--ink-2);
+  margin: var(--s-3) 0 0;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+.result__multiline {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+  margin: var(--s-2) 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.result__caveat {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin: var(--s-4) 0 0;
+  max-width: 32em;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------
+   v2.9 — Mode toggle (Single vs Compare)
+   Pill switch above the picker. Two buttons share a rounded container;
+   the active one gets the teal-soft fill + teal text. Same vocabulary
+   as .fav-toggle so the page has one coherent "small toggle" feel.
+   ------------------------------------------------------------------------- */
+.mode-toggle {
+  display: inline-flex;
+  gap: 2px;
+  margin: 0 0 var(--s-3);
+  padding: 3px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+}
+.mode-toggle__pill {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 6px 16px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+}
+.mode-toggle__pill:hover:not(.is-on) {
+  color: var(--ink);
+}
+.mode-toggle__pill.is-on {
+  background: white;
+  color: var(--teal-deep);
+  box-shadow: var(--shadow-1);
+}
+.mode-toggle__pill:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--teal);
+}
+
+/* -------------------------------------------------------------------------
+   v2.9 — Compare tray (visible only in Compare mode).
+   Horizontal strip of chips. "Comparing:" label + chips + "Remove all"
+   link on the right. Chips wrap to multiple rows on narrow viewports.
+   Sits above the picker where the selection-bar used to live.
+   ------------------------------------------------------------------------- */
+.compare-tray {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: 0 0 var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 22%, transparent);
+  border-radius: var(--r-md);
+}
+.compare-tray__label {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--teal-deep);
+  flex: none;
+  margin-right: var(--s-1);
+}
+.compare-tray__chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+.compare-tray__hint {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--teal-deep);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+.compare-tray__clear {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--teal-deep);
+  font: inherit;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  flex: none;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--teal) 35%, transparent);
+  text-underline-offset: 3px;
+  transition: color 140ms var(--ease-out), background-color 140ms var(--ease-out);
+}
+.compare-tray__clear:hover {
+  color: var(--teal-ink);
+  background: color-mix(in srgb, var(--teal) 12%, transparent);
+}
+.compare-tray__clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--teal);
+}
+.compare-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px 3px 10px;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  font-size: var(--t-xs);
+  color: var(--ink);
+  max-width: 100%;
+  min-width: 0;
+}
+.compare-chip__name {
+  font-family: var(--sans);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  max-width: 22ch;
+}
+.compare-chip__provider {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  flex: none;
+}
+.compare-chip__remove {
+  appearance: none;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink-3);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+}
+.compare-chip__remove:hover {
+  background: var(--teal);
+  color: white;
+}
+.compare-chip__remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--teal);
+}
+
+/* -------------------------------------------------------------------------
+   v2.9 — Compare results: horizontal row of cards.
+   Single-mode .result block stays untouched (still drives the Single
+   flow). Compare-mode rendering goes here. The grid is 5-column on
+   wide screens; 3-column on tablet; vertical stack on phones.
+   Each card has model name (mono caption), big total ($), breakdown
+   line, per-run cost. Cheapest card has teal border + a "Cheapest"
+   badge in the top-right corner.
+   ------------------------------------------------------------------------- */
+.compare-results {
+  display: block;
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  animation: result-in 460ms var(--ease-out-quart) both;
+}
+.compare-results__eyebrow {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 var(--s-3);
+  text-align: center;
+}
+.compare-results__grid {
+  display: grid;
+  gap: var(--s-3);
+  /* 5 columns on wide viewports — fits 5 cards in a single row. The
+     spec caps at 5 models; with 2-5 cards the grid uses auto-fit so
+     the row is always evenly distributed. */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.compare-card {
+  position: relative;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-3) var(--s-4);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.compare-card.is-cheapest {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--teal) 25%, transparent) inset,
+              var(--shadow-1);
+}
+.compare-card__badge {
+  position: absolute;
+  top: -10px;
+  right: var(--s-3);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--teal);
+  color: white;
+  border-radius: var(--r-pill);
+}
+.compare-card__name {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compare-card__amount {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--teal);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.compare-card.is-cheapest .compare-card__amount {
+  color: var(--teal-deep);
+}
+.compare-card__breakdown {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compare-card__perrun {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+.compare-card.is-free .compare-card__amount { color: var(--ok); }
+.compare-results__caveat {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin: var(--s-4) 0 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Mobile (<700px): stack cards vertically, cheapest on top. The grid
+   already gives us one column when the viewport is < ~700px because
+   minmax(140px, 1fr) doesn't fit; the explicit @media makes the rule
+   bulletproof and matches the brief. */
+@media (max-width: 700px) {
+  .compare-results__grid {
+    grid-template-columns: 1fr;
+  }
+  .compare-card { padding: var(--s-3); }
+  .compare-card__amount { font-size: 1.875rem; }
+}
+
+/* -------------------------------------------------------------------------
+   Local GPU section (collapsible)
+   ------------------------------------------------------------------------- */
+.local { margin-bottom: var(--s-7); }
+.local__toggle {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+  font: inherit;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.local__toggle:hover {
+  border-color: var(--ink-2);
+  background: var(--paper-2);
+}
+.local__toggle[aria-expanded="true"] {
+  border-style: solid;
+  border-color: var(--rule);
+  background: white;
+  color: var(--ink);
+}
+.local__chev {
+  width: 10px;
+  height: 10px;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 220ms var(--ease-out);
+}
+.local__toggle[aria-expanded="true"] .local__chev {
+  transform: rotate(45deg);
+}
+.local__panel {
+  margin-top: var(--s-4);
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-xl);
+  padding: var(--s-6);
+  box-shadow: var(--shadow-1);
+  max-width: 880px;                                /* v2.2: match .calc cap */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* -------------------------------------------------------------------------
+   Blurb + footer
+   ------------------------------------------------------------------------- */
+.blurb {
+  max-width: 38em;
+  margin: 0 auto;
+  color: var(--ink-2);
+  font-size: var(--t-base);
+  line-height: 1.6;
+}
+.blurb__heading {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--t-xl);
+  color: var(--ink);
+  margin: 0 0 var(--s-3);
+  letter-spacing: -0.015em;
+}
+.blurb p { margin: 0 0 var(--s-4); }
+.blurb strong { color: var(--ink); font-weight: 600; }
+.blurb__links {
+  list-style: none;
+  margin: var(--s-5) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5);
+  font-size: var(--t-sm);
+}
+.blurb__links a {
+  color: var(--ink);
+  text-decoration-color: var(--ink-4);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms var(--ease-out), text-decoration-color 160ms var(--ease-out);
+}
+.blurb__links a:hover {
+  color: var(--teal-deep);
+  text-decoration-color: var(--teal);
+}
+
+/* v2.9: FAQ section. Uses native <details>/<summary> so the closed
+   state is the default — visitors who want it expand, others don't
+   see the answers. Headings use the display serif for visual weight;
+   the answers are sans, like the blurb body. */
+.faq {
+  margin-top: var(--s-9);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--rule);
+}
+.faq__heading {
+  font-family: var(--display);
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 var(--s-5);
+}
+.faq__item {
+  border-bottom: 1px solid var(--rule);
+}
+.faq__item:first-of-type {
+  border-top: 1px solid var(--rule);
+}
+.faq__item > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--s-4) 0;
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  font-weight: 500;
+  color: var(--ink);
+  position: relative;
+  padding-right: var(--s-7);
+  transition: color 120ms var(--ease-out);
+}
+.faq__item > summary::-webkit-details-marker { display: none; }
+.faq__item > summary::marker { display: none; content: ''; }
+.faq__item > summary::after {
+  content: '';
+  position: absolute;
+  right: var(--s-2);
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
+  transform: translateY(-70%) rotate(45deg);
+  transform-origin: center;
+  transition: transform 180ms var(--ease-out), border-color 120ms var(--ease-out);
+}
+.faq__item[open] > summary::after {
+  transform: translateY(-30%) rotate(-135deg);
+  border-color: var(--teal);
+}
+.faq__item > summary:hover { color: var(--teal-deep); }
+.faq__item > summary:hover::after { border-color: var(--teal); }
+.faq__item > summary:focus-visible {
+  outline: none;
+  color: var(--teal-deep);
+}
+.faq__body {
+  padding: 0 0 var(--s-5);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+.faq__body p { margin: 0; }
+.faq__body a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--teal) 40%, transparent);
+  text-underline-offset: 3px;
+}
+.faq__body a:hover { color: var(--teal-deep); text-decoration-color: var(--teal); }
+.faq__body code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--paper-2);
+  padding: 1px 5px;
+  border-radius: var(--r-sm);
+  color: var(--ink);
+}
+
+.foot {
+  border-top: 1px solid var(--rule);
+  padding: var(--s-5);
+  text-align: center;
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+}
+.foot a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--ink-4); text-underline-offset: 3px; }
+.foot a:hover { color: var(--teal-deep); }
+
+/* -------------------------------------------------------------------------
+   Form error
+   ------------------------------------------------------------------------- */
+.form-error {
+  margin-top: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent);
+  color: var(--teal-ink);
+  border-radius: var(--r-md);
+  font-size: var(--t-sm);
+}
+
+/* -------------------------------------------------------------------------
+   Responsive — mobile (≤480)
+   ------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .page { padding: var(--s-5) var(--s-4) var(--s-7); }
+  .topbar { padding: var(--s-3) var(--s-4); }
+  .hero__mark { width: 200px; height: 100px; }
+  .calc, .local__panel { padding: var(--s-5); border-radius: var(--r-lg); }
+  .calc-btn { min-height: 56px; }
+  .result__amount { font-size: clamp(2.5rem, 14vw, 4rem); }
+  .ad-slot--side { width: 100%; aspect-ratio: 300 / 250; min-height: 180px; }
+  .picker__selected { max-width: 50%; }
+}
+
+/* -------------------------------------------------------------------------
+   Reduced motion
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* v2.7b: Project picker — custom dropdown with tabs */
+.proj-picker {
+  position: relative;
+}
+
+.proj-picker__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+.proj-picker__trigger:hover,
+.proj-picker__trigger:focus-visible {
+  border-color: var(--teal);
+  outline: none;
+}
+
+.proj-picker__current {
+  flex: 1;
+  font-size: var(--t-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proj-picker__chev {
+  color: var(--ink-2);
+  font-size: 0.85em;
+  transition: transform 120ms ease;
+}
+
+.proj-picker__trigger[aria-expanded="true"] .proj-picker__chev {
+  transform: rotate(180deg);
+}
+
+.proj-picker__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  padding: var(--s-3);
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.proj-picker__custom {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  margin-bottom: var(--s-3);
+  background: var(--paper-2, #fbf8f1);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.proj-picker__custom:hover,
+.proj-picker__custom:focus-visible {
+  border-color: var(--teal);
+  outline: none;
+}
+
+.proj-picker__custom-name {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.proj-picker__custom-hint {
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+}
+
+.proj-tabs {
+  display: flex;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--s-2);
+}
+
+.proj-tab {
+  flex: 1;
+  padding: var(--s-2) var(--s-3);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font: inherit;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.proj-tab:hover {
+  color: var(--ink);
+  background: rgba(0,0,0,0.03);
+}
+
+.proj-tab.is-on {
+  color: var(--ink);
+  background: var(--paper-2, #fbf8f1);
+  border-color: var(--rule);
+  font-weight: 600;
+}
+
+.proj-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.proj-list__item {
+  padding: var(--s-3) var(--s-4);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 100ms ease;
+}
+
+.proj-list__item:hover,
+.proj-list__item:focus-visible,
+.proj-list__item.is-on {
+  background: var(--paper-2, #fbf8f1);
+  outline: none;
+}
+
+.proj-list__name {
+  display: block;
+  font-size: var(--t-base);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.proj-list__meta {
+  display: block;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  margin-top: 2px;
+}

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Every Major LLM in One Cost Table (2026) | AI Cost Calculator</title>
+  <meta name="description" content="A single-page comparison of input, output, and cache rates for every flagship and mid-tier LLM in 2026: sorted by total cost per typical call.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/every-major-llm-cost-table.html">
+  <meta property="og:title" content="Every Major LLM in One Cost Table (2026) | AI Cost Calculator">
+  <meta property="og:description" content="A single-page comparison of every flagship and mid-tier LLM cost rate in 2026.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/every-major-llm-cost-table.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Every Major LLM in One Cost Table (2026) | AI Cost Calculator">
+  <meta name="twitter:description" content="A single-page comparison of every flagship and mid-tier LLM cost rate in 2026.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type": "Article", "headline": "Every Major LLM in One Cost Table (2026)", "description": "A single-page comparison of input, output, and cache rates for every flagship and mid-tier LLM in 2026.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-23", "mainEntityOfPage": "https://aicostcalculator.net/blog/every-major-llm-cost-table.html", "url": "https://aicostcalculator.net/blog/every-major-llm-cost-table.html"},
+    {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "Every Major LLM in One Cost Table", "item": "https://aicostcalculator.net/blog/every-major-llm-cost-table.html"}]},
+    {"@type": "FAQPage", "mainEntity": [
+      {"@type": "Question", "name": "What's the cheapest flagship-tier LLM in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "Among the major flagship models (GPT-4o, Claude Sonnet 4, Gemini 2.5 Pro, DeepSeek V3, Llama 3.3 70B, Mistral Large), Gemini 2.5 Pro is the cheapest on input at $1.25 per 1M tokens and Mistral Small 3.1 24B at $0.351 input / $0.555 output is the cheapest mid-tier model. Llama 3.1 8B at $0.02 input / $0.03 output is the cheapest production-quality model on OpenRouter."}},
+      {"@type": "Question", "name": "What's the most expensive LLM in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "Among the publicly listed models, Claude Opus 4 at $15.00 input and $75.00 output per 1M tokens is the most expensive flagship on OpenRouter. OpenAI's o1 is $15.00 / $60.00. Some specialty models (Claude Opus 4 fast variants, o1-pro) push past $100 per 1M output."}},
+      {"@type": "Question", "name": "Do all models on OpenRouter have the same pricing structure?", "acceptedAnswer": {"@type": "Answer", "text": "Most publish input, output, cached input, and a tool_call_cost field. Some publish a reasoning_per_1m field for chain-of-thought billing. The free models (26 as of mid-2026) publish $0 across the board. The structure is consistent; the values are not."}},
+      {"@type": "Question", "name": "How often does OpenRouter refresh pricing?", "acceptedAnswer": {"@type": "Answer", "text": "AI Cost Calculator refreshes its OpenRouter cache every six hours. The OpenRouter feed itself can update more or less frequently depending on vendor changes. As of mid-2026, the cache is rarely more than a few hours behind vendor list prices."}}
+    ]}
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>Every Major LLM Cost Table</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">Every Major LLM in One Cost Table (2026)</h1>
+    <p class="blog-lede">
+      Twenty models, one table, sorted by total cost for a typical chat call.
+      The numbers below come from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public feed</a>, refreshed every six hours on AI Cost Calculator. Flagship
+      models from OpenAI, Anthropic, Google, Meta, DeepSeek, Mistral, xAI,
+      Cohere, and Qwen sit side-by-side, with the cheap, mid-tier, and
+      premium tiers shown for each provider where they exist.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>How to read the table</h2>
+    <p>
+      The "Input $/M" and "Output $/M" columns are the per-million-token
+      rates as published by the upstream vendor and surfaced through
+      OpenRouter. The "Cache $/M" column is the cached input rate where
+      the vendor publishes one. The "1k in + 500 out" column is what
+      a single chat-shaped call would cost: 1,000 input tokens at the
+      input rate, 500 output tokens at the output rate. The final
+      "10k + 2k" column is a longer-form workload: 10,000 input and
+      2,000 output, closer to a RAG or coding workload.
+    </p>
+    <p>
+      Sorted by the typical-call column, cheapest first. Reasoning
+      tokens, tool call surcharges, and batch discounts are excluded —
+      see the
+      <a href="./what-is-a-reasoning-token.html">reasoning token article</a>
+      and the
+      <a href="./reduce-claude-gpt-api-costs.html">cost reduction article</a>
+      for those multipliers. All numbers are current as of the publish
+      date; refresh the page or check each model's page for the live
+      rate.
+    </p>
+
+    <h2>The full table</h2>
+    <table class="blog-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Provider</th>
+          <th>Tier</th>
+          <th>Input $/M</th>
+          <th>Output $/M</th>
+          <th>Cache $/M</th>
+          <th>1k+500</th>
+          <th>10k+2k</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="../models/meta-llama-llama-3-1-8b-instruct.html">Llama 3.1 8B Instruct</a></td><td>Meta</td><td>Budget</td><td class="is-num">$0.02</td><td class="is-num">$0.03</td><td class="is-num">—</td><td class="is-num">$0.00004</td><td class="is-num">$0.00026</td></tr>
+        <tr><td><a href="../models/microsoft-phi-4.html">Phi-4</a></td><td>Microsoft</td><td>Budget</td><td class="is-num">$0.07</td><td class="is-num">$0.14</td><td class="is-num">—</td><td class="is-num">$0.00014</td><td class="is-num">$0.00098</td></tr>
+        <tr><td><a href="../models/meta-llama-llama-3-3-70b-instruct.html">Llama 3.3 70B Instruct</a></td><td>Meta</td><td>Mid</td><td class="is-num">$0.10</td><td class="is-num">$0.32</td><td class="is-num">—</td><td class="is-num">$0.00026</td><td class="is-num">$0.00164</td></tr>
+        <tr><td><a href="../models/qwen-qwen-2-5-72b-instruct.html">Qwen 2.5 72B</a></td><td>Alibaba</td><td>Mid</td><td class="is-num">$0.36</td><td class="is-num">$0.40</td><td class="is-num">—</td><td class="is-num">$0.00056</td><td class="is-num">$0.00440</td></tr>
+        <tr><td><a href="../models/mistralai-mistral-small-3-1-24b-instruct.html">Mistral Small 3.1 24B</a></td><td>Mistral</td><td>Mid</td><td class="is-num">$0.35</td><td class="is-num">$0.56</td><td class="is-num">—</td><td class="is-num">$0.00063</td><td class="is-num">$0.00462</td></tr>
+        <tr><td><a href="../models/google-gemini-2-5-flash.html">Gemini 2.5 Flash</a></td><td>Google</td><td>Mid</td><td class="is-num">$0.30</td><td class="is-num">$2.50</td><td class="is-num">$0.03</td><td class="is-num">$0.00155</td><td class="is-num">$0.00800</td></tr>
+        <tr><td><a href="../models/qwen-qwen3-235b-a22b.html">Qwen3 235B A22B</a></td><td>Alibaba</td><td>Flagship</td><td class="is-num">$0.46</td><td class="is-num">$1.82</td><td class="is-num">—</td><td class="is-num">$0.00136</td><td class="is-num">$0.00824</td></tr>
+        <tr><td><a href="../models/deepseek-deepseek-chat-v3-0324.html">DeepSeek V3 0324</a></td><td>DeepSeek</td><td>Flagship</td><td class="is-num">$0.20</td><td class="is-num">$0.77</td><td class="is-num">$0.14</td><td class="is-num">$0.00059</td><td class="is-num">$0.00354</td></tr>
+        <tr><td><a href="../models/anthropic-claude-3-haiku.html">Claude 3 Haiku</a></td><td>Anthropic</td><td>Budget</td><td class="is-num">$0.25</td><td class="is-num">$1.25</td><td class="is-num">$0.03</td><td class="is-num">$0.00088</td><td class="is-num">$0.00500</td></tr>
+        <tr><td><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></td><td>OpenAI</td><td>Budget</td><td class="is-num">$0.15</td><td class="is-num">$0.60</td><td class="is-num">$0.075</td><td class="is-num">$0.00045</td><td class="is-num">$0.00270</td></tr>
+        <tr><td><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></td><td>Anthropic</td><td>Mid</td><td class="is-num">$1.00</td><td class="is-num">$5.00</td><td class="is-num">$0.10</td><td class="is-num">$0.00350</td><td class="is-num">$0.02000</td></tr>
+        <tr><td><a href="../models/openai-gpt-4-1-mini.html">GPT-4.1 Mini</a></td><td>OpenAI</td><td>Mid</td><td class="is-num">$0.40</td><td class="is-num">$1.60</td><td class="is-num">$0.10</td><td class="is-num">$0.00120</td><td class="is-num">$0.00720</td></tr>
+        <tr><td><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></td><td>Google</td><td>Flagship</td><td class="is-num">$1.25</td><td class="is-num">$10.00</td><td class="is-num">$0.125</td><td class="is-num">$0.00625</td><td class="is-num">$0.03250</td></tr>
+        <tr><td><a href="../models/x-ai-grok-4-20.html">Grok 4.20</a></td><td>xAI</td><td>Flagship</td><td class="is-num">$1.25</td><td class="is-num">$2.50</td><td class="is-num">$0.20</td><td class="is-num">$0.00250</td><td class="is-num">$0.01750</td></tr>
+        <tr><td><a href="../models/openai-gpt-4-1.html">GPT-4.1</a></td><td>OpenAI</td><td>Flagship</td><td class="is-num">$2.00</td><td class="is-num">$8.00</td><td class="is-num">$0.50</td><td class="is-num">$0.00600</td><td class="is-num">$0.03600</td></tr>
+        <tr><td><a href="../models/openai-gpt-4o.html">GPT-4o</a></td><td>OpenAI</td><td>Flagship</td><td class="is-num">$2.50</td><td class="is-num">$10.00</td><td class="is-num">—</td><td class="is-num">$0.00750</td><td class="is-num">$0.04500</td></tr>
+        <tr><td><a href="../models/openai-o3.html">OpenAI o3</a></td><td>OpenAI</td><td>Reasoning</td><td class="is-num">$2.00</td><td class="is-num">$8.00</td><td class="is-num">$0.50</td><td class="is-num">$0.00600</td><td class="is-num">$0.03600</td></tr>
+        <tr><td><a href="../models/openai-o4-mini.html">OpenAI o4 Mini</a></td><td>OpenAI</td><td>Reasoning</td><td class="is-num">$1.10</td><td class="is-num">$4.40</td><td class="is-num">$0.275</td><td class="is-num">$0.00330</td><td class="is-num">$0.01980</td></tr>
+        <tr><td><a href="../models/cohere-command-a.html">Cohere Command A</a></td><td>Cohere</td><td>Flagship</td><td class="is-num">$2.50</td><td class="is-num">$10.00</td><td class="is-num">—</td><td class="is-num">$0.00750</td><td class="is-num">$0.04500</td></tr>
+        <tr><td><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></td><td>Anthropic</td><td>Flagship</td><td class="is-num">$3.00</td><td class="is-num">$15.00</td><td class="is-num">$0.30</td><td class="is-num">$0.01050</td><td class="is-num">$0.06000</td></tr>
+        <tr><td><a href="../models/deepseek-deepseek-r1.html">DeepSeek R1</a></td><td>DeepSeek</td><td>Reasoning</td><td class="is-num">$0.70</td><td class="is-num">$2.50</td><td class="is-num">—</td><td class="is-num">$0.00195</td><td class="is-num">$0.01200</td></tr>
+        <tr><td><a href="../models/openai-o1.html">OpenAI o1</a></td><td>OpenAI</td><td>Reasoning</td><td class="is-num">$15.00</td><td class="is-num">$60.00</td><td class="is-num">$7.50</td><td class="is-num">$0.04500</td><td class="is-num">$0.27000</td></tr>
+        <tr><td><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></td><td>Anthropic</td><td>Flagship+</td><td class="is-num">$15.00</td><td class="is-num">$75.00</td><td class="is-num">$1.50</td><td class="is-num">$0.05250</td><td class="is-num">$0.30000</td></tr>
+      </tbody>
+    </table>
+
+    <h2>What the table tells you</h2>
+    <p>
+      The cheap end of the table is dominated by open-weights models:
+      Llama 3.1 8B at $0.00004 per chat-shaped call is roughly 1,300x
+      cheaper than Claude Opus 4 at $0.05250 for the same shape. The
+      gap reflects real capability differences on hard tasks, but on
+      classification, extraction, and short chat, the cheap models are
+      often good enough.
+    </p>
+    <p>
+      The flagship tier clusters around $2.00-$3.00 input and $8.00-$15.00
+      output. GPT-4o, Claude Sonnet 4, Gemini 2.5 Pro, Cohere Command A,
+      and Grok 4.20 all sit in this band, with differences in cache
+      rates and context window that matter more than the headline rate
+      for most production workloads. The
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o
+      vs Claude Sonnet 4 comparison</a> walks through the side-by-side
+      math for one of these flagship pairs.
+    </p>
+    <p>
+      The reasoning tier is its own band. DeepSeek R1 at $0.70/$2.50 is
+      the cost-conscious pick — you get chain-of-thought reasoning at
+      roughly 1/24th the cost of OpenAI o1. OpenAI's o3 at $2.00/$8.00
+      and o4-mini at $1.10/$4.40 are mid-tier reasoning options. o1
+      and Claude Opus 4 are the premium reasoning tier, suitable for
+      problems where reasoning quality is worth paying for. See the
+      <a href="./what-is-a-reasoning-token.html">reasoning token article</a>
+      for the full breakdown of how reasoning affects the bill.
+    </p>
+
+    <h2>Reading across rows</h2>
+    <p>
+      A useful exercise is to compare the cheap and flagship entries
+      from the same provider. Anthropic's Claude 3 Haiku at $0.25/$1.25
+      is the budget tier, Claude Sonnet 4 at $3.00/$15.00 is the
+      flagship, and Claude Opus 4 at $15.00/$75.00 is the premium tier.
+      The same shape is true on OpenAI — GPT-4o mini at $0.15/$0.60,
+      GPT-4o at $2.50/$10.00, and o1 at $15.00/$60.00. Google's Gemini
+      2.5 family runs from Flash at $0.30/$2.50 to Pro at $1.25/$10.00
+      with no published Gemini Ultra tier on OpenRouter at the moment.
+      When a workload needs to scale across many calls, the budget tier
+      is the right default; the flagship tier is the right call when
+      the answer quality justifies the price.
+    </p>
+    <p>
+      A second useful exercise is to compare flagship-to-flagship across
+      providers. GPT-4o, Claude Sonnet 4, Gemini 2.5 Pro, Cohere Command
+      A, and Grok 4.20 all sit within a 3x range of each other on
+      output rates. The differentiators are not the headline rates;
+      they're the cache rate (Anthropic and OpenAI publish aggressive
+      cache discounts, Gemini has implicit caching), the context window
+      (Gemini 2.5 Pro and Claude Sonnet 4 reach 1M tokens, GPT-4o tops
+      out at 128K), and the quality on the specific task the application
+      needs. The
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o
+      vs Claude Sonnet 4 comparison</a> walks through how those
+      differentiators show up on a real workload.
+    </p>
+
+    <h2>Where the cheap models stay cheap</h2>
+    <p>
+      Llama 3.1 8B Instruct at $0.02/$0.03 is roughly 1,300x cheaper
+      per chat-shaped call than Claude Opus 4. The reason is structural.
+      A 70B-parameter model requires multiple high-end GPUs to serve at
+      reasonable latency; an 8B model runs on a single consumer GPU.
+      The inference cost is dominated by the GPU-hours, not the number
+      of tokens, and an 8B model uses about 1/10th the GPU-time per
+      token of a 70B model. The labs that serve the cheap models pass
+      the GPU-cost savings through to the per-token rate.
+    </p>
+    <p>
+      The catch is capability. Llama 3.1 8B is good at classification,
+      extraction, and short replies. It is not good at long-form
+      synthesis, complex reasoning, or any task where the flagship's
+      larger context window and stronger training show up in the
+      output. For workloads where the cheap model is good enough, the
+      per-call cost is roughly free at scale. For workloads where the
+      flagship is the right answer, no amount of cost optimization
+      closes the gap to the cheap tier — you have to use the model
+      that does the work.
+    </p>
+
+    <h2>What the table doesn't show</h2>
+    <p>
+      The table shows the headline rate, but production bills are
+      shaped by the multipliers covered elsewhere on this site.
+      Prompt caching cuts input by 50-90% depending on provider.
+      System prompts ship on every call and can be a fixed cost
+      worth thousands of dollars a month at scale. Reasoning
+      tokens multiply the per-call cost by 2-10x depending on
+      the model and the question. Tool calls grow the
+      conversation history and re-bill it on every turn.
+    </p>
+    <p>
+      The right way to read the table is as the input to a real
+      estimate, not the estimate itself. Plug in your actual token
+      counts, account for the multipliers, and the per-call cost
+      moves up or down. The
+      <a href="../">calculator</a> handles the multipliers; the
+      model pages linked above are the source of truth for the
+      rates.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      All rates from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a> via AI Cost Calculator's six-hour refresh loop.
+      Last sync timestamps on each model's page.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the models cited here</h2>
+      <ul>
+        <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
+        <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+        <li><a href="../models/google-gemini-2-5-flash.html">Gemini 2.5 Flash</a></li>
+        <li><a href="../models/deepseek-deepseek-chat-v3-0324.html">DeepSeek V3</a></li>
+        <li><a href="../models/deepseek-deepseek-r1.html">DeepSeek R1</a></li>
+        <li><a href="../models/x-ai-grok-4-20.html">Grok 4.20</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./gpt-4o-vs-claude-sonnet-cost.html"><strong>GPT-4o vs Claude Sonnet 4: Full Cost Breakdown</strong><span>Side-by-side for the most common flagship pair.</span></a></li>
+        <li><a href="./cheap-llm-api-for-startups.html"><strong>Cheapest LLM APIs for Startups in 2026</strong><span>When the right answer is a budget model.</span></a></li>
+        <li><a href="./how-to-estimate-llm-api-costs.html"><strong>How to Estimate LLM API Costs: A Practical Guide</strong><span>The four-step method.</span></a></li>
+        <li><a href="./every-major-llm-cost-table.html"><strong>Every Major LLM in One Cost Table</strong><span>This article.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">What's the cheapest flagship-tier LLM in 2026?</p><p class="blog-faq__a">Among the major flagship models, Gemini 2.5 Pro is the cheapest on input at $1.25 per 1M tokens. Mistral Small 3.1 24B at $0.351 input / $0.555 output is the cheapest mid-tier model. Llama 3.1 8B at $0.02 input / $0.03 output is the cheapest production-quality model on OpenRouter.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">What's the most expensive LLM in 2026?</p><p class="blog-faq__a">Among the publicly listed models, Claude Opus 4 at $15.00 input and $75.00 output per 1M tokens is the most expensive flagship on OpenRouter. OpenAI's o1 is $15.00 / $60.00. Some specialty models push past $100 per 1M output.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Do all models on OpenRouter have the same pricing structure?</p><p class="blog-faq__a">Most publish input, output, cached input, and a tool_call_cost field. Some publish a reasoning_per_1m field for chain-of-thought billing. The free models publish $0 across the board. The structure is consistent; the values are not.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How often does OpenRouter refresh pricing?</p><p class="blog-faq__a">AI Cost Calculator refreshes its OpenRouter cache every six hours. The OpenRouter feed itself can update more or less frequently depending on vendor changes.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

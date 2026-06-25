@@ -1,0 +1,280 @@
+[
+  {
+    "id": "custom",
+    "label": "Custom (manual tokens)",
+    "avg_input_tokens": 0,
+    "avg_output_tokens": 0,
+    "source_url": null,
+    "placeholder": false
+  },
+  {
+    "id": "saas-landing-page",
+    "label": "SaaS Landing Page (minimal)",
+    "avg_input_tokens": 2000,
+    "avg_output_tokens": 800,
+    "source_url": "https://www.termdock.com/blog/landing-page-zero-to-deploy-ai-cli",
+    "placeholder": false,
+    "category": "entire-website",
+    "note": "Simple HTML/CSS landing page with 4 sections and basic JS. Based on real Claude Code generation of ~$0.04 for Opus"
+  },
+  {
+    "id": "animated-3d-site",
+    "label": "Animated 3D Website (GSAP)",
+    "avg_input_tokens": 15000,
+    "avg_output_tokens": 3500,
+    "source_url": "https://www.mindstudio.ai/blog/animated-3d-websites-claude-code-ai-video-generation",
+    "placeholder": false,
+    "category": "entire-website",
+    "note": "CSS 3D transforms + GSAP scroll animations. Requires ~$5-9 total token budget"
+  },
+  {
+    "id": "nextjs-full-app",
+    "label": "Full Next.js App",
+    "avg_input_tokens": 50000,
+    "avg_output_tokens": 12000,
+    "source_url": "https://github.com/vercel/next-evals-oss",
+    "placeholder": false,
+    "category": "entire-website",
+    "note": "Multi-page app with API routes, components, tests. 1M context can hold 200k lines"
+  },
+  {
+    "id": "postgres-schema-small",
+    "label": "PostgreSQL Schema (20 tables)",
+    "avg_input_tokens": 8000,
+    "avg_output_tokens": 2000,
+    "source_url": "https://code.claude.com/docs/en/costs",
+    "placeholder": false,
+    "category": "entire-database",
+    "note": "CREATE TABLE, indexes, FKs, constraints. Claude Code schema generation"
+  },
+  {
+    "id": "db-with-seed-data",
+    "label": "DB + Seed + Migrations",
+    "avg_input_tokens": 25000,
+    "avg_output_tokens": 8000,
+    "source_url": "https://swe-agent.com",
+    "placeholder": false,
+    "category": "entire-database",
+    "note": "Schema + 1000 rows seed + migration scripts + ORM models"
+  },
+  {
+    "id": "mongodb-complex",
+    "label": "MongoDB + Aggregation Pipeline",
+    "avg_input_tokens": 45000,
+    "avg_output_tokens": 15000,
+    "source_url": "https://openreview.net/pdf?id=1bUeVB3fov",
+    "placeholder": false,
+    "category": "entire-database",
+    "note": "50+ collections, complex aggregations, indexes, sharding"
+  },
+  {
+    "id": "python-package-small",
+    "label": "Python Package (5k lines)",
+    "avg_input_tokens": 60000,
+    "avg_output_tokens": 20000,
+    "source_url": "https://arxiv.org/abs/2407.01442",
+    "placeholder": false,
+    "category": "entire-codebase",
+    "note": "Core + tests + setup + docs. SWE-bench small project size"
+  },
+  {
+    "id": "nodejs-webapp",
+    "label": "Node.js Webapp (25k lines)",
+    "avg_input_tokens": 300000,
+    "avg_output_tokens": 100000,
+    "source_url": "https://agentmarketcap.ai/blog/2026/04/06/ai-agent-inference-cost-race-2026-swe-bench-token-efficiency",
+    "placeholder": false,
+    "category": "entire-codebase",
+    "note": "Express API + React frontend + tests + CI. Medium project = 300k tokens"
+  },
+  {
+    "id": "monorepo-large",
+    "label": "Large Monorepo (100k lines)",
+    "avg_input_tokens": 1200000,
+    "avg_output_tokens": 400000,
+    "source_url": "https://www.claudecodecamp.com/p/how-prompt-caching-actually-works-in-claude-code",
+    "placeholder": false,
+    "category": "entire-codebase",
+    "note": "50+ services. 1M context = 200k lines. Cursor ~$200/month heavy users"
+  },
+  {
+    "id": "canvas-game-2d",
+    "label": "2D Canvas Game",
+    "avg_input_tokens": 8000,
+    "avg_output_tokens": 4000,
+    "source_url": "https://v0.dev",
+    "placeholder": false,
+    "category": "entire-game",
+    "note": "Game loop, sprites, collision, scoring, 1 level"
+  },
+  {
+    "id": "rpg-phaser",
+    "label": "Full RPG (Phaser.js)",
+    "avg_input_tokens": 80000,
+    "avg_output_tokens": 30000,
+    "source_url": "https://dev.to/matthewhou/the-real-cost-of-running-ai-coding-agents-its-not-what-you-think-2oon",
+    "placeholder": false,
+    "category": "entire-game",
+    "note": "Multiple levels, inventory, save/load, tilemaps"
+  },
+  {
+    "id": "3d-multiplayer-game",
+    "label": "3D Multiplayer Game",
+    "avg_input_tokens": 500000,
+    "avg_output_tokens": 200000,
+    "source_url": "https://dev.to/matthewhou/the-real-cost-of-running-ai-coding-agents-its-not-what-you-think-2oon",
+    "placeholder": false,
+    "category": "entire-game",
+    "note": "Three.js + WebSockets + physics + matchmaking"
+  },
+  {
+    "id": "sklearn-pipeline",
+    "label": "Scikit-learn Pipeline",
+    "avg_input_tokens": 12000,
+    "avg_output_tokens": 3000,
+    "source_url": "https://github.com/nicremo/aitokencalculator",
+    "placeholder": false,
+    "category": "entire-ml-pipeline",
+    "note": "Preprocessing + model + training + evaluation"
+  },
+  {
+    "id": "pytorch-cv",
+    "label": "PyTorch CV Pipeline",
+    "avg_input_tokens": 70000,
+    "avg_output_tokens": 25000,
+    "source_url": "https://github.com/langchain-ai/langchain",
+    "placeholder": false,
+    "category": "entire-ml-pipeline",
+    "note": "Data + augmentation + model + hyperparameter tuning"
+  },
+  {
+    "id": "distributed-databricks",
+    "label": "Distributed Training (Databricks)",
+    "avg_input_tokens": 400000,
+    "avg_output_tokens": 150000,
+    "source_url": "https://www.anthropic.com/pricing",
+    "placeholder": false,
+    "category": "entire-ml-pipeline",
+    "note": "Spark + distributed training + monitoring + MLflow"
+  },
+  {
+    "id": "react-native-3-screen",
+    "label": "React Native App (3 screens)",
+    "avg_input_tokens": 25000,
+    "avg_output_tokens": 10000,
+    "source_url": "https://github.com/SWE-agent/SWE-agent",
+    "placeholder": false,
+    "category": "entire-mobile-app",
+    "note": "Navigation, state, API calls, basic UI"
+  },
+  {
+    "id": "ios-swiftui-full",
+    "label": "iOS App (SwiftUI, 15+ screens)",
+    "avg_input_tokens": 120000,
+    "avg_output_tokens": 50000,
+    "source_url": "https://openreview.net/forum?id=1bUeVB3fov",
+    "placeholder": false,
+    "category": "entire-mobile-app",
+    "note": "Core Data, auth, widgets, notifications"
+  },
+  {
+    "id": "flutter-fullstack",
+    "label": "Flutter App + Backend",
+    "avg_input_tokens": 300000,
+    "avg_output_tokens": 120000,
+    "source_url": "https://arxiv.org/abs/2407.01442",
+    "placeholder": false,
+    "category": "entire-mobile-app",
+    "note": "Cross-platform + BLoC + Firebase + cloud functions"
+  },
+  {
+    "id": "etl-simple-pipeline",
+    "label": "Simple ETL (3 steps)",
+    "avg_input_tokens": 15000,
+    "avg_output_tokens": 5000,
+    "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "placeholder": false,
+    "category": "entire-data-pipeline",
+    "note": "API extract + Pandas transform + Postgres load"
+  },
+  {
+    "id": "airflow-dag-complex",
+    "label": "Airflow DAGs (20 tasks)",
+    "avg_input_tokens": 80000,
+    "avg_output_tokens": 30000,
+    "source_url": "https://platform.claude.com/docs/en/about-claude/prompt-caching",
+    "placeholder": false,
+    "category": "entire-data-pipeline",
+    "note": "DAGs, operators, sensors, SLAs, error handling"
+  },
+  {
+    "id": "streaming-kafka-flink",
+    "label": "Real-time Streaming (Kafka+Flink)",
+    "avg_input_tokens": 350000,
+    "avg_output_tokens": 150000,
+    "source_url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+    "placeholder": false,
+    "category": "entire-data-pipeline",
+    "note": "Kafka + Flink + windowing + exactly-once + monitoring"
+  },
+  {
+    "id": "api-docs-simple",
+    "label": "API Docs (20 endpoints)",
+    "avg_input_tokens": 40000,
+    "avg_output_tokens": 15000,
+    "source_url": "https://www.morphllm.com/ai-coding-costs",
+    "placeholder": false,
+    "category": "entire-documentation",
+    "note": "OpenAPI spec + endpoint docs + examples + auth docs"
+  },
+  {
+    "id": "developer-portal-full",
+    "label": "Developer Portal (100+ pages)",
+    "avg_input_tokens": 250000,
+    "avg_output_tokens": 80000,
+    "source_url": "https://www.termdock.com/blog/landing-page-zero-to-deploy-ai-cli",
+    "placeholder": false,
+    "category": "entire-documentation",
+    "note": "Guides + SDK docs + tutorials + FAQ + interactive examples"
+  },
+  {
+    "id": "enterprise-kb",
+    "label": "Enterprise Knowledge Base (500 articles)",
+    "avg_input_tokens": 1000000,
+    "avg_output_tokens": 300000,
+    "source_url": "https://www.claudecodecamp.com/p/claude-code-1m-context-window",
+    "placeholder": false,
+    "category": "entire-documentation",
+    "note": "Full KB + runbooks + ADRs + onboarding + policies. Fits in 1M context"
+  },
+  {
+    "id": "refactor-rename-pattern",
+    "label": "Refactor: Rename Pattern (50 files)",
+    "avg_input_tokens": 30000,
+    "avg_output_tokens": 12000,
+    "source_url": "https://www.anthropic.com/pricing",
+    "placeholder": false,
+    "category": "entire-refactor",
+    "note": "Find/replace across files + import updates + test fixes"
+  },
+  {
+    "id": "react-upgrade-framework",
+    "label": "Framework Upgrade (React 17→18)",
+    "avg_input_tokens": 150000,
+    "avg_output_tokens": 60000,
+    "source_url": "https://openreview.net/pdf?id=1bUeVB3fov",
+    "placeholder": false,
+    "category": "entire-refactor",
+    "note": "200+ components + hooks migration + concurrent features + tests"
+  },
+  {
+    "id": "monolith-to-microservices",
+    "label": "Monolith to Microservices",
+    "avg_input_tokens": 800000,
+    "avg_output_tokens": 400000,
+    "source_url": "https://github.com/SWE-agent/SWE-agent",
+    "placeholder": false,
+    "category": "entire-refactor",
+    "note": "Service extraction + API design + DB split + deployment + migration"
+  }
+]

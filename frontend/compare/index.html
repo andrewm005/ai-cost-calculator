@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Compare LLM API Costs: Side-by-Side Pricing for Every Major Model | AI Cost Calculator</title>
+  <meta name="description" content="Side-by-side API cost comparisons for every major LLM. GPT-4o vs Claude Sonnet 4, GPT-4o vs Llama 3.3 70B, Claude Opus 4 vs Gemini 2.5 Pro, and more. Live pricing, refreshed every 6 hours.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/compare/">
+  <meta property="og:title" content="Compare LLM API Costs: Side-by-Side Pricing for Every Major Model">
+  <meta property="og:description" content="Side-by-side API cost comparisons for every major LLM. Live pricing, refreshed every 6 hours.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../app.css">
+  <style>
+    .compare-idx { max-width: 760px; margin: 0 auto; padding: var(--s-4) var(--s-5) var(--s-8); }
+    .compare-idx__back { display: inline-block; font-size: var(--t-sm); color: var(--ink-2); text-decoration: none; margin-bottom: var(--s-5); }
+    .compare-idx__back:hover { color: var(--teal); }
+    .compare-idx__title { font-family: var(--display); font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 var(--s-2); line-height: 1.1; }
+    .compare-idx__sub { font-size: var(--t-base); color: var(--ink-2); margin: 0 0 var(--s-7); line-height: 1.5; max-width: 60ch; }
+    .compare-idx__grid { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+    @media (min-width: 560px) { .compare-idx__grid { grid-template-columns: 1fr 1fr; } }
+    .compare-idx__card { display: block; padding: var(--s-4) var(--s-5); background: white; border: 1px solid var(--rule); border-radius: var(--r-md); text-decoration: none; color: var(--ink); transition: border-color 120ms var(--ease-out), transform 120ms var(--ease-out); }
+    .compare-idx__card:hover { border-color: var(--teal); transform: translateY(-1px); }
+    .compare-idx__name { font-family: var(--sans); font-size: var(--t-base); font-weight: 500; color: var(--ink); }
+    .compare-idx__name em { color: var(--teal); font-style: normal; font-weight: 600; }
+    .compare-idx__name .compare-idx__vs { color: var(--ink-3); font-weight: 400; margin: 0 6px; }
+    .compare-idx__meta { font-size: var(--t-xs); color: var(--ink-3); margin-top: 4px; font-family: var(--mono); }
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <a class="brand" href="../" aria-label="AI Cost Calculator (home)">
+      <img class="brand__mark" src="../logo.svg" alt="" width="44" height="22">
+      <span class="brand__word">AI Cost Calculator</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Primary">
+      <a href="../">Calculator</a>
+      <a href="../models/">All models</a>
+      <a href="./">Compare</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="compare-idx">
+    <a class="compare-idx__back" href="../">&larr; Back to the calculator</a>
+    <h1 class="compare-idx__title">Compare LLM API costs</h1>
+    <p class="compare-idx__sub">
+      Side-by-side pricing for the most-asked LLM comparisons.
+      Live OpenRouter prices, four workload sizes each, refreshed every 6 hours.
+      Each link below opens a dedicated page with input/output costs at
+      5K, 50K, 500K, and 1M tokens.
+    </p>
+
+    <div class="compare-idx__grid">
+      <a class="compare-idx__card" href="./anthropic-claude-opus-4-vs-openai-gpt-4o.html">
+        <div class="compare-idx__name"><em>Claude opus 4</em> <span class="compare-idx__vs">vs</span> <em>GPT-4o</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./anthropic-claude-sonnet-4-vs-anthropic-claude-haiku-4.html">
+        <div class="compare-idx__name"><em>Claude sonnet 4</em> <span class="compare-idx__vs">vs</span> <em>Claude haiku 4</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./anthropic-claude-sonnet-4-vs-google-gemini-2.5-pro.html">
+        <div class="compare-idx__name"><em>Claude sonnet 4</em> <span class="compare-idx__vs">vs</span> <em>Gemini 2.5 pro</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-mini-vs-anthropic-claude-haiku-4.html">
+        <div class="compare-idx__name"><em>GPT-4o mini</em> <span class="compare-idx__vs">vs</span> <em>Claude haiku 4</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>Claude sonnet 4</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-deepseek-deepseek-chat.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>DeepSeek chat</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-google-gemini-2.5-pro.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>Gemini 2.5 pro</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-openai-gpt-4o-mini.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>GPT-4o mini</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-openrouter-meta-llama-llama-3.3-70b-instruct.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>Llama 3.3 70b instruct</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-openrouter-mistralai-mistral-large.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>Mistral large</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-gpt-4o-vs-openrouter-x-ai-grok-4.20.html">
+        <div class="compare-idx__name"><em>GPT-4o</em> <span class="compare-idx__vs">vs</span> <em>Grok 4.20</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+      <a class="compare-idx__card" href="./openai-o3-vs-anthropic-claude-sonnet-4.html">
+        <div class="compare-idx__name"><em>o3</em> <span class="compare-idx__vs">vs</span> <em>Claude sonnet 4</em></div>
+        <div class="compare-idx__meta">4 workload sizes &middot; live data</div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p>
+      AI Cost Calculator &middot; <a href="../">Calculator</a> &middot; <a href="../about.html">About</a> &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../status.html">Status</a>
+    </p>
+  </footer>
+</body>
+</html>

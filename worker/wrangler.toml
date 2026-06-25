@@ -1,0 +1,62 @@
+# Cloudflare Workers configuration for the AI Cost Calculator API.
+#
+# This config wires up two things:
+#   1. A Workers KV namespace binding (`PRICING`) where the merged pricing
+#      cache lives. The cron trigger reads from here; the fetch handler
+#      writes here on every refresh.
+#   2. A cron schedule (`0 */6 * * *`) that fires the `scheduled()` export
+#      in src/scheduled.ts every 6 hours. The handler fetches OpenRouter's
+#      public /api/v1/models and writes to KV.
+#
+# Operator setup (do this ONCE before the first deploy):
+#
+#   1. Create the KV namespace:
+#        npx wrangler kv:namespace create PRICING
+#      Wrangler prints the namespace ID. Paste it into the `id` field
+#      below (replacing REPLACE_WITH_KV_NAMESPACE_ID).
+#
+#   2. (Optional) Create a preview namespace for `wrangler dev`:
+#        npx wrangler kv:namespace create PRICING --preview
+#      Paste the preview ID into the `preview_id` field below.
+#
+#   3. Deploy:
+#        npx wrangler deploy
+#
+# For the Pages Functions path (no standalone Worker), the `main` and
+# `[[kv_namespaces]]` blocks above are not used — Pages reads the binding
+# from the Pages project settings (dashboard → Settings → Functions →
+# KV namespace bindings). See the README for the Pages setup recipe.
+
+name = "token-calculator-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# nodejs_compat enables the node:fs and node:path polyfills. The Workers
+# entry (src/index.ts) doesn't actually call any disk-touching functions,
+# but the shared lib modules export disk-based helpers alongside the KV
+# loaders (so the Node dev entry can import them). Without this flag,
+# Wrangler warns about the unused-but-bundled imports.
+compatibility_flags = ["nodejs_compat"]
+
+# KV namespace binding. The `id` MUST be replaced with a real namespace ID
+# (from `wrangler kv:namespace create PRICING`) before the first deploy.
+# The `preview_id` is only used by `wrangler dev`.
+[[kv_namespaces]]
+binding = "PRICING"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+# preview_id = "REPLACE_WITH_PREVIEW_KV_NAMESPACE_ID"
+
+# Cron trigger — fires src/scheduled.ts every 6 hours on the hour.
+# The schedule syntax is the standard cron format.
+[triggers]
+crons = ["0 */6 * * *"]
+
+# Build configuration. Wrangler uses esbuild by default; this is here so
+# future tweaks (e.g. adding a custom plugin) have a place to live.
+[build]
+command = ""
+
+# Variables available to the worker as `env.<NAME>` at runtime.
+# Override locally with `wrangler dev --var PRICING_KEY:cache`.
+[vars]
+PRICING_KEY = "cache"

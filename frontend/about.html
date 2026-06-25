@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>About AI Cost Calculator, Built by Andrew Morgado</title>
+  <meta name="description" content="AI Cost Calculator is an AI token calculator built by Andrew Morgado, a data science student learning the field of AI. Live OpenRouter pricing for 80 curated models.">
+  <meta name="author" content="Andrew Morgado">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/about.html">
+  <meta property="og:title" content="About AI Cost Calculator, Built by Andrew Morgado"></meta>
+  <meta property="og:description" content="AI Cost Calculator is an AI token calculator built by Andrew Morgado, a data science student learning the field of AI. Live OpenRouter pricing for 80 curated models.">
+  <meta property="og:url" content="https://aicostcalculator.net/about.html">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="./app.css">
+
+  <!-- E-E-A-T: schema.org Person block for Google author attribution.
+       Finance-adjacent content benefits from explicit author markup;
+       Google uses this for "Who" signals on YMYL pages. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Andrew Morgado",
+    "jobTitle": "Data Science student",
+    "description": "Learning the field of AI",
+    "url": "https://aicostcalculator.net/about.html",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "AI Cost Calculator"
+    }
+  }
+  </script>
+
+  <style>
+    /* ---- existing .legal styles (kept verbatim from previous about.html) ---- */
+    .legal { max-width: 680px; margin: 0 auto; padding: var(--s-4) var(--s-5) var(--s-8); }
+    .legal__back { display: inline-block; font-size: var(--t-sm); color: var(--ink-2); text-decoration: none; margin-bottom: var(--s-5); }
+    .legal__back:hover { color: var(--teal); }
+    .legal__title { font-family: var(--display); font-size: var(--t-4xl); font-weight: 400; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 var(--s-2); line-height: 1.1; }
+    .legal__sub { font-size: var(--t-sm); color: var(--ink-3); margin: 0 0 var(--s-6); display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: baseline; }
+    .legal__updated { font-family: var(--mono); font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); padding: 2px var(--s-2); border: 1px solid var(--rule); border-radius: var(--r-pill); background: var(--paper); }
+    .legal p { font-size: var(--t-base); line-height: 1.65; color: var(--ink-2); margin: 0 0 var(--s-4); }
+    .legal a { color: var(--teal); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--teal) 40%, transparent); text-underline-offset: 3px; }
+    .legal a:hover { color: var(--teal-deep); }
+    .legal strong { color: var(--ink); font-weight: 600; }
+    .legal code { font-family: var(--mono); font-size: 0.92em; padding: 1px 5px; background: var(--paper-2); border-radius: 4px; color: var(--ink); }
+    .legal__signoff { margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--rule); font-size: var(--t-sm); color: var(--ink-3); font-style: italic; }
+
+    /* ---- SEO-3: E-E-A-T additions ----
+       Reuse existing tokens (paper, ink, teal, display font) — no new
+       colors, no new fonts. Author + mission + methodology blocks all
+       live inside the same .legal column (max-width 680px). */
+
+    /* Mission callout — sits between intro paragraph and author bio. */
+    .legal__mission { font-size: var(--t-lg); line-height: 1.55; color: var(--ink); padding: var(--s-4) var(--s-5); border-left: 3px solid var(--teal); background: var(--teal-soft); border-radius: 0 var(--r-md) var(--r-md) 0; margin: 0 0 var(--s-6); }
+    .legal__mission strong { color: var(--ink); }
+
+    /* Author bio card. .section-heading is defined in app.css and gives
+       the small-caps DM Serif Display look that matches the rest of the site. */
+    .legal__author { margin: 0 0 var(--s-6); padding: var(--s-5); background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-lg); }
+    .legal__author .section-heading { margin: 0 0 var(--s-3); }
+    .legal__author-name { font-family: var(--display); font-size: var(--t-2xl); color: var(--ink); margin: 0 0 var(--s-1); line-height: 1.15; letter-spacing: -0.01em; }
+    .legal__author-role { font-size: var(--t-base); color: var(--teal-deep); font-style: italic; margin: 0 0 var(--s-3); font-weight: 500; }
+    .legal__author p { font-size: var(--t-base); line-height: 1.6; color: var(--ink-2); margin: 0; }
+
+    /* Methodology + Contact — share the small-caps section heading. */
+    .legal__section { margin: var(--s-6) 0; }
+    .legal__section .section-heading { margin: 0 0 var(--s-2); }
+    .legal__placeholder { font-style: normal; color: var(--warn); font-family: var(--mono); font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <a class="brand" href="./" aria-label="AI Cost Calculator (home)">
+      <img class="brand__mark" src="./logo.svg" alt="" width="44" height="22">
+      <span class="brand__word">AI Cost Calculator</span>
+    </a>
+  </header>
+
+  <main class="legal">
+    <a class="legal__back" href="./">← Back to the calculator</a>
+    <h1 class="legal__title">About AI Cost Calculator</h1>
+    <p class="legal__sub">
+      <span>A free, no-signup AI token-cost calculator.</span>
+      <span class="legal__updated">Last updated 2026-06-23</span>
+    </p>
+
+    <p class="legal__mission">
+      I built this because my OpenRouter bill kept surprising me and the
+      invoice never explained why. AI Cost Calculator reads OpenRouter's
+      live pricing feed, lets you pick a model and a workload, and gives
+      you a dollar figure you can quote without doing the arithmetic by
+      hand.
+    </p>
+
+    <section class="legal__author">
+      <h2 class="section-heading">About me</h2>
+      <p class="legal__author-name">Andrew Morgado</p>
+      <p class="legal__author-role">Data Science student, learning AI</p>
+      <p>
+        I'm a data science student working on my bachelor's degree. I have
+        been writing code since I was a kid, starting with Scratch, then
+        BASIC, then Python, and the through-line from then to now is the
+        same one: I like building tools that answer a question I keep
+        asking. AI is the most important shift I will see in my lifetime,
+        and tokenomics is the part of it most people skip over. The price
+        of a token decides who can ship, what they ship, and whether what
+        they ship survives contact with real users. I built AI Cost
+        Calculator because I needed that number myself, and I plan to
+        keep updating it as the economics of AI stop being a niche
+        question and start being baseline literacy.
+      </p>
+      <p>
+        I run agentic coding sessions on OpenClaw and Hermes through
+        OpenRouter, where every code-generation loop pulls a fresh batch
+        of tokens from a model I picked from a list of 300+ names I barely
+        understood, and every loop has two costs: tokens going in and
+        tokens coming out. Some loops cost a few cents. Some cost dollars.
+        The total adds up faster than I expected.
+      </p>
+      <p>
+        OpenRouter's invoice tells me what I spent last month. It does
+        not tell me which model was responsible, or whether switching
+        from Claude Sonnet to GPT-4o-mini would have saved me anything.
+        So I opened tabs for the pricing pages, copied them into another
+        AI, and asked it to compare. Then I did it again for Gemini. Then
+        for DeepSeek. Each round of asking cost another batch of tokens,
+        and by the time I had a rough answer I'd spent more time and
+        more money figuring out the savings than I would have saved by
+        switching in the first place.
+      </p>
+      <p>
+        AI Cost Calculator is what I built to skip that loop. Pick a
+        model. Pick a workload. Get a number in dollars. Compare two
+        models side by side. The math is the same math another AI would
+        have run, just faster, and the price comes from OpenRouter's
+        live feed instead of stale blog screenshots.
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/in/andrew-morgado-49a629264/" rel="noopener" target="_blank">LinkedIn</a>
+      </p>
+    </section>
+
+    <p>
+      The site started as a one-evening hack to stop me from redoing the
+      same arithmetic every time I wanted to swap a model. It now covers
+      80 curated models, the ones real developers ship against, plus
+      the long tail: open-weights, niche labs, auto-routers. The kind
+      of stuff the official per-vendor pricing pages don't list in one
+      place.
+    </p>
+
+    <p>
+      Pricing is live from <a href="https://openrouter.ai" rel="noopener">OpenRouter</a>.
+      OpenRouter's feed refreshes every six hours, which means the numbers
+      here are never more than a few hours behind vendor list prices.
+      Hand-curated entries for the major hosted APIs get cross-checked
+      against each vendor's pricing page on the same cycle, which matters
+      because some providers update their public pricing faster than
+      OpenRouter does.
+    </p>
+
+    <p>
+      The math is open. Every multiplier, every preset, the calculator
+      source. All linked from the <a href="./">main page</a>. I do not
+      track you, sign you up, run analytics, or set cookies. The
+      <a href="./privacy.html">privacy policy</a> lists everything the
+      site intentionally does not do. The site is boring on purpose.
+      It is a tool, not a funnel.
+    </p>
+
+    <p>
+      The <a href="./faq.html">FAQ</a> lives in the calculator page. The
+      <a href="https://api.aicostcalculator.net/models" rel="noopener">raw
+      model list</a> is public JSON, which matters if you want to build
+      on top of this instead of clicking through it.
+    </p>
+
+    <section class="legal__section">
+      <h2 class="section-heading">Methodology</h2>
+
+      <p>
+        <strong>Data sources.</strong> I pull prices from OpenRouter's
+        <code>/api/v1/models</code> endpoint. OpenRouter aggregates most
+        hosted providers (OpenAI, Anthropic, Google, Mistral, DeepSeek,
+        Meta, xAI, Cohere, Qwen, Perplexity, and the long tail) and
+        exposes them through one consistent schema. That's why I anchor
+        on it. Hand-curated entries in <code>config/pricing.json</code>
+        cover the direct-API surface for models OpenRouter doesn't carry.
+      </p>
+
+      <p>
+        <strong>Refresh cadence.</strong> A background loop re-fetches
+        the OpenRouter feed every six hours (configurable via
+        <code>OPENROUTER_REFRESH_SECONDS</code>) and rewrites the cache
+        in place. Every generated model page carries a
+        <em>Last updated</em> timestamp tied to the most recent
+        generation. The main calculator hits the live cache on every
+        request, so the numbers you see are at most a few hours behind
+        the vendor list price.
+      </p>
+
+      <p>
+        <strong>What the calculator covers.</strong> Input and output
+        token cost. Cached input, where the provider supports it (read
+        from <code>cached_input_per_1m</code>). Reasoning tokens
+        (<code>reasoning_per_1m</code> for o-series, R1, Claude
+        thinking, Gemini thinking models). Flat per-call tool cost
+        (<code>tool_call_cost</code>). Image input at a flat per-image
+        estimate. Agentic overhead: a 2,000-token system prompt, 5 tool
+        calls per loop, and a 1.4&times; retry multiplier that matches
+        what agent frameworks actually observe in production.
+      </p>
+
+      <p>
+        <strong>What it does not cover.</strong> Per-image variance
+        across providers. I use a flat per-image estimate, not the
+        actual multi-resolution cost. Batch API discounts (typically
+        50&nbsp;% off for OpenAI and Anthropic). Fine-tuning costs.
+        Self-hosted GPU cost (covered separately at the
+        <code>/calculate/local</code> endpoint, which factors GPU rental
+        plus power into a per-token rate). Enterprise contracts.
+        Regional pricing variations. Any post-hoc credits or rebates.
+        The page you got the number from was generated against the
+        headline on-demand rate. Run your own batch test before quoting
+        a customer.
+      </p>
+
+      <p>
+        <strong>How errors are handled.</strong> If OpenRouter is
+        unreachable on the scheduled refresh, the calculator keeps
+        serving the last cached price and surfaces a
+        <em>last verified X hours ago</em> banner. I never invent prices.
+        If a model disappears from the upstream feed, it disappears
+        from the catalog on the next refresh. I don't retroactively
+        patch in a replacement.
+      </p>
+
+      <p>
+        <strong>What I don't do.</strong> No tracking. No signup. No
+        analytics. No cookies. See the
+        <a href="./privacy.html">privacy policy</a> for the full list
+        of what's intentionally not on this site.
+      </p>
+
+      <p>
+        <strong>Scope (why 80 models and not 334).</strong> The
+        /models/ directory is a curated 80, not a dump of every
+        OpenRouter listing. I chose depth over breadth. Every page
+        here is for a model real developers search for. Every page
+        has a real FAQ, a real workload-cost breakdown, a real
+        related-models block. The full OpenRouter feed powers the
+        live <code>/models</code> API endpoint, which the calculator
+        itself uses, but does not produce 254 thin pages that add no
+        value beyond the main calculator.
+      </p>
+    </section>
+
+    <section class="legal__section">
+      <h2 class="section-heading">Contact</h2>
+      <p>
+        Reach out at andrewsagents@gmail.com.
+      </p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>
+      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./about.html">About</a> · <a href="./privacy.html">Privacy</a>
+    </p>
+  </footer>
+</body>
+</html>

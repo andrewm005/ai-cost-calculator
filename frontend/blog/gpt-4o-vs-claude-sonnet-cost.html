@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GPT-4o vs Claude Sonnet 4: Full Cost Breakdown | AI Cost Calculator</title>
+  <meta name="description" content="GPT-4o costs $2.50/$10.00 per 1M tokens. Claude Sonnet 4 costs $3.00/$15.00. Here is what that gap looks like on five real workloads.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/gpt-4o-vs-claude-sonnet-cost.html">
+  <meta property="og:title" content="GPT-4o vs Claude Sonnet 4: Full Cost Breakdown | AI Cost Calculator">
+  <meta property="og:description" content="GPT-4o vs Claude Sonnet 4 — five workloads, real numbers, the per-call gap.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/gpt-4o-vs-claude-sonnet-cost.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GPT-4o vs Claude Sonnet 4: Full Cost Breakdown | AI Cost Calculator">
+  <meta name="twitter:description" content="GPT-4o vs Claude Sonnet 4 — five workloads, real numbers, the per-call gap.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type": "Article", "headline": "GPT-4o vs Claude Sonnet 4: Full Cost Breakdown", "description": "GPT-4o costs $2.50/$10.00 per 1M tokens. Claude Sonnet 4 costs $3.00/$15.00. Here is what that gap looks like on five real workloads.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-23", "mainEntityOfPage": "https://aicostcalculator.net/blog/gpt-4o-vs-claude-sonnet-cost.html", "url": "https://aicostcalculator.net/blog/gpt-4o-vs-claude-sonnet-cost.html"},
+    {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "GPT-4o vs Claude Sonnet 4", "item": "https://aicostcalculator.net/blog/gpt-4o-vs-claude-sonnet-cost.html"}]},
+    {"@type": "FAQPage", "mainEntity": [
+      {"@type": "Question", "name": "Is GPT-4o cheaper than Claude Sonnet 4?", "acceptedAnswer": {"@type": "Answer", "text": "On the rate card, yes. GPT-4o is $2.50 per 1M input and $10.00 per 1M output. Claude Sonnet 4 is $3.00 per 1M input and $15.00 per 1M output. The gap is 20% on input and 50% on output. On a typical chat-shaped call (1,000 in + 500 out), GPT-4o runs $0.0075 vs Claude Sonnet 4 at $0.0105 — a $0.003 per-call gap that compounds at scale."}},
+      {"@type": "Question", "name": "Does Claude's prompt cache make it cheaper in practice?", "acceptedAnswer": {"@type": "Answer", "text": "Often yes. Anthropic publishes a cached_input_per_1m at $0.30 for Sonnet 4, which is 10% of the input rate. OpenAI does not publish a cache rate for GPT-4o (cache is supported on GPT-4o mini and the GPT-4.1 family but not on the base GPT-4o as of mid-2026). For any workload with a long cacheable system prompt, Claude Sonnet 4 with cache hits can come out cheaper than GPT-4o on the same workload."}},
+      {"@type": "Question", "name": "Which has the longer context window?", "acceptedAnswer": {"@type": "Answer", "text": "Claude Sonnet 4 supports a 1,000,000-token context window. GPT-4o tops out at 128,000 tokens. For long-document tasks — full-codebase review, long-PDF summarization, multi-document RAG — Claude Sonnet 4 is the only viable flagship-tier option of the two."}},
+      {"@type": "Question", "name": "Which is better for coding?", "acceptedAnswer": {"@type": "Answer", "text": "Both are competitive on coding tasks. Claude Sonnet 4 has a longer context window and stronger performance on multi-file refactors. GPT-4o has the broader ecosystem of tooling and slightly faster latency on short completions. The right choice is usually whichever you can route the cacheable prefix through — see the prompt caching article for the structural details."}}
+    ]}
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>GPT-4o vs Claude Sonnet 4</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">GPT-4o vs Claude Sonnet 4: Full Cost Breakdown</h1>
+    <p class="blog-lede">
+      GPT-4o and Claude Sonnet 4 are the two flagship models most teams
+      compare for general-purpose workloads. The headline rates say GPT-4o
+      is cheaper; the cache rates and context window say Claude Sonnet 4
+      is more capable on long-context workloads. This article runs both
+      models through five realistic workloads and shows what the bill
+      looks like in each case, with no multipliers or hand-waving.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>The headline rates</h2>
+    <p>
+      On OpenRouter as of mid-2026, GPT-4o is $2.50 per 1M input tokens
+      and $10.00 per 1M output tokens. Claude Sonnet 4 is $3.00 per 1M
+      input and $15.00 per 1M output. The input gap is 20%; the output
+      gap is 50%. On a chat-shaped call with equal input and output,
+      GPT-4o runs roughly 29% cheaper.
+    </p>
+    <p>
+      But the headline rate is the input to a real estimate, not the
+      estimate itself. Three multipliers shape the bill: prompt caching,
+      context window, and the typical workload shape. Prompt caching
+      alone can flip the comparison.
+    </p>
+
+    <h2>The cache rates</h2>
+    <p>
+      <a href="../models/openai-gpt-4o.html">GPT-4o</a> does not publish
+      a cached_input_per_1m rate on OpenRouter as of mid-2026 — OpenAI
+      supports prompt caching on GPT-4o mini and the GPT-4.1 family, but
+      not on the base GPT-4o. <a href="../models/anthropic-claude-sonnet-4.html">Claude
+      Sonnet 4</a> publishes a cache rate of $0.30 per 1M, which is 10%
+      of its $3.00 input rate. For any application that ships a long
+      system prompt on every call, Claude Sonnet 4's cache rate is the
+      relevant input rate, and GPT-4o's missing cache rate means there
+      is no cache to compare against.
+    </p>
+    <p>
+      A worked example. A 2,000-token system prompt shipped on every
+      call, plus a 300-token user message. On GPT-4o the full 2,300
+      tokens bill at $2.50 per 1M = $0.00575 per call. On Claude Sonnet
+      4 with the system prompt cacheable, the 2,000 system tokens bill
+      at $0.30 per 1M ($0.0006) and the 300 user tokens bill at $3.00
+      per 1M ($0.0009) for a total of $0.0015 per call — about a
+      quarter of GPT-4o's input cost. The cache flips the comparison.
+    </p>
+
+    <h2>The context window</h2>
+    <p>
+      Claude Sonnet 4 has a 1,000,000-token context window. GPT-4o tops
+      out at 128,000. For workloads that need to fit a large document,
+      a multi-file codebase, or a long retrieved context into a single
+      prompt, Claude Sonnet 4 is the only flagship-tier option of the
+      two. Anthropic charges a premium for input beyond 200K tokens, so
+      the very-long-context math is more nuanced than the headline rate
+      suggests, but the 1M-token ceiling is real and GPT-4o can't match
+      it.
+    </p>
+    <p>
+      For typical chat and short RAG workloads under 100K tokens, the
+      context window is not the constraint and the headline rate is
+      the right basis for comparison. The 1M-token context window is
+      the differentiator when the workload actually uses it.
+    </p>
+
+    <h2>Five workloads, side by side</h2>
+    <p>
+      Five standard workload shapes, computed at the published rates
+      with no caching applied:
+    </p>
+
+    <h3>Chat (1,000 in + 500 out)</h3>
+    <p>
+      GPT-4o: 1,000 × $2.50/M + 500 × $10.00/M = $0.0025 + $0.005 =
+      $0.0075. Claude Sonnet 4: 1,000 × $3.00/M + 500 × $15.00/M =
+      $0.003 + $0.0075 = $0.0105. Gap: $0.003 per call, GPT-4o cheaper.
+      At 1M calls/month, GPT-4o is $7,500 vs Sonnet at $10,500.
+    </p>
+
+    <h3>RAG (5,000 in + 1,000 out)</h3>
+    <p>
+      GPT-4o: 5,000 × $2.50/M + 1,000 × $10.00/M = $0.0125 + $0.010 =
+      $0.0225. Claude Sonnet 4: 5,000 × $3.00/M + 1,000 × $15.00/M =
+      $0.015 + $0.015 = $0.030. Gap: $0.0075 per call. At 200K
+      calls/month, GPT-4o is $4,500 vs Sonnet at $6,000.
+    </p>
+
+    <h3>Coding (3,000 in + 2,000 out)</h3>
+    <p>
+      GPT-4o: 3,000 × $2.50/M + 2,000 × $10.00/M = $0.0075 + $0.020 =
+      $0.0275. Claude Sonnet 4: 3,000 × $3.00/M + 2,000 × $15.00/M =
+      $0.009 + $0.030 = $0.039. Gap: $0.0115 per call. At 100K
+      calls/month, GPT-4o is $2,750 vs Sonnet at $3,900.
+    </p>
+
+    <h3>Agentic (8,000 in + 4,000 out)</h3>
+    <p>
+      GPT-4o: 8,000 × $2.50/M + 4,000 × $10.00/M = $0.020 + $0.040 =
+      $0.060. Claude Sonnet 4: 8,000 × $3.00/M + 4,000 × $15.00/M =
+      $0.024 + $0.060 = $0.084. Gap: $0.024 per call. At 50K
+      calls/month, GPT-4o is $3,000 vs Sonnet at $4,200.
+    </p>
+
+    <h3>Long context (50,000 in + 5,000 out)</h3>
+    <p>
+      GPT-4o: 50,000 × $2.50/M + 5,000 × $10.00/M = $0.125 + $0.050 =
+      $0.175. Claude Sonnet 4: 50,000 × $3.00/M + 5,000 × $15.00/M =
+      $0.150 + $0.075 = $0.225. Gap: $0.050 per call. But GPT-4o's
+      context window caps at 128K, so a workload that needs more than
+      128K of input has to use Sonnet (or split the work across
+      multiple GPT-4o calls, which adds latency).
+    </p>
+
+    <h2>What the math says</h2>
+    <p>
+      Across the five workloads, GPT-4o is consistently 20-30% cheaper
+      on the headline rate. The gap widens on workloads that are
+      output-heavy (the agentic workload is 40% output and shows a
+      $0.024 gap) and shrinks on workloads that are input-heavy (the
+      long-context workload shows a $0.050 gap but on a larger base
+      cost). The cache multiplier, when applied to Claude Sonnet 4 on
+      a cacheable prefix, flips the comparison on any workload with a
+      substantial system prompt.
+    </p>
+    <p>
+      A simple decision rule. If your application has a long cacheable
+      system prompt (more than 1,500 tokens), Claude Sonnet 4 with
+      cache hits is the cheaper option. If it doesn't, GPT-4o is the
+      cheaper option on every workload shape. If you need a context
+      window above 128K tokens, Claude Sonnet 4 is the only option of
+      the two. The full
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o
+      vs Claude Sonnet 4 side-by-side</a> on the compare pages walks
+      through more workload shapes.
+    </p>
+
+    <h2>When the answer is "both"</h2>
+    <p>
+      Many production systems route traffic across both models. The
+      cheap, fast path is GPT-4o for short replies, classification,
+      and most chat traffic. The slow, capable path is Claude Sonnet
+      4 for long-context work, multi-file refactors, and any task
+      where the cacheable prefix makes Sonnet cheaper than GPT-4o.
+      The router is a small classifier that decides per request. The
+      <a href="./reduce-claude-gpt-api-costs.html">cost reduction
+      article</a> walks through the routing pattern in more detail.
+    </p>
+
+    <h2>Quality differences that matter for cost</h2>
+    <p>
+      The headline rate gap is meaningless if the cheaper model can't
+      do the work. Two areas where the quality difference shows up
+      directly in the bill: instruction-following and tool use.
+      GPT-4o is more consistent at following complex multi-step
+      instructions in a single prompt. Claude Sonnet 4 is more
+      consistent at using tools correctly on the first call. For a
+      coding agent that calls tools ten times per task, the difference
+      between 8 and 9 successful first-try tool calls is the
+      difference between ten API calls and eleven — a 10% bill
+      increase from one extra tool call per task.
+    </p>
+    <p>
+      The right comparison here is on a workload the application
+      actually runs, not on a benchmark. If the application is a chat
+      assistant that does not call tools, GPT-4o is almost always
+      cheaper at acceptable quality. If the application is a
+      multi-tool agent, Claude Sonnet 4's stronger tool-use
+      consistency can save more than the headline rate gap costs.
+      The
+      <a href="./agentic-workflow-token-cost.html">agentic workflow
+      article</a> walks through the multi-step cost math in detail.
+    </p>
+
+    <h2>Latency and throughput</h2>
+    <p>
+      Latency is not a direct line item on the bill, but it shapes
+      how many requests the system can serve and how many concurrent
+      users it can support. GPT-4o's median time-to-first-token on
+      OpenRouter is in the 200-400ms range for short prompts. Claude
+      Sonnet 4 sits in a similar range but with more variance on
+      long-context calls — the time-to-first-token for a 100K-token
+      prompt is meaningfully higher on Sonnet 4 than on GPT-4o,
+      because GPT-4o caps at 128K and isn't doing that workload at
+      all.
+    </p>
+    <p>
+      For real-time chat, GPT-4o's lower variance on short prompts
+      makes it the easier choice. For batch workloads where latency
+      does not matter, throughput per dollar is the right metric, and
+      Sonnet 4's higher output quality on long-context tasks can
+      outweigh the rate gap.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      Per-model rates from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a>. Cache pricing per Anthropic's
+      published prompt caching docs.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the models cited here</h2>
+      <ul>
+        <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
+        <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
+        <li><a href="../models/openai-gpt-4-1.html">GPT-4.1</a></li>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./every-major-llm-cost-table.html"><strong>Every Major LLM in One Cost Table (2026)</strong><span>All major flagships in one place.</span></a></li>
+        <li><a href="./reduce-claude-gpt-api-costs.html"><strong>How to Reduce Claude and GPT API Costs by 60%</strong><span>Caching, tiering, trimming.</span></a></li>
+        <li><a href="./cache-tokens-savings.html"><strong>Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</strong><span>Make the cache hit.</span></a></li>
+        <li><a href="./how-to-estimate-llm-api-costs.html"><strong>How to Estimate LLM API Costs</strong><span>The four-step method.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">Is GPT-4o cheaper than Claude Sonnet 4?</p><p class="blog-faq__a">On the rate card, yes. GPT-4o is $2.50 per 1M input and $10.00 per 1M output. Claude Sonnet 4 is $3.00 per 1M input and $15.00 per 1M output. The gap is 20% on input and 50% on output.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Does Claude's prompt cache make it cheaper in practice?</p><p class="blog-faq__a">Often yes. Anthropic publishes a cached_input_per_1m at $0.30 for Sonnet 4, which is 10% of the input rate. OpenAI does not publish a cache rate for GPT-4o. For any workload with a long cacheable system prompt, Claude Sonnet 4 with cache hits can come out cheaper than GPT-4o on the same workload.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Which has the longer context window?</p><p class="blog-faq__a">Claude Sonnet 4 supports a 1,000,000-token context window. GPT-4o tops out at 128,000 tokens. For long-document tasks, Claude Sonnet 4 is the only flagship-tier option of the two.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Which is better for coding?</p><p class="blog-faq__a">Both are competitive on coding tasks. Claude Sonnet 4 has a longer context window and stronger performance on multi-file refactors. GPT-4o has the broader ecosystem of tooling and slightly faster latency on short completions.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

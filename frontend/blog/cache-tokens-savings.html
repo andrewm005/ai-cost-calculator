@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens | AI Cost Calculator</title>
+  <meta name="description" content="Prompt caching cuts the input rate by 50% to 90%. Anthropic, OpenAI, and Google all publish cache rates: most teams never turn them on. Here's the math.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/cache-tokens-savings.html">
+  <meta property="og:title" content="Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens | AI Cost Calculator">
+  <meta property="og:description" content="Prompt caching cuts the input rate by 50% to 90%. How it works and what it saves.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/cache-tokens-savings.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens | AI Cost Calculator">
+  <meta name="twitter:description" content="Prompt caching cuts the input rate by 50% to 90%. How it works and what it saves.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {"@type": "Article", "headline": "Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens", "description": "Prompt caching cuts the input rate by 50% to 90%. Anthropic, OpenAI, and Google all publish cache rates — most teams never turn them on. Here's the math.", "author": {"@type": "Person", "name": "Andrew Morgado"}, "publisher": {"@type": "Organization", "name": "AI Cost Calculator", "url": "https://aicostcalculator.net/"}, "datePublished": "2026-06-23", "dateModified": "2026-06-23", "mainEntityOfPage": "https://aicostcalculator.net/blog/cache-tokens-savings.html", "url": "https://aicostcalculator.net/blog/cache-tokens-savings.html"},
+    {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "Prompt Caching", "item": "https://aicostcalculator.net/blog/cache-tokens-savings.html"}]},
+    {"@type": "FAQPage", "mainEntity": [
+      {"@type": "Question", "name": "How much does prompt caching save?", "acceptedAnswer": {"@type": "Answer", "text": "Anthropic's cache rate is 10% of input — Claude Sonnet 4 caches at $0.30 vs $3.00 input per 1M. OpenAI's cache rate is 50% off input — GPT-4.1 caches at $0.50 vs $2.00. Google's Gemini family has implicit caching that activates above a token threshold. For a workload with a 2,000-token cacheable system prompt shipped on every call, prompt caching typically cuts the input line by 50-90%."}},
+      {"@type": "Question", "name": "Does the cache have a TTL?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Anthropic's cache TTL is 5 minutes by default, extendable to 1 hour with an explicit breakpoint. OpenAI's cache TTL is 5-10 minutes depending on the model. Google's implicit cache is best-effort with no explicit TTL — it activates when the prefix matches a recent request. A high-traffic application hits the cache most of the time; a low-traffic application misses often."}},
+      {"@type": "Question", "name": "What if the prefix changes between calls?", "acceptedAnswer": {"@type": "Answer", "text": "The cache misses. Anthropic and OpenAI both require the prefix to be byte-identical to count as a cache hit. If you change a single token in the system prompt, the cache miss starts from that token forward. The cache is most useful for the parts of the prompt that do not change — the persona, the tool definitions, the long retrieved context that updates less frequently than the user message."}},
+      {"@type": "Question", "name": "How do I structure my prompt for cache hits?", "acceptedAnswer": {"@type": "Answer", "text": "Put the cacheable content first. The system prompt, tool definitions, and any stable retrieved context go at the start of the prompt. The user message and any per-call retrieved context go at the end. Anthropic supports up to four cache breakpoints per prompt, so a long system prompt can be split into the stable prefix (cacheable) and the variable suffix (per-call). OpenRouter's models pass through the upstream provider's cache mechanics unchanged."}}
+    ]}
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>Prompt Caching</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</h1>
+    <p class="blog-lede">
+      Prompt caching is the largest single cost saver in any LLM bill
+      that ships a long prefix on every call. Anthropic's cache rate
+      is 10% of input. OpenAI's cache rate is 50% off input on
+      supported models. Google's Gemini family has implicit caching
+      on prompts over a token threshold. Most production applications
+      are eligible for cache hits on the bulk of their input tokens
+      and never turn it on. This article is about how to turn it on
+      and what it saves.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>What prompt caching is</h2>
+    <p>
+      Prompt caching is a vendor-side optimization. When you send a
+      prompt to the model, the vendor checks whether the opening
+      tokens match a recent request. If they do, the vendor serves
+      the cached prefix from memory and charges you the cache rate
+      for those tokens instead of the input rate. The model still
+      produces the same output as if it had processed the prefix
+      fresh — the cache is invisible to you and to the model.
+    </p>
+    <p>
+      The catch is that the cache is prefix-based. The vendor has
+      to see the same opening tokens to count them as cached. If
+      the user message comes first and the system prompt is
+      appended at the end, the cache misses every time. The
+      structure of your prompt is the difference between a 90%
+      cache hit rate and a 0% cache hit rate.
+    </p>
+
+    <h2>The cache rates</h2>
+    <p>
+      Anthropic's cache rate is 10% of input. Claude Sonnet 4
+      lists input at $3.00 per 1M tokens and cache at $0.30 per
+      1M. Claude Opus 4 is $15.00 input / $1.50 cache. Claude
+      Haiku 4.5 is $1.00 input / $0.10 cache. A 10x discount
+      across the board.
+    </p>
+    <p>
+      OpenAI's cache rate is 50% off input on supported models.
+      GPT-4.1 is $2.00 input / $0.50 cache. GPT-4.1 mini is $0.40
+      / $0.10. GPT-4o mini is $0.15 / $0.075. GPT-4o does not
+      publish a cache rate on OpenRouter as of mid-2026 — the cache
+      is supported on the GPT-4.1 family and on GPT-4o mini but
+      not on the base GPT-4o.
+    </p>
+    <p>
+      Google's Gemini family uses implicit caching. Gemini 2.5 Pro
+      caches at $0.125 per 1M (10% of the $1.25 input rate).
+      Gemini 2.5 Flash caches at $0.030 per 1M (10% of the $0.30
+      input rate). The implicit cache activates when the prefix
+      matches a recent request above a token threshold — typically
+      1,000-2,000 tokens. No explicit breakpoint is required.
+    </p>
+
+    <h2>How big the savings are</h2>
+    <p>
+      A representative production application: 2,000-token system
+      prompt shipped on every call, 300-token user message,
+      250-token assistant reply. At 1 million calls per month on
+      <a href="../models/anthropic-claude-sonnet-4.html">Claude
+      Sonnet 4</a>:
+    </p>
+    <table class="blog-table">
+      <thead><tr><th>Configuration</th><th>Input rate</th><th>Monthly input cost</th><th>Reduction</th></tr></thead>
+      <tbody>
+        <tr><td>No caching (full prefix at input rate)</td><td>$3.00/M</td><td>$6,900</td><td>—</td></tr>
+        <tr><td>Anthropic cache hits on 2,000-token system prompt</td><td>$0.30 (2K) + $3.00 (0.3K)</td><td>$1,500</td><td>78%</td></tr>
+        <tr><td>Move user message into same prefix (full cache)</td><td>$0.30/M (all 2,300)</td><td>$690</td><td>90%</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The 90% reduction on the third row is the upper bound. In
+      practice, the user message changes every call, so the cache
+      hits the system prompt only. The 78% reduction is realistic
+      for any application with a stable system prompt shipped on
+      every call. The
+      <a href="../compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o
+      vs Claude Sonnet 4 comparison</a> shows the same cache math
+      applied to the flagship pair.
+    </p>
+
+    <h2>The cache TTL</h2>
+    <p>
+      Caches expire. Anthropic's default TTL is 5 minutes; it can
+      be extended to 1 hour with an explicit cache breakpoint on
+      the prompt. OpenAI's cache TTL is 5-10 minutes depending
+      on the model. Google's implicit cache has no explicit TTL
+      — it activates when the prefix matches a recent request.
+    </p>
+    <p>
+      The TTL matters less than most teams think. A high-traffic
+      application (more than 1 call per minute on the same prefix)
+      hits the cache most of the time. A low-traffic application
+      (less than 1 call per 5 minutes on the same prefix) misses
+      often and the cache savings are smaller.
+    </p>
+    <p>
+      For a low-traffic application, the right move is to set an
+      explicit long-TTL breakpoint on the stable prefix and re-send
+      the prefix periodically to keep the cache warm. The cost of
+      keeping a 5,000-token prefix warm once per hour is the cache
+      rate for 5,000 tokens every hour — effectively free.
+    </p>
+
+    <h2>How to structure prompts for cache hits</h2>
+    <p>
+      The mechanical rule: put the cacheable content first. The
+      system prompt, tool definitions, and any stable retrieved
+      context go at the start of the prompt. The user message and
+      any per-call retrieved context go at the end.
+    </p>
+    <p>
+      Anthropic supports up to four cache breakpoints per prompt.
+      A long system prompt can be split into the stable prefix
+      (cacheable, hits every time) and the variable suffix
+      (per-call, billed at input rate). The breakpoint is a marker
+      that tells the vendor "everything before this is cacheable,
+      everything after is fresh." A 5,000-token system prompt with
+      a breakpoint after the first 4,000 tokens means the first
+      4,000 hit the cache and the last 1,000 bill at input rate.
+    </p>
+    <p>
+      A common structural mistake is to put a timestamp or a
+      request ID at the start of the system prompt. That single
+      variable token invalidates the entire cache on every call.
+      Timestamps and request IDs go at the end of the prompt or
+      inside the user message.
+    </p>
+
+    <h2>What does not cache</h2>
+    <p>
+      The cache is for the prefix. The user message and the
+      per-call retrieved context are not cacheable — they change
+      every call. The output is not cacheable. Reasoning tokens
+      are not cacheable. Tool call results are not cacheable
+      (they change every call).
+    </p>
+    <p>
+      For an application with a 500-token system prompt and a
+      5,000-token user message, the cacheable portion is 500
+      tokens out of 5,500 — about 9% of the input. The cache
+      discount on 9% of input is a 9% reduction on the input
+      line. That's still meaningful but it's not the 78-90%
+      reduction the same application gets with a 2,000-token
+      system prompt. The cache is most valuable when the
+      cacheable prefix is a large fraction of the total input.
+    </p>
+
+    <h2>The implementation checklist</h2>
+    <p>
+      Five things that have to be true for prompt caching to
+      deliver the savings. First, the cacheable prefix is at the
+      start of the prompt, not appended at the end. Second, the
+      prefix is byte-identical across calls — no timestamps, no
+      request IDs, no per-call variables in the cached portion.
+      Third, the breakpoint markers are set explicitly for the
+      Anthropic API (or the implicit cache is large enough to
+      activate for Google). Fourth, the cache TTL is longer than
+      the typical interval between calls with the same prefix.
+      Fifth, the application sends the prefix on every call even
+      when the user message is short — the vendor needs the
+      prefix to do the cache lookup.
+    </p>
+    <p>
+      For most production applications, items 1-3 are mechanical
+      and ship in an afternoon. Items 4-5 require some thought
+      about traffic patterns and prompt structure but are also
+      straightforward. The savings compound: a 78% reduction on
+      the input line is roughly a 50% reduction on the total
+      bill for a chat-shaped workload.
+    </p>
+
+    <h2>The calculator</h2>
+    <p>
+      Plug your model's published rate into the
+      <a href="../">AI Cost Calculator</a> with your expected input
+      and output token counts and the call volume per month. Flip
+      the cache toggle and the number on the right will drop by
+      50% to 90% on the input line — that's the size of the lever
+      you're leaving on the table if you have not turned caching
+      on yet.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      Per-model cache rates from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a>. Cache mechanics per Anthropic's
+      published prompt caching docs and Google's Gemini implicit
+      caching docs.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the cache-friendly models</h2>
+      <ul>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4-5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></li>
+        <li><a href="../models/openai-gpt-4-1.html">GPT-4.1</a></li>
+        <li><a href="../models/openai-gpt-4-1-mini.html">GPT-4.1 mini</a></li>
+        <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+        <li><a href="../models/google-gemini-2-5-flash.html">Gemini 2.5 Flash</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./system-prompt-tokens-bill.html"><strong>How System Prompt Tokens Show Up on Your Bill</strong><span>The hidden per-call tax.</span></a></li>
+        <li><a href="./reduce-claude-gpt-api-costs.html"><strong>How to Reduce Claude and GPT API Costs by 60%</strong><span>The five tactics.</span></a></li>
+        <li><a href="./how-to-estimate-llm-api-costs.html"><strong>How to Estimate LLM API Costs</strong><span>The four-step method.</span></a></li>
+        <li><a href="./openrouter-pricing-explained.html"><strong>OpenRouter Pricing Explained</strong><span>The full rate card breakdown.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">How much does prompt caching save?</p><p class="blog-faq__a">Anthropic's cache rate is 10% of input. OpenAI's cache rate is 50% off input on supported models. Google's Gemini family has implicit caching. For a workload with a 2,000-token cacheable system prompt shipped on every call, prompt caching typically cuts the input line by 50-90%.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Does the cache have a TTL?</p><p class="blog-faq__a">Yes. Anthropic's cache TTL is 5 minutes by default, extendable to 1 hour. OpenAI's is 5-10 minutes. Google's implicit cache is best-effort with no explicit TTL. A high-traffic application hits the cache most of the time; a low-traffic application misses often.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">What if the prefix changes between calls?</p><p class="blog-faq__a">The cache misses. Anthropic and OpenAI both require the prefix to be byte-identical to count as a cache hit. If you change a single token, the cache miss starts from that token forward. Put stable content at the start; variable content at the end.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How do I structure my prompt for cache hits?</p><p class="blog-faq__a">Put the cacheable content first — system prompt, tool definitions, stable retrieved context. The user message and per-call context go at the end. Anthropic supports up to four cache breakpoints per prompt. Timestamps and request IDs must not appear in the cached portion.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1292 @@
+{
+  "generated_at": "2026-06-25",
+  "model_count": 80,
+  "pages_written": 81,
+  "min_visible_word_count": 793,
+  "max_visible_word_count": 1488,
+  "median_visible_word_count": 1059,
+  "providers": [
+    "allenai",
+    "amazon",
+    "anthropic",
+    "baidu",
+    "bytedance-seed",
+    "cognitivecomputations",
+    "cohere",
+    "deepseek",
+    "google",
+    "ibm-granite",
+    "inclusionai",
+    "meta-llama",
+    "minimax",
+    "mistralai",
+    "moonshotai",
+    "morph",
+    "nousresearch",
+    "nvidia",
+    "openai",
+    "perplexity",
+    "poolside",
+    "qwen",
+    "z-ai"
+  ],
+  "free_model_count": 14,
+  "keep_slug_count": 120,
+  "keep_slugs_missing_from_cache": [
+    "anthropic-claude-3-5-haiku-latest",
+    "anthropic-claude-3-5-sonnet-latest",
+    "anthropic-claude-3-7-sonnet",
+    "anthropic-claude-3-opus-latest",
+    "anthropic-claude-haiku-4",
+    "cohere-command-r",
+    "cohere-command-r-plus",
+    "cohere-command-r7b",
+    "deepseek-deepseek-chat-v3",
+    "deepseek-deepseek-chat-v3:free",
+    "deepseek-deepseek-coder",
+    "google-gemini-1-5-flash",
+    "google-gemini-1-5-flash-8b",
+    "google-gemini-1-5-pro",
+    "google-gemini-2-0-flash",
+    "google-gemini-2-0-flash-thinking",
+    "google-gemini-2-0-pro",
+    "google-gemma-2-9b-it:free",
+    "meta-llama-llama-3-1-405b-instruct",
+    "meta-llama-llama-3-2-90b-vision-instruct",
+    "meta-llama-llama-3-3-8b-instruct",
+    "meta-llama-llama-guard-3-8b",
+    "mistralai-codestral-latest",
+    "mistralai-mistral-7b-instruct",
+    "mistralai-mistral-7b-instruct:free",
+    "mistralai-mistral-large-latest",
+    "mistralai-mistral-small-latest",
+    "mistralai-mixtral-8x7b-instruct",
+    "mistralai-pixtral-large-2411",
+    "openai-o1-mini",
+    "openrouter-auto",
+    "perplexity-llama-3.1-sonar-large-128k-online",
+    "perplexity-sonar-reasoning",
+    "qwen-qwen-2-5-72b-instruct:free",
+    "qwen-qwen-2-5-vl-72b-instruct",
+    "qwen-qwen-2-72b-instruct",
+    "qwen-qwq-32b-preview",
+    "x-ai-grok-2",
+    "x-ai-grok-2-mini",
+    "x-ai-grok-3"
+  ],
+  "pages_deleted": [],
+  "template_distribution": {
+    "A": 27,
+    "B": 17,
+    "C": 36
+  },
+  "enriched_pages_count": 39,
+  "models": [
+    {
+      "id": "openrouter/allenai/olmo-3-32b-think",
+      "slug": "allenai-olmo-3-32b-think",
+      "display_name": "AllenAI: Olmo 3 32B Think",
+      "provider": "allenai",
+      "is_free": false,
+      "template": "B",
+      "enriched": true,
+      "related_slugs": [
+        "minimax-minimax-m2-5",
+        "openai-gpt-4o-mini",
+        "openai-gpt-4o-mini-search-preview",
+        "z-ai-glm-4-5-air",
+        "meta-llama-llama-3-1-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/amazon/nova-lite-v1",
+      "slug": "amazon-nova-lite-v1",
+      "display_name": "Amazon: Nova Lite 1.0",
+      "provider": "amazon",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "amazon-nova-pro-v1",
+        "z-ai-glm-4-7-flash",
+        "meta-llama-llama-3-2-3b-instruct",
+        "ibm-granite-granite-4-1-8b",
+        "meta-llama-llama-3-2-1b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/amazon/nova-pro-v1",
+      "slug": "amazon-nova-pro-v1",
+      "display_name": "Amazon: Nova Pro 1.0",
+      "provider": "amazon",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "amazon-nova-lite-v1",
+        "deepseek-deepseek-r1",
+        "morph-morph-v3-large",
+        "qwen-qwen-2-5-coder-32b-instruct",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/anthropic/claude-3-haiku",
+      "slug": "anthropic-claude-3-haiku",
+      "display_name": "Anthropic: Claude 3 Haiku",
+      "provider": "anthropic",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "anthropic-claude-opus-4",
+        "anthropic-claude-sonnet-4",
+        "bytedance-seed-seed-1-6",
+        "minimax-minimax-m2",
+        "baidu-ernie-4-5-vl-424b-a47b"
+      ]
+    },
+    {
+      "id": "openrouter/anthropic/claude-opus-4",
+      "slug": "anthropic-claude-opus-4",
+      "display_name": "Anthropic: Claude Opus 4",
+      "provider": "anthropic",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "anthropic-claude-3-haiku",
+        "anthropic-claude-sonnet-4",
+        "openai-o1",
+        "openai-gpt-4-turbo"
+      ]
+    },
+    {
+      "id": "openrouter/anthropic/claude-sonnet-4",
+      "slug": "anthropic-claude-sonnet-4",
+      "display_name": "Anthropic: Claude Sonnet 4",
+      "provider": "anthropic",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "anthropic-claude-opus-4",
+        "anthropic-claude-3-haiku",
+        "perplexity-sonar-pro",
+        "cohere-command-a",
+        "google-gemini-2-5-pro"
+      ]
+    },
+    {
+      "id": "openrouter/anthropic/claude-sonnet-4.5",
+      "slug": "anthropic-claude-sonnet-4-5",
+      "display_name": "Anthropic: Claude Sonnet 4.5",
+      "provider": "anthropic",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "anthropic-claude-opus-4",
+        "anthropic-claude-3-haiku",
+        "perplexity-sonar-pro",
+        "cohere-command-a",
+        "google-gemini-2-5-pro"
+      ]
+    },
+    {
+      "id": "openrouter/baidu/ernie-4.5-vl-424b-a47b",
+      "slug": "baidu-ernie-4-5-vl-424b-a47b",
+      "display_name": "Baidu: ERNIE 4.5 VL 424B A47B",
+      "provider": "baidu",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-6",
+        "meta-llama-llama-3-1-70b-instruct",
+        "minimax-minimax-m1",
+        "openai-gpt-4-1-mini",
+        "minimax-minimax-01"
+      ]
+    },
+    {
+      "id": "openrouter/bytedance-seed/seed-1.6",
+      "slug": "bytedance-seed-seed-1-6",
+      "display_name": "ByteDance Seed: Seed 1.6",
+      "provider": "bytedance-seed",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "anthropic-claude-3-haiku",
+        "minimax-minimax-m2",
+        "minimax-minimax-m2-7",
+        "deepseek-deepseek-chat-v3-1",
+        "z-ai-glm-5"
+      ]
+    },
+    {
+      "id": "openrouter/cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+      "slug": "cognitivecomputations-dolphin-mistral-24b-venice-edition:free",
+      "display_name": "Venice: Uncensored (free)",
+      "provider": "cognitivecomputations",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/cohere/command-a",
+      "slug": "cohere-command-a",
+      "display_name": "Cohere: Command A",
+      "provider": "cohere",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "cohere-north-mini-code:free",
+        "openai-gpt-4o",
+        "openai-gpt-4o-search-preview",
+        "anthropic-claude-sonnet-4"
+      ]
+    },
+    {
+      "id": "openrouter/cohere/north-mini-code:free",
+      "slug": "cohere-north-mini-code:free",
+      "display_name": "Cohere: North Mini Code (free)",
+      "provider": "cohere",
+      "is_free": true,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "cohere-command-a"
+      ]
+    },
+    {
+      "id": "openrouter/deepseek/deepseek-chat-v3.1",
+      "slug": "deepseek-deepseek-chat-v3-1",
+      "display_name": "DeepSeek: DeepSeek V3.1",
+      "provider": "deepseek",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "deepseek-deepseek-r1",
+        "minimax-minimax-01",
+        "minimax-minimax-m2-7",
+        "anthropic-claude-3-haiku",
+        "inclusionai-ring-2-6-1t"
+      ]
+    },
+    {
+      "id": "openrouter/deepseek/deepseek-r1",
+      "slug": "deepseek-deepseek-r1",
+      "display_name": "DeepSeek: R1",
+      "provider": "deepseek",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "deepseek-deepseek-chat-v3-1",
+        "qwen-qwen-2-5-coder-32b-instruct",
+        "qwen-qwen3-coder-plus",
+        "amazon-nova-pro-v1",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/google/gemini-2.5-flash",
+      "slug": "google-gemini-2-5-flash",
+      "display_name": "Google: Gemini 2.5 Flash",
+      "provider": "google",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "google-gemini-2-5-pro",
+        "google-gemma-4-26b-a4b-it:free",
+        "minimax-minimax-m2-her",
+        "minimax-minimax-m3",
+        "deepseek-deepseek-r1"
+      ]
+    },
+    {
+      "id": "openrouter/google/gemini-2.5-pro",
+      "slug": "google-gemini-2-5-pro",
+      "display_name": "Google: Gemini 2.5 Pro",
+      "provider": "google",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "google-gemma-4-26b-a4b-it:free",
+        "google-gemma-4-31b-it:free",
+        "openai-gpt-5",
+        "z-ai-glm-5-turbo",
+        "cohere-command-a"
+      ]
+    },
+    {
+      "id": "openrouter/google/gemma-3-27b-it",
+      "slug": "google-gemma-3-27b-it",
+      "display_name": "Google: Gemma 3 27B",
+      "provider": "google",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "google-gemini-2-5-pro",
+        "google-gemini-2-5-flash",
+        "inclusionai-ring-2-6-1t",
+        "amazon-nova-lite-v1",
+        "meta-llama-llama-3-2-1b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/google/gemma-4-26b-a4b-it:free",
+      "slug": "google-gemma-4-26b-a4b-it:free",
+      "display_name": "Google: Gemma 4 26B A4B  (free)",
+      "provider": "google",
+      "is_free": true,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "google-gemini-2-5-pro",
+        "google-gemini-2-5-flash",
+        "google-gemma-3-27b-it"
+      ]
+    },
+    {
+      "id": "openrouter/google/gemma-4-31b-it:free",
+      "slug": "google-gemma-4-31b-it:free",
+      "display_name": "Google: Gemma 4 31B (free)",
+      "provider": "google",
+      "is_free": true,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "google-gemini-2-5-pro",
+        "google-gemini-2-5-flash",
+        "google-gemma-3-27b-it"
+      ]
+    },
+    {
+      "id": "openrouter/ibm-granite/granite-4.1-8b",
+      "slug": "ibm-granite-granite-4-1-8b",
+      "display_name": "IBM: Granite 4.1 8B",
+      "provider": "ibm-granite",
+      "is_free": false,
+      "template": "B",
+      "enriched": true,
+      "related_slugs": [
+        "meta-llama-llama-3-2-3b-instruct",
+        "amazon-nova-lite-v1",
+        "qwen-qwen-2-5-7b-instruct",
+        "z-ai-glm-4-7-flash"
+      ]
+    },
+    {
+      "id": "openrouter/inclusionai/ring-2.6-1t",
+      "slug": "inclusionai-ring-2-6-1t",
+      "display_name": "inclusionAI: Ring-2.6-1T",
+      "provider": "inclusionai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "google-gemma-3-27b-it",
+        "amazon-nova-lite-v1",
+        "z-ai-glm-4-7-flash",
+        "meta-llama-llama-3-2-3b-instruct",
+        "openai-gpt-4o-mini"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.1-70b-instruct",
+      "slug": "meta-llama-llama-3-1-70b-instruct",
+      "display_name": "Meta: Llama 3.1 70B Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "minimax-minimax-m1",
+        "openai-gpt-4-1-mini",
+        "z-ai-glm-4-7",
+        "openai-gpt-4-1-nano"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.1-8b-instruct",
+      "slug": "meta-llama-llama-3-1-8b-instruct",
+      "display_name": "Meta: Llama 3.1 8B Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "mistralai-mistral-nemo",
+        "meta-llama-llama-3-2-1b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.2-11b-vision-instruct",
+      "slug": "meta-llama-llama-3-2-11b-vision-instruct",
+      "display_name": "Meta: Llama 3.2 11B Vision Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "qwen-qwen-2-5-72b-instruct",
+        "google-gemini-2-5-flash",
+        "minimax-minimax-m2-her",
+        "meta-llama-llama-3-2-3b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.2-1b-instruct",
+      "slug": "meta-llama-llama-3-2-1b-instruct",
+      "display_name": "Meta: Llama 3.2 1B Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "meta-llama-llama-3-1-8b-instruct",
+        "mistralai-mistral-nemo",
+        "qwen-qwen-2-5-7b-instruct",
+        "amazon-nova-lite-v1"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.2-3b-instruct",
+      "slug": "meta-llama-llama-3-2-3b-instruct",
+      "display_name": "Meta: Llama 3.2 3B Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "ibm-granite-granite-4-1-8b",
+        "amazon-nova-lite-v1",
+        "z-ai-glm-4-7-flash",
+        "meta-llama-llama-3-2-11b-vision-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "slug": "meta-llama-llama-3-3-70b-instruct",
+      "display_name": "Meta: Llama 3.3 70B Instruct",
+      "provider": "meta-llama",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-3-70b-instruct:free",
+        "openai-gpt-4-1-nano",
+        "google-gemma-3-27b-it",
+        "inclusionai-ring-2-6-1t",
+        "meta-llama-llama-3-2-11b-vision-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/meta-llama/llama-3.3-70b-instruct:free",
+      "slug": "meta-llama-llama-3-3-70b-instruct:free",
+      "display_name": "Meta: Llama 3.3 70B Instruct (free)",
+      "provider": "meta-llama",
+      "is_free": true,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "meta-llama-llama-3-1-70b-instruct",
+        "meta-llama-llama-3-2-11b-vision-instruct",
+        "meta-llama-llama-3-3-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-01",
+      "slug": "minimax-minimax-01",
+      "display_name": "MiniMax: MiniMax-01",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "deepseek-deepseek-chat-v3-1",
+        "minimax-minimax-m2-7",
+        "allenai-olmo-3-32b-think",
+        "anthropic-claude-3-haiku",
+        "minimax-minimax-m2-her"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m1",
+      "slug": "minimax-minimax-m1",
+      "display_name": "MiniMax: MiniMax M1",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "meta-llama-llama-3-1-70b-instruct",
+        "openai-gpt-4-1-mini",
+        "z-ai-glm-4-7",
+        "baidu-ernie-4-5-vl-424b-a47b",
+        "z-ai-glm-4-5"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m2",
+      "slug": "minimax-minimax-m2",
+      "display_name": "MiniMax: MiniMax M2",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "anthropic-claude-3-haiku",
+        "bytedance-seed-seed-1-6",
+        "minimax-minimax-m2-7",
+        "minimax-minimax-m2-1",
+        "deepseek-deepseek-chat-v3-1"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m2-her",
+      "slug": "minimax-minimax-m2-her",
+      "display_name": "MiniMax: MiniMax M2-her",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "google-gemini-2-5-flash",
+        "minimax-minimax-m3",
+        "z-ai-glm-4-6v",
+        "minimax-minimax-m2-1",
+        "meta-llama-llama-3-2-11b-vision-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m2.1",
+      "slug": "minimax-minimax-m2-1",
+      "display_name": "MiniMax: MiniMax M2.1",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "google-gemini-2-5-flash",
+        "minimax-minimax-m2-her",
+        "minimax-minimax-m3",
+        "z-ai-glm-4-6v",
+        "anthropic-claude-3-haiku"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m2.5",
+      "slug": "minimax-minimax-m2-5",
+      "display_name": "MiniMax: MiniMax M2.5",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "allenai-olmo-3-32b-think",
+        "openai-gpt-4o-mini",
+        "openai-gpt-4o-mini-search-preview",
+        "z-ai-glm-4-5-air",
+        "z-ai-glm-4-6v"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m2.7",
+      "slug": "minimax-minimax-m2-7",
+      "display_name": "MiniMax: MiniMax M2.7",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "anthropic-claude-3-haiku",
+        "bytedance-seed-seed-1-6",
+        "minimax-minimax-m2",
+        "deepseek-deepseek-chat-v3-1",
+        "minimax-minimax-01"
+      ]
+    },
+    {
+      "id": "openrouter/minimax/minimax-m3",
+      "slug": "minimax-minimax-m3",
+      "display_name": "MiniMax: MiniMax M3",
+      "provider": "minimax",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "google-gemini-2-5-flash",
+        "minimax-minimax-m2-her",
+        "z-ai-glm-4-6v",
+        "minimax-minimax-m2-1",
+        "meta-llama-llama-3-2-11b-vision-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/mistralai/mistral-nemo",
+      "slug": "mistralai-mistral-nemo",
+      "display_name": "Mistral: Mistral Nemo",
+      "provider": "mistralai",
+      "is_free": false,
+      "template": "B",
+      "enriched": true,
+      "related_slugs": [
+        "meta-llama-llama-3-1-8b-instruct",
+        "meta-llama-llama-3-2-1b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/moonshotai/kimi-k2",
+      "slug": "moonshotai-kimi-k2",
+      "display_name": "MoonshotAI: Kimi K2 0711",
+      "provider": "moonshotai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-5",
+        "z-ai-glm-4-5v",
+        "z-ai-glm-5",
+        "openai-gpt-3-5-turbo",
+        "bytedance-seed-seed-1-6"
+      ]
+    },
+    {
+      "id": "openrouter/morph/morph-v3-large",
+      "slug": "morph-morph-v3-large",
+      "display_name": "Morph: Morph V3 Large",
+      "provider": "morph",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-5-2",
+        "z-ai-glm-5-1",
+        "amazon-nova-pro-v1",
+        "perplexity-sonar",
+        "bytedance-seed-seed-1-6"
+      ]
+    },
+    {
+      "id": "openrouter/nousresearch/hermes-3-llama-3.1-405b:free",
+      "slug": "nousresearch-hermes-3-llama-3-1-405b:free",
+      "display_name": "Nous: Hermes 3 405B Instruct (free)",
+      "provider": "nousresearch",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/nvidia/nemotron-3-nano-30b-a3b:free",
+      "slug": "nvidia-nemotron-3-nano-30b-a3b:free",
+      "display_name": "NVIDIA: Nemotron 3 Nano 30B A3B (free)",
+      "provider": "nvidia",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "slug": "nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "display_name": "NVIDIA: Nemotron 3 Nano Omni (free)",
+      "provider": "nvidia",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+      "slug": "nvidia-nemotron-3-super-120b-a12b:free",
+      "display_name": "NVIDIA: Nemotron 3 Super (free)",
+      "provider": "nvidia",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+      "slug": "nvidia-nemotron-3-ultra-550b-a55b:free",
+      "display_name": "NVIDIA: Nemotron 3 Ultra (free)",
+      "provider": "nvidia",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/openai/gpt-3.5-turbo",
+      "slug": "openai-gpt-3-5-turbo",
+      "display_name": "OpenAI: GPT-3.5 Turbo",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "moonshotai-kimi-k2",
+        "z-ai-glm-4-6",
+        "minimax-minimax-01"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4-turbo",
+      "slug": "openai-gpt-4-turbo",
+      "display_name": "OpenAI: GPT-4 Turbo",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-gpt-oss-120b:free",
+        "openai-gpt-oss-20b:free",
+        "anthropic-claude-opus-4",
+        "anthropic-claude-sonnet-4"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4.1",
+      "slug": "openai-gpt-4-1",
+      "display_name": "OpenAI: GPT-4.1",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-oss-120b:free",
+        "cohere-command-a",
+        "google-gemini-2-5-pro"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4.1-mini",
+      "slug": "openai-gpt-4-1-mini",
+      "display_name": "OpenAI: GPT-4.1 Mini",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "meta-llama-llama-3-1-70b-instruct",
+        "minimax-minimax-m1",
+        "z-ai-glm-4-5v"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4.1-nano",
+      "slug": "openai-gpt-4-1-nano",
+      "display_name": "OpenAI: GPT-4.1 Nano",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "meta-llama-llama-3-3-70b-instruct",
+        "google-gemma-3-27b-it",
+        "meta-llama-llama-3-1-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4o",
+      "slug": "openai-gpt-4o",
+      "display_name": "OpenAI: GPT-4o",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-oss-120b:free",
+        "cohere-command-a",
+        "anthropic-claude-sonnet-4"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4o-mini",
+      "slug": "openai-gpt-4o-mini",
+      "display_name": "OpenAI: GPT-4o-mini",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "allenai-olmo-3-32b-think",
+        "minimax-minimax-m2-5",
+        "meta-llama-llama-3-1-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4o-mini-search-preview",
+      "slug": "openai-gpt-4o-mini-search-preview",
+      "display_name": "OpenAI: GPT-4o-mini Search Preview",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "allenai-olmo-3-32b-think",
+        "minimax-minimax-m2-5",
+        "meta-llama-llama-3-1-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-4o-search-preview",
+      "slug": "openai-gpt-4o-search-preview",
+      "display_name": "OpenAI: GPT-4o Search Preview",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-oss-120b:free",
+        "cohere-command-a",
+        "anthropic-claude-sonnet-4"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-5",
+      "slug": "openai-gpt-5",
+      "display_name": "OpenAI: GPT-5",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-oss-120b:free",
+        "google-gemini-2-5-pro",
+        "z-ai-glm-5-turbo",
+        "cohere-command-a"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-oss-120b:free",
+      "slug": "openai-gpt-oss-120b:free",
+      "display_name": "OpenAI: gpt-oss-120b (free)",
+      "provider": "openai",
+      "is_free": true,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "openai-gpt-4o"
+      ]
+    },
+    {
+      "id": "openrouter/openai/gpt-oss-20b:free",
+      "slug": "openai-gpt-oss-20b:free",
+      "display_name": "OpenAI: gpt-oss-20b (free)",
+      "provider": "openai",
+      "is_free": true,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "openai-gpt-4o"
+      ]
+    },
+    {
+      "id": "openrouter/openai/o1",
+      "slug": "openai-o1",
+      "display_name": "OpenAI: o1",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-gpt-oss-120b:free",
+        "openai-gpt-oss-20b:free",
+        "anthropic-claude-opus-4"
+      ]
+    },
+    {
+      "id": "openrouter/openai/o3",
+      "slug": "openai-o3",
+      "display_name": "OpenAI: o3",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-oss-120b:free",
+        "cohere-command-a",
+        "google-gemini-2-5-pro"
+      ]
+    },
+    {
+      "id": "openrouter/openai/o3-mini",
+      "slug": "openai-o3-mini",
+      "display_name": "OpenAI: o3 Mini",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "perplexity-sonar",
+        "z-ai-glm-5-turbo",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/openai/o4-mini",
+      "slug": "openai-o4-mini",
+      "display_name": "OpenAI: o4 Mini",
+      "provider": "openai",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "openai-o1",
+        "openai-gpt-4-turbo",
+        "perplexity-sonar",
+        "z-ai-glm-5-turbo",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/perplexity/sonar",
+      "slug": "perplexity-sonar",
+      "display_name": "Perplexity: Sonar",
+      "provider": "perplexity",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "perplexity-sonar-pro",
+        "z-ai-glm-5-1",
+        "z-ai-glm-5-2",
+        "morph-morph-v3-large",
+        "minimax-minimax-m2"
+      ]
+    },
+    {
+      "id": "openrouter/perplexity/sonar-pro",
+      "slug": "perplexity-sonar-pro",
+      "display_name": "Perplexity: Sonar Pro",
+      "provider": "perplexity",
+      "is_free": false,
+      "template": "A",
+      "enriched": false,
+      "related_slugs": [
+        "perplexity-sonar",
+        "anthropic-claude-sonnet-4",
+        "anthropic-claude-sonnet-4-5",
+        "cohere-command-a",
+        "google-gemini-2-5-pro"
+      ]
+    },
+    {
+      "id": "openrouter/poolside/laguna-m.1:free",
+      "slug": "poolside-laguna-m-1:free",
+      "display_name": "Poolside: Laguna M.1 (free)",
+      "provider": "poolside",
+      "is_free": true,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": []
+    },
+    {
+      "id": "openrouter/qwen/qwen-2.5-72b-instruct",
+      "slug": "qwen-qwen-2-5-72b-instruct",
+      "display_name": "Qwen2.5 72B Instruct",
+      "provider": "qwen",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "qwen-qwen3-coder:free",
+        "qwen-qwen-2-5-coder-32b-instruct",
+        "meta-llama-llama-3-2-11b-vision-instruct",
+        "meta-llama-llama-3-1-70b-instruct",
+        "openai-gpt-4-1-nano"
+      ]
+    },
+    {
+      "id": "openrouter/qwen/qwen-2.5-7b-instruct",
+      "slug": "qwen-qwen-2-5-7b-instruct",
+      "display_name": "Qwen: Qwen2.5 7B Instruct",
+      "provider": "qwen",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "qwen-qwen-2-5-coder-32b-instruct",
+        "qwen-qwen3-coder-plus",
+        "ibm-granite-granite-4-1-8b",
+        "meta-llama-llama-3-2-3b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
+      "slug": "qwen-qwen-2-5-coder-32b-instruct",
+      "display_name": "Qwen2.5 Coder 32B Instruct",
+      "provider": "qwen",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "qwen-qwen3-coder:free",
+        "qwen-qwen-2-5-7b-instruct",
+        "deepseek-deepseek-r1",
+        "z-ai-glm-4-5",
+        "minimax-minimax-m2"
+      ]
+    },
+    {
+      "id": "openrouter/qwen/qwen3-coder-plus",
+      "slug": "qwen-qwen3-coder-plus",
+      "display_name": "Qwen: Qwen3 Coder Plus",
+      "provider": "qwen",
+      "is_free": false,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "qwen-qwen3-coder:free",
+        "qwen-qwen-2-5-7b-instruct",
+        "deepseek-deepseek-r1",
+        "z-ai-glm-4-5",
+        "z-ai-glm-5-1"
+      ]
+    },
+    {
+      "id": "openrouter/qwen/qwen3-coder:free",
+      "slug": "qwen-qwen3-coder:free",
+      "display_name": "Qwen: Qwen3 Coder 480B A35B (free)",
+      "provider": "qwen",
+      "is_free": true,
+      "template": "B",
+      "enriched": false,
+      "related_slugs": [
+        "qwen-qwen-2-5-coder-32b-instruct",
+        "qwen-qwen3-coder-plus",
+        "qwen-qwen-2-5-72b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.5",
+      "slug": "z-ai-glm-4-5",
+      "display_name": "Z.ai: GLM 4.5",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "moonshotai-kimi-k2",
+        "qwen-qwen3-coder-plus",
+        "bytedance-seed-seed-1-6"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.5-air",
+      "slug": "z-ai-glm-4-5-air",
+      "display_name": "Z.ai: GLM 4.5 Air",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-5-turbo",
+        "z-ai-glm-5v-turbo",
+        "allenai-olmo-3-32b-think",
+        "minimax-minimax-m2-5",
+        "deepseek-deepseek-chat-v3-1"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.5v",
+      "slug": "z-ai-glm-4-5v",
+      "display_name": "Z.ai: GLM 4.5V",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "moonshotai-kimi-k2",
+        "qwen-qwen3-coder-plus",
+        "bytedance-seed-seed-1-6"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.6",
+      "slug": "z-ai-glm-4-6",
+      "display_name": "Z.ai: GLM 4.6",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "baidu-ernie-4-5-vl-424b-a47b",
+        "meta-llama-llama-3-1-70b-instruct",
+        "morph-morph-v3-large"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.6v",
+      "slug": "z-ai-glm-4-6v",
+      "display_name": "Z.ai: GLM 4.6V",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "google-gemini-2-5-flash",
+        "minimax-minimax-m2-her",
+        "perplexity-sonar"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.7",
+      "slug": "z-ai-glm-4-7",
+      "display_name": "Z.ai: GLM 4.7",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "meta-llama-llama-3-1-70b-instruct",
+        "minimax-minimax-m1",
+        "morph-morph-v3-large"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-4.7-flash",
+      "slug": "z-ai-glm-4-7-flash",
+      "display_name": "Z.ai: GLM 4.7 Flash",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-5-turbo",
+        "z-ai-glm-5v-turbo",
+        "amazon-nova-lite-v1",
+        "meta-llama-llama-3-2-3b-instruct",
+        "meta-llama-llama-3-1-70b-instruct"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-5",
+      "slug": "z-ai-glm-5",
+      "display_name": "Z.ai: GLM 5",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "moonshotai-kimi-k2",
+        "qwen-qwen3-coder-plus",
+        "bytedance-seed-seed-1-6"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-5-turbo",
+      "slug": "z-ai-glm-5-turbo",
+      "display_name": "Z.ai: GLM 5 Turbo",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "google-gemini-2-5-pro",
+        "openai-gpt-5",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-5.1",
+      "slug": "z-ai-glm-5-1",
+      "display_name": "Z.ai: GLM 5.1",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "perplexity-sonar",
+        "morph-morph-v3-large",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-5.2",
+      "slug": "z-ai-glm-5-2",
+      "display_name": "Z.ai: GLM 5.2",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "morph-morph-v3-large",
+        "perplexity-sonar",
+        "google-gemini-2-5-flash"
+      ]
+    },
+    {
+      "id": "openrouter/z-ai/glm-5v-turbo",
+      "slug": "z-ai-glm-5v-turbo",
+      "display_name": "Z.ai: GLM 5V Turbo",
+      "provider": "z-ai",
+      "is_free": false,
+      "template": "C",
+      "enriched": true,
+      "related_slugs": [
+        "z-ai-glm-4-7-flash",
+        "z-ai-glm-4-5-air",
+        "google-gemini-2-5-pro",
+        "openai-gpt-5",
+        "google-gemini-2-5-flash"
+      ]
+    }
+  ]
+}

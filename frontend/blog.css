@@ -1,0 +1,440 @@
+/* =========================================================================
+   AI Cost Calculator Blog — shared stylesheet (SEO-2, 2026-06-23)
+   --------------------------------------------------------------------------
+   Loads on every /blog/<article>.html page. Color tokens mirror app.css
+   exactly so the articles sit visually inside the rest of the site without
+   depending on app.css (which is intentionally untouched).
+
+   Type:    DM Serif Display (display H1) + system-ui (body). Same as app.
+   Layout:  centered 720px column, generous line-height (1.7), 19px body.
+   Tone:    editorial / paper / ink / teal. No new colors.
+   ========================================================================= */
+
+:root {
+  /* Surface — copied verbatim from app.css */
+  --paper:        #f7f3ec;
+  --paper-2:      #efe9dc;
+  --paper-3:      #e7dfcd;
+  --ink:          #1f1c17;
+  --ink-2:        #4a4439;
+  --ink-3:        #807868;
+  --ink-4:        #b5ac9a;
+  --rule:         #d8cfba;
+
+  /* Accent — deep teal */
+  --teal:         #0c4a52;
+  --teal-deep:    #093438;
+  --teal-soft:    #dde8ea;
+  --teal-ink:     #062b30;
+
+  /* Functional */
+  --ok:           #2f8a4f;
+  --warn:         #b15c00;
+
+  /* Type */
+  --display:      'DM Serif Display', 'Iowan Old Style', 'Palatino Linotype', 'Charter', Georgia, serif;
+  --sans:         ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --mono:         ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* Scale */
+  --t-xs:   0.78rem;
+  --t-sm:   0.875rem;
+  --t-base: 1rem;
+  --t-lg:   1.125rem;
+  --t-xl:   1.375rem;
+  --t-2xl:  1.75rem;
+  --t-3xl:  2.25rem;
+  --t-4xl:  3rem;
+  --t-5xl:   4.25rem;
+
+  /* Spacing */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+
+  /* Radii */
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  14px;
+}
+
+/* -------- Reset / base -------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-family: var(--sans);
+  font-size: 1.0625rem;       /* ~17px — slightly larger than app's 1rem for long-form readability */
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--teal); color: #fff; }
+
+/* -------- Layout shell -------- */
+
+.blog-topbar {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+.blog-topbar__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--s-3) var(--s-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.blog-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  text-decoration: none;
+  color: var(--ink);
+}
+.blog-brand__mark {
+  display: block;
+  width: 32px;
+  height: 16px;
+}
+.blog-brand__word {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.blog-topbar__nav {
+  display: flex;
+  gap: var(--s-4);
+  font-size: var(--t-sm);
+}
+.blog-topbar__nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.blog-topbar__nav a:hover { color: var(--teal); }
+
+main.blog-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-4) var(--s-8);
+}
+
+/* -------- Article chrome -------- */
+
+.blog-breadcrumb {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  margin-bottom: var(--s-4);
+}
+.blog-breadcrumb a {
+  color: var(--ink-3);
+  text-decoration: none;
+}
+.blog-breadcrumb a:hover { color: var(--teal); }
+.blog-breadcrumb__sep { margin: 0 6px; color: var(--ink-4); }
+
+.blog-byline {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--s-3);
+}
+
+h1.blog-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 var(--s-3);
+}
+
+.blog-lede {
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0 0 var(--s-6);
+  font-weight: 400;
+}
+
+/* -------- Prose -------- */
+
+.blog-prose h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: var(--s-7) 0 var(--s-3);
+}
+.blog-prose h2:first-of-type { margin-top: var(--s-6); }
+
+.blog-prose h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: var(--s-5) 0 var(--s-2);
+}
+
+.blog-prose p {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin: 0 0 var(--s-4);
+}
+
+.blog-prose a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--teal) 40%, transparent);
+  text-underline-offset: 3px;
+}
+.blog-prose a:hover {
+  color: var(--teal-deep);
+  text-decoration-color: var(--teal);
+}
+
+.blog-prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.blog-prose code {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  background: var(--paper-2);
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+.blog-prose ul, .blog-prose ol {
+  margin: 0 0 var(--s-4);
+  padding-left: 1.4em;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.blog-prose li { margin-bottom: var(--s-2); }
+.blog-prose li::marker { color: var(--ink-4); }
+
+.blog-prose blockquote {
+  margin: var(--s-5) 0;
+  padding: var(--s-3) var(--s-4);
+  border-left: 3px solid var(--teal);
+  background: var(--teal-soft);
+  color: var(--ink);
+  font-style: italic;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.blog-prose blockquote p:last-child { margin-bottom: 0; }
+
+/* -------- Data tables -------- */
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--s-4) 0 var(--s-5);
+  font-size: var(--t-sm);
+}
+.blog-table th, .blog-table td {
+  text-align: left;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.blog-table th {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-2);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.blog-table td.is-num {
+  font-family: var(--mono);
+  font-size: var(--t-sm);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.blog-table tr:last-child td { border-bottom: none; }
+
+/* -------- Callout / verdict boxes -------- */
+
+.blog-callout {
+  background: var(--teal-soft);
+  border: 1px solid color-mix(in srgb, var(--teal) 22%, transparent);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  margin: var(--s-5) 0;
+  font-size: var(--t-base);
+  line-height: 1.6;
+  color: var(--ink);
+}
+.blog-callout strong { color: var(--teal-deep); }
+
+.blog-warn {
+  background: color-mix(in srgb, var(--warn) 8%, var(--paper));
+  border-left: 3px solid var(--warn);
+  padding: var(--s-3) var(--s-4);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  margin: var(--s-4) 0;
+}
+
+/* -------- FAQ section -------- */
+
+.blog-faq {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+}
+.blog-faq__item {
+  border-bottom: 1px solid var(--rule);
+  padding: var(--s-3) 0;
+}
+.blog-faq__item:last-child { border-bottom: none; }
+.blog-faq__q {
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-base);
+}
+.blog-faq__a {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: var(--t-base);
+  line-height: 1.65;
+}
+
+/* -------- Related / explore blocks -------- */
+
+.blog-related {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+.blog-related h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin: 0 0 var(--s-3);
+}
+.blog-related ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+.blog-related li a {
+  display: block;
+  padding: var(--s-3);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--t-sm);
+  line-height: 1.4;
+  transition: border-color 120ms var(--ease-out, ease-out), background 120ms;
+}
+.blog-related li a:hover {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  color: var(--ink);
+}
+.blog-related li a strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.blog-related li a span {
+  display: block;
+  color: var(--ink-3);
+  font-size: var(--t-xs);
+}
+
+.blog-models {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+.blog-models h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin: 0 0 var(--s-3);
+}
+.blog-models ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--s-2);
+}
+.blog-models li a {
+  display: block;
+  padding: var(--s-2) var(--s-3);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: var(--t-sm);
+  line-height: 1.35;
+}
+.blog-models li a:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* -------- Footer -------- */
+
+footer.blog-foot {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-4) var(--s-8);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+  text-align: center;
+}
+footer.blog-foot a {
+  color: var(--ink-2);
+  text-decoration: none;
+  margin: 0 var(--s-2);
+}
+footer.blog-foot a:hover { color: var(--teal); }
+
+/* -------- Mobile -------- */
+
+@media (max-width: 540px) {
+  .blog-topbar__nav { gap: var(--s-3); }
+  .blog-topbar__nav a { font-size: var(--t-xs); }
+  main.blog-page { padding: var(--s-5) var(--s-4) var(--s-7); }
+  .blog-models ul { grid-template-columns: 1fr 1fr; }
+}

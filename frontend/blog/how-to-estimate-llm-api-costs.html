@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>How to Estimate LLM API Costs: A Practical Guide | AI Cost Calculator</title>
+  <meta name="description" content="A practical four-step method for estimating LLM API costs: pick a model, count real tokens, apply the right multipliers, and sanity-check with a calculator.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f7f3ec">
+  <link rel="canonical" href="https://aicostcalculator.net/blog/how-to-estimate-llm-api-costs.html">
+  <meta property="og:title" content="How to Estimate LLM API Costs: A Practical Guide | AI Cost Calculator">
+  <meta property="og:description" content="A practical four-step method for estimating LLM API costs before you ship.">
+  <meta property="og:url" content="https://aicostcalculator.net/blog/how-to-estimate-llm-api-costs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Cost Calculator">
+  <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Estimate LLM API Costs: A Practical Guide | AI Cost Calculator">
+  <meta name="twitter:description" content="A practical four-step method for estimating LLM API costs before you ship.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap">
+  <link rel="stylesheet" href="../blog.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "How to Estimate LLM API Costs: A Practical Guide",
+      "description": "A practical four-step method for estimating LLM API costs: pick a model, count real tokens, apply the right multipliers, and sanity-check with a calculator.",
+      "author": {
+        "@type": "Person",
+        "name": "Andrew Morgado"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AI Cost Calculator",
+        "url": "https://aicostcalculator.net/"
+      },
+      "datePublished": "2026-06-23",
+      "dateModified": "2026-06-23",
+      "mainEntityOfPage": "https://aicostcalculator.net/blog/how-to-estimate-llm-api-costs.html",
+      "url": "https://aicostcalculator.net/blog/how-to-estimate-llm-api-costs.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"},
+        {"@type": "ListItem", "position": 3, "name": "How to Estimate LLM API Costs", "item": "https://aicostcalculator.net/blog/how-to-estimate-llm-api-costs.html"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I estimate the cost of an LLM API call before shipping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pick the model, count the input and output tokens for one realistic call (not the minimum), multiply by the per-million rates for that model, then scale by expected monthly volume. A calculator like AI Cost Calculator handles the multipliers (caching, reasoning tokens, tool calls) that vendors charge separately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between input and output tokens for billing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Input tokens are the prompt you send (system prompt, user message, retrieved context). Output tokens are the model's response. Output is typically 3 to 5 times more expensive than input because generation is more compute-intensive. On GPT-4o, for example, input is $2.50 per 1M tokens and output is $10.00 per 1M tokens."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do reasoning tokens count as input or output?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+          "text": "Reasoning tokens are billed as output on most providers, but at a different rate tier. OpenAI's o1 and o3, Anthropic's extended-thinking Claude, Google's Gemini 2.5 Pro, and DeepSeek-R1 all publish a separate reasoning_per_1m field. The chain-of-thought tokens are typically billed at the output rate or higher."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a single chat message cost on a typical LLM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A short chat message (around 1,000 input tokens and 500 output tokens) costs roughly $0.0075 on GPT-4o, $0.003 on Claude Sonnet 4, $0.0018 on Gemini 2.5 Flash, and $0.00026 on Llama 3.1 8B. The same exchange on Claude Opus 4 costs about $0.0450, and on OpenAI o1 around $0.0375."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+</head>
+<body>
+  <header class="blog-topbar" role="banner">
+    <div class="blog-topbar__inner">
+      <a class="blog-brand" href="../" aria-label="AI Cost Calculator (home)">
+        <img class="blog-brand__mark" src="../logo.svg" alt="" width="32" height="16">
+        <span class="blog-brand__word">AI Cost Calculator</span>
+      </a>
+      <nav class="blog-topbar__nav" aria-label="Primary">
+        <a href="../">Calculator</a>
+        <a href="./">Blog</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="blog-breadcrumb__sep">›</span><a href="./">Blog</a><span class="blog-breadcrumb__sep">›</span><span>How to Estimate LLM API Costs</span>
+    </nav>
+    <p class="blog-byline">Published: 2026-06-23 · Last updated: 2026-06-23 · By Andrew Morgado</p>
+
+    <h1 class="blog-title">How to Estimate LLM API Costs: A Practical Guide</h1>
+    <p class="blog-lede">
+      Estimating what a large language model will cost you before you ship is one
+      of the most useful thirty-minute exercises in building with these APIs. A
+      small number of multipliers, applied honestly, will tell you whether the
+      bill at month-end will be $50 or $5,000. The trick is using real numbers
+      from the model you're actually going to run, not the headline rate from a
+      vendor blog post.
+    </p>
+
+    <div class="blog-prose">
+
+    <h2>Step 1: Pick the model first</h2>
+    <p>
+      Every estimate starts with a model, because the input and output rates
+      differ by orders of magnitude across the catalog. As of mid-2026, the
+      spread between the cheapest and most expensive mainstream models on
+      OpenRouter is roughly 1000x. Llama 3.1 8B Instruct runs $0.02 per 1M input
+      tokens and $0.03 per 1M output tokens. Cohere's Command A sits at $2.50
+      input and $10.00 output. Anthropic's Claude Opus 4 is at $15.00 input and
+      $75.00 output. OpenAI's o1 is $15.00 and $60.00. The model you pick is
+      the dominant variable, and no amount of clever prompt engineering changes
+      that.
+    </p>
+    <p>
+      A common trap is starting with the cheapest model and walking up the
+      quality ladder until the answers are good enough. That's fine for a
+      prototype, but for a production system, the right starting point is the
+      model you would be happy to ship, then a cheaper fallback for the
+      workloads where the flagship is overkill. The
+      <a href="../compare/openai-gpt-4o-vs-openai-gpt-4o-mini.html">GPT-4o vs
+      GPT-4o mini comparison</a> is a useful template: a flagship for important
+      calls, a mini for high-volume easy ones.
+    </p>
+
+    <h2>Step 2: Count tokens on a real call, not a minimum</h2>
+    <p>
+      Vendor pricing pages quote rates per million tokens, but no real call is
+      one million tokens. Most chat messages are 200 to 2,000 input tokens and
+      100 to 1,000 output tokens. Retrieval-augmented generation runs in the
+      thousands for input (the retrieved chunks) and hundreds for output (the
+      final answer). Coding agents are heavier on both ends — the prompt carries
+      tool definitions, retrieved code, and prior conversation history; the
+      response carries generated code, tool call requests, and natural language
+      explanations.
+    </p>
+    <p>
+      The right number to plug in is the token count of an actual call from
+      your system, not the textbook minimum. Run a few representative
+      conversations through your application, capture the input and output
+      token counts from the API response, and take the median. Multiply that
+      median by your expected monthly volume. If you don't have representative
+      calls yet, the calculator's standard workload shapes are a reasonable
+      starting point: 1,000 in + 500 out for a chat, 5,000 in + 1,000 out for
+      RAG, 8,000 in + 4,000 out for an agent, 50,000 in + 5,000 out for a long
+      context job.
+    </p>
+
+    <h2>Step 3: Apply the right multipliers</h2>
+    <p>
+      The headline rate is the easy part. The tricky part is the things the
+      vendor charges for on top. Three multipliers show up on every production
+      bill: cached input, reasoning tokens, and tool calls.
+    </p>
+    <p>
+      <strong>Cached input tokens</strong> are prompt prefixes the vendor
+      recognizes as repeats. Anthropic, Google, and OpenAI all publish a
+      cached_input_per_1m field, usually at 10% of the regular input rate.
+      Claude Sonnet 4 lists input at $3.00 per 1M and cache at $0.30 per 1M, a
+      10x discount. If your prompt reuses a long system message, a tool
+      definition block, or a retrieved document, the cache rate is what
+      matters for most of your input tokens. A workflow that runs the same
+      4,000-token prompt prefix on every call effectively pays for those 4,000
+      tokens once and gets them cached for the next five minutes.
+    </p>
+    <p>
+      <strong>Reasoning tokens</strong> are the chain-of-thought tokens that
+      reasoning models like OpenAI's o1 and o3, Anthropic's Claude (with
+      extended thinking enabled), Google's Gemini 2.5 Pro, and DeepSeek's R1
+      emit internally before the user-visible answer. They are typically billed
+      as output, sometimes at a higher rate. DeepSeek R1 publishes $0.70 input
+      and $2.50 output per 1M, and the reasoning tokens fall into that output
+      bucket. If your agentic workflow is making three or four reasoning calls
+      per user request, reasoning tokens can dominate the bill, sometimes
+      without the user seeing any extra content.
+    </p>
+    <p>
+      <strong>Tool calls</strong> are usually a flat fee per call on OpenRouter
+      (currently $0 for most models, but not all). OpenAI charges for
+      individual tools through its Assistants API. Anthropic charges nothing
+      per call but the tool result tokens go through the regular input rate.
+      Either way, multi-step agentic workflows multiply the cost: ten tool
+      calls in a single user request is ten input round-trips through the
+      model's context window.
+    </p>
+
+    <h2>Step 4: Sanity-check the math</h2>
+    <p>
+      The four-line sanity check is: pick the model, pick a workload shape,
+      multiply by the per-million rates, compare to the price the calculator
+      spits out. If the numbers are within 10%, your estimate is probably
+      right. If they're off by 5x, something is wrong — usually an undercount
+      of output tokens, or a missed reasoning tier, or a system prompt that
+      ships 1,500 tokens of instructions on every call without being cached.
+    </p>
+    <p>
+      Two concrete examples. First, a chatbot on GPT-4o with a 500-token
+      system prompt, a 300-token user message, and a 250-token response. Input
+      is 800 tokens at $2.50 per 1M ($0.002), output is 250 tokens at $10.00
+      per 1M ($0.0025), total $0.0045 per message. At 100,000 messages per
+      month, that's $450. Second, an agentic coding assistant running on
+      Claude Sonnet 4 with an 8,000-token prompt (system prompt + retrieved
+      files + tool definitions), a 4,000-token response including several tool
+      calls, and 10 tool invocations. Input is $0.024, output is $0.060, total
+      $0.084 per run. At 5,000 runs per month, that's $420. Both are
+      reasonable working numbers.
+    </p>
+
+    <h2>Common mistakes</h2>
+    <p>
+      The most common mistake is forgetting the system prompt. A long system
+      prompt with examples, persona instructions, and tool definitions can
+      easily hit 1,000 to 3,000 tokens, and it ships on every call. If you're
+      using a 3,000-token system prompt on a million chat messages a month,
+      that's 3 billion input tokens, or $7,500 at GPT-4o rates and $750 at
+      Claude Sonnet 4 rates. The system prompt is also the easiest place to
+      apply cache: most vendors will cache the prefix automatically if you
+      structure the request to put the cacheable part first.
+    </p>
+    <p>
+      The second most common mistake is forgetting that streaming changes
+      nothing about billing. Some teams assume streaming is cheaper because
+      the user sees tokens as they arrive. It's not — you pay for the same
+      number of output tokens regardless of whether they arrive in a single
+      batch or one at a time.
+    </p>
+    <p>
+      The third is forgetting that long context has its own surcharge on some
+      providers. OpenAI charges double the rate for input tokens beyond 200K
+      on GPT-4.1. Anthropic's Sonnet 4 has a 1M-token context window but
+      charges a premium for prompts longer than 200K tokens. Most chat and
+      agent workloads stay well under those thresholds, but if you're
+      summarizing a long document or processing a long code file, the second
+      half of the context can cost more than the first half.
+    </p>
+
+    <h2>What to do with the number</h2>
+    <p>
+      Once you have a real estimate, the right next step is to multiply by
+      your expected volume and compare to the revenue or value the application
+      generates. If the per-call cost is $0.005 and the average user generates
+      100 calls per month, that's $0.50 per user per month for inference. A
+      subscription at $5/month covers it with margin. A subscription at $0.99
+      does not. If the application is ad-supported, you need to know the
+      effective CPM per inference call. If it's a one-shot tool, you need the
+      number before you can price the SKU.
+    </p>
+    <p>
+      <a href="../">The AI Cost Calculator calculator</a> handles all of the above in
+      one place: pick the model, pick a workload shape, and the page returns
+      the cost of one run plus the multipliers (caching, reasoning, tool
+      calls). The 350 models on the site are the same ones you'd query
+      through OpenRouter or directly from the vendor, so the number you get is
+      the number you'll actually be billed.
+    </p>
+
+    <h2>Sources</h2>
+    <p>
+      Per-model input, output, and cache rates in this article come from the
+      <a href="https://openrouter.ai/api/v1/models" rel="noopener">OpenRouter
+      public models endpoint</a>, refreshed every six hours. Vendor-direct
+      pricing pages are linked from each model's page on this site.
+    </p>
+
+    </div>
+
+    <section class="blog-models">
+      <h2>Explore the models cited here</h2>
+      <ul>
+        <li><a href="../models/openai-gpt-4o.html">GPT-4o</a></li>
+        <li><a href="../models/openai-gpt-4o-mini.html">GPT-4o mini</a></li>
+        <li><a href="../models/openai-o1.html">OpenAI o1</a></li>
+        <li><a href="../models/openai-o3.html">OpenAI o3</a></li>
+        <li><a href="../models/anthropic-claude-sonnet-4.html">Claude Sonnet 4</a></li>
+        <li><a href="../models/anthropic-claude-opus-4.html">Claude Opus 4</a></li>
+        <li><a href="../models/anthropic-claude-haiku-4.5.html">Claude Haiku 4.5</a></li>
+        <li><a href="../models/google-gemini-2-5-pro.html">Gemini 2.5 Pro</a></li>
+        <li><a href="../models/google-gemini-2-5-flash.html">Gemini 2.5 Flash</a></li>
+        <li><a href="../models/deepseek-deepseek-r1.html">DeepSeek R1</a></li>
+      </ul>
+    </section>
+
+    <section class="blog-related">
+      <h2>Related articles</h2>
+      <ul>
+        <li><a href="./reduce-claude-gpt-api-costs.html"><strong>How to Reduce Claude and GPT API Costs by 60%</strong><span>Caching, model selection, prompt trimming.</span></a></li>
+        <li><a href="./system-prompt-tokens-bill.html"><strong>How System Prompt Tokens Show Up on Your Bill</strong><span>The hidden cost of the 1,500-token persona.</span></a></li>
+        <li><a href="./agentic-workflow-token-cost.html"><strong>How Much Does an Agentic Workflow Actually Cost?</strong><span>Tool calls, reasoning tokens, and context growth.</span></a></li>
+        <li><a href="./cache-tokens-savings.html"><strong>Prompt Caching: How Anthropic and Gemini Discount Repeat Tokens</strong><span>The 10x discount nobody uses.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="blog-faq">
+      <h2 style="font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--ink); margin: 0 0 var(--s-3);">Frequently asked questions</h2>
+      <div class="blog-faq__item"><p class="blog-faq__q">How do I estimate the cost of an LLM API call before shipping?</p><p class="blog-faq__a">Pick the model, count the input and output tokens for one realistic call (not the minimum), multiply by the per-million rates for that model, then scale by expected monthly volume. A calculator like AI Cost Calculator handles the multipliers (caching, reasoning tokens, tool calls) that vendors charge separately.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">What is the difference between input and output tokens for billing?</p><p class="blog-faq__a">Input tokens are the prompt you send (system prompt, user message, retrieved context). Output tokens are the model's response. Output is typically 3 to 5 times more expensive than input because generation is more compute-intensive. On GPT-4o, input is $2.50 per 1M tokens and output is $10.00 per 1M tokens.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">Do reasoning tokens count as input or output?</p><p class="blog-faq__a">Reasoning tokens are billed as output on most providers, but at a different rate tier. OpenAI's o1 and o3, Anthropic's extended-thinking Claude, Google's Gemini 2.5 Pro, and DeepSeek-R1 all publish a separate reasoning_per_1m field. The chain-of-thought tokens are typically billed at the output rate or higher.</p></div>
+      <div class="blog-faq__item"><p class="blog-faq__q">How much does a single chat message cost on a typical LLM?</p><p class="blog-faq__a">A short chat message (around 1,000 input tokens and 500 output tokens) costs roughly $0.0075 on GPT-4o, $0.003 on Claude Sonnet 4, $0.0018 on Gemini 2.5 Flash, and $0.00026 on Llama 3.1 8B. The same exchange on Claude Opus 4 costs about $0.0450, and on OpenAI o1 around $0.0375.</p></div>
+    </section>
+  </main>
+
+  <footer class="blog-foot">
+    <a href="../">Calculator</a> · <a href="./">Blog</a> · <a href="../about.html">About</a> · <a href="../privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>

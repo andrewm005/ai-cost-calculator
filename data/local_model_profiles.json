@@ -1,0 +1,203 @@
+{
+  "_meta": {
+    "schema_version": "1.0",
+    "source": "PLACEHOLDER — compiled from GigaGPU, Mustafa.net, Ollama TPS Live, and NVIDIA NIM benchmarks cited in findings.md §5. Throughput figures are Q4_K_M-class estimates; FP16 throughput is typically 30-50% lower.",
+    "last_updated": "2026-06-22",
+    "notes": "Each model lists per-GPU tokens/sec for the major serving targets. Missing GPU entries fall back to model.default_tokens_per_second × (gpu.default_tokens_per_second / reference_default). Model tags match the canonical Ollama library names (e.g. 'llama3.3:70b')."
+  },
+  "reference_default_tokens_per_second": 135.0,
+  "models": {
+    "llama3.2:3b": {
+      "display_name": "Llama 3.2 3B",
+      "parameters_b": 3.2,
+      "default_tokens_per_second": 220.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 245.0,
+        "nvidia-rtx-4080": 175.0,
+        "nvidia-rtx-3090": 165.0,
+        "nvidia-rtx-4060-ti-16gb": 95.0,
+        "nvidia-a100-80gb": 340.0,
+        "nvidia-h100-80gb": 620.0,
+        "nvidia-l40s": 290.0,
+        "nvidia-rtx-3060-12gb": 55.0,
+        "amd-mi300x": 480.0,
+        "apple-m2-ultra": 75.0,
+        "apple-m3-max": 85.0,
+        "apple-m4-max": 110.0,
+        "cpu-only-xeon-32core": 6.0
+      },
+      "notes": "PLACEHOLDER — fits in any GPU; very fast"
+    },
+    "llama3.1:8b": {
+      "display_name": "Llama 3.1 8B",
+      "parameters_b": 8.0,
+      "default_tokens_per_second": 135.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 135.0,
+        "nvidia-rtx-4080": 95.0,
+        "nvidia-rtx-3090": 95.0,
+        "nvidia-rtx-4060-ti-16gb": 52.0,
+        "nvidia-a100-80gb": 180.0,
+        "nvidia-h100-80gb": 350.0,
+        "nvidia-l40s": 160.0,
+        "nvidia-rtx-3060-12gb": 28.0,
+        "amd-mi300x": 280.0,
+        "apple-m2-ultra": 40.0,
+        "apple-m3-max": 45.0,
+        "apple-m4-max": 60.0,
+        "cpu-only-xeon-32core": 3.5
+      },
+      "notes": "PLACEHOLDER — reference 8B model for benchmark comparison"
+    },
+    "mistral:7b": {
+      "display_name": "Mistral 7B",
+      "parameters_b": 7.2,
+      "default_tokens_per_second": 145.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 150.0,
+        "nvidia-rtx-4080": 105.0,
+        "nvidia-rtx-3090": 105.0,
+        "nvidia-rtx-4060-ti-16gb": 58.0,
+        "nvidia-a100-80gb": 200.0,
+        "nvidia-h100-80gb": 380.0,
+        "nvidia-l40s": 175.0,
+        "nvidia-rtx-3060-12gb": 32.0,
+        "amd-mi300x": 310.0,
+        "apple-m2-ultra": 45.0,
+        "apple-m3-max": 50.0,
+        "apple-m4-max": 68.0,
+        "cpu-only-xeon-32core": 4.0
+      },
+      "notes": "PLACEHOLDER — slightly faster than LLaMA 3 8B on same class GPU"
+    },
+    "gemma2:27b": {
+      "display_name": "Gemma 2 27B",
+      "parameters_b": 27.0,
+      "default_tokens_per_second": 55.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 60.0,
+        "nvidia-rtx-4080": 35.0,
+        "nvidia-rtx-3090": 32.0,
+        "nvidia-a100-80gb": 95.0,
+        "nvidia-h100-80gb": 185.0,
+        "nvidia-l40s": 80.0,
+        "amd-mi300x": 145.0,
+        "apple-m2-ultra": 22.0,
+        "apple-m3-max": 25.0,
+        "apple-m4-max": 32.0,
+        "cpu-only-xeon-32core": 1.5
+      },
+      "notes": "PLACEHOLDER — needs ~18GB VRAM at Q4; 24GB-class GPUs serve one copy"
+    },
+    "phi3:14b": {
+      "display_name": "Phi-3 14B",
+      "parameters_b": 14.0,
+      "default_tokens_per_second": 90.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 95.0,
+        "nvidia-rtx-4080": 62.0,
+        "nvidia-rtx-3090": 58.0,
+        "nvidia-rtx-4060-ti-16gb": 30.0,
+        "nvidia-a100-80gb": 135.0,
+        "nvidia-h100-80gb": 260.0,
+        "nvidia-l40s": 115.0,
+        "nvidia-rtx-3060-12gb": 18.0,
+        "amd-mi300x": 220.0,
+        "apple-m2-ultra": 28.0,
+        "apple-m3-max": 32.0,
+        "apple-m4-max": 42.0,
+        "cpu-only-xeon-32core": 2.5
+      },
+      "notes": "PLACEHOLDER — Microsoft research model, dense 14B"
+    },
+    "qwen2.5:32b": {
+      "display_name": "Qwen 2.5 32B",
+      "parameters_b": 32.5,
+      "default_tokens_per_second": 48.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 50.0,
+        "nvidia-rtx-3090": 28.0,
+        "nvidia-a100-80gb": 82.0,
+        "nvidia-h100-80gb": 165.0,
+        "nvidia-l40s": 70.0,
+        "amd-mi300x": 130.0,
+        "apple-m2-ultra": 20.0,
+        "apple-m3-max": 22.0,
+        "apple-m4-max": 30.0
+      },
+      "notes": "PLACEHOLDER — needs ~20GB VRAM at Q4; 24GB GPUs serve one copy"
+    },
+    "llama3.3:70b": {
+      "display_name": "Llama 3.3 70B",
+      "parameters_b": 70.0,
+      "default_tokens_per_second": 25.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 22.0,
+        "nvidia-a100-80gb": 65.0,
+        "nvidia-h100-80gb": 110.0,
+        "nvidia-l40s": 55.0,
+        "amd-mi300x": 95.0,
+        "apple-m2-ultra": 18.0,
+        "apple-m3-max": 22.0,
+        "apple-m4-max": 28.0,
+        "cpu-only-xeon-32core": 0.8
+      },
+      "notes": "PLACEHOLDER — quantized Q4_K_M; FP16 needs ~140GB (A100/H100/MI300X-only)"
+    },
+    "deepseek-r1:8b": {
+      "display_name": "DeepSeek R1 Distill 8B",
+      "parameters_b": 8.0,
+      "default_tokens_per_second": 120.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 125.0,
+        "nvidia-rtx-4080": 88.0,
+        "nvidia-rtx-3090": 88.0,
+        "nvidia-rtx-4060-ti-16gb": 48.0,
+        "nvidia-a100-80gb": 170.0,
+        "nvidia-h100-80gb": 330.0,
+        "nvidia-l40s": 150.0,
+        "nvidia-rtx-3060-12gb": 26.0,
+        "amd-mi300x": 265.0,
+        "apple-m2-ultra": 38.0,
+        "apple-m3-max": 42.0,
+        "apple-m4-max": 56.0,
+        "cpu-only-xeon-32core": 3.0
+      },
+      "notes": "PLACEHOLDER — reasoning model, similar throughput to base 8B but emits more tokens per query"
+    },
+    "codellama:34b": {
+      "display_name": "CodeLlama 34B",
+      "parameters_b": 34.0,
+      "default_tokens_per_second": 45.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 48.0,
+        "nvidia-rtx-3090": 26.0,
+        "nvidia-a100-80gb": 80.0,
+        "nvidia-h100-80gb": 160.0,
+        "nvidia-l40s": 68.0,
+        "amd-mi300x": 125.0,
+        "apple-m2-ultra": 19.0,
+        "apple-m3-max": 21.0,
+        "apple-m4-max": 28.0
+      },
+      "notes": "PLACEHOLDER — code-specialized; similar footprint to Qwen 2.5 32B"
+    },
+    "ministral-3:14b": {
+      "display_name": "Ministral 3 14B",
+      "parameters_b": 14.0,
+      "default_tokens_per_second": 95.0,
+      "tokens_per_second_by_gpu": {
+        "nvidia-rtx-4090": 100.0,
+        "nvidia-rtx-4080": 65.0,
+        "nvidia-rtx-3090": 60.0,
+        "nvidia-a100-80gb": 145.0,
+        "nvidia-h100-80gb": 275.0,
+        "nvidia-l40s": 120.0,
+        "amd-mi300x": 230.0,
+        "apple-m3-max": 34.0,
+        "apple-m4-max": 45.0
+      },
+      "notes": "PLACEHOLDER — Ollama TPS Live 214.6 tps at peak; typical sustained lower"
+    }
+  }
+}

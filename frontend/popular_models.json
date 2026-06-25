@@ -1,0 +1,74 @@
+[
+  {
+    "provider": "openai",
+    "provider_label": "OpenAI",
+    "icon": "dot",
+    "brand_color": "#0d0d0d",
+    "brand_soft": "#ecebe8",
+    "text_color": "#ffffff",
+    "default_model": "openai/gpt-4o"
+  },
+  {
+    "provider": "anthropic",
+    "provider_label": "Anthropic",
+    "icon": "diamond",
+    "brand_color": "#c75a3f",
+    "brand_soft": "#f4dccf",
+    "text_color": "#ffffff",
+    "default_model": "anthropic/claude-sonnet-4"
+  },
+  {
+    "provider": "google",
+    "provider_label": "Google",
+    "icon": "square",
+    "brand_color": "#4285F4",
+    "brand_soft": "#dde6fa",
+    "text_color": "#ffffff",
+    "default_model": "google/gemini-2.5-pro"
+  },
+  {
+    "provider": "meta-llama",
+    "provider_label": "Meta",
+    "icon": "ring",
+    "brand_color": "#0866E1",
+    "brand_soft": "#d9e6fa",
+    "text_color": "#ffffff",
+    "default_model": "openrouter/meta-llama/llama-3.3-70b-instruct"
+  },
+  {
+    "provider": "deepseek",
+    "provider_label": "DeepSeek",
+    "icon": "triangle",
+    "brand_color": "#0F4C81",
+    "brand_soft": "#d6dfeb",
+    "text_color": "#ffffff",
+    "default_model": "deepseek/deepseek-chat"
+  },
+  {
+    "provider": "mistralai",
+    "provider_label": "Mistral",
+    "icon": "hex",
+    "brand_color": "#FF7000",
+    "brand_soft": "#fde2cd",
+    "text_color": "#ffffff",
+    "default_model": "openrouter/mistralai/mistral-large"
+  },
+  {
+    "provider": "x-ai",
+    "provider_label": "xAI",
+    "icon": "plus",
+    "brand_color": "#2d2d2d",
+    "brand_soft": "#e9e8e6",
+    "text_color": "#ffffff",
+    "default_model": "openrouter/x-ai/grok-4.20"
+  },
+  {
+    "provider": "cohere",
+    "provider_label": "Cohere",
+    "icon": "arc",
+    "brand_color": "#FF0034",
+    "brand_soft": "#fbd0d6",
+    "text_color": "#ffffff",
+    "default_model": "openrouter/cohere/command-r-plus-08-2024"
+  }
+]

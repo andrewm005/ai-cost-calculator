@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+.next/
+dist/
+build/
+.tsbuildinfo
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Secrets (none in this repo today, but defensive)
+.env
+.env.local
+.env.*.local
+
+# Kanban workspace forensics (these are gateway diagnostic files)
+*.corrupt.*.bak
+kanban.db
+kanban.db-journal
+kanban.db-shm
+kanban.db-wal
+
+# Python egg build
+*.egg-info/
+build/
+dist/
+
+# Logs
+*.log
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
