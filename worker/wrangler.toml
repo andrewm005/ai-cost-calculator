@@ -60,4 +60,4 @@ command = ""
 # Override locally with `wrangler dev --var PRICING_KEY:cache`.
 [vars]
 PRICING_KEY = "cache"
-OPENROUTER_KEY = "openrouter"
+OPENROUTER_CACHE_PATH = "openrouter"
