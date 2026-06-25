@@ -59,10 +59,13 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
   const key = env.PRICING_KEY ?? 'cache';
 
   // 1. Try KV first; if empty, fall back to the baked hand-curated pricing.
-  let merged = await loadPricingFromKV(env.PRICING, key);
-  if (Object.keys(merged).length === 0) {
-    merged = loadPricingFromObject(PRICING_BLOB);
-  }
+const baked = loadPricingFromObject(PRICING_BLOB);
+const live = await loadPricingFromKV(env.PRICING, key);
+
+const merged = {
+  ...baked,
+  ...live,
+};
 
   // 2. Empty-loader; we'll inject the merged dict.
   const loader = new PricingLoader();
