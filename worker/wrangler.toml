@@ -43,7 +43,7 @@ compatibility_flags = ["nodejs_compat"]
 # The `preview_id` is only used by `wrangler dev`.
 [[kv_namespaces]]
 binding = "PRICING"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "36fc3c8c680e418f82a13ff5095919da"
 # preview_id = "REPLACE_WITH_PREVIEW_KV_NAMESPACE_ID"
 
 # Cron trigger — fires src/scheduled.ts every 6 hours on the hour.
