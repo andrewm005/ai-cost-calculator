@@ -86,13 +86,7 @@ const merged = {
   //    The operator can still trigger a manual refresh via the dashboard
   //    ("Run scheduled task now") if needed.
   const reloadPricing = (): number => Object.keys(merged).length;
-  const refreshOpenrouter = async (): Promise<number> => {
-    // No-op in Workers; the cron handler is the only refresh path.
-    throw new Error(
-      'Manual refresh is not available in Workers runtime — use the Cloudflare ' +
-        'dashboard to trigger the scheduled handler, or wait for the cron tick.',
-    );
-  };
+  refreshOpenrouter: async () => refreshToKV(env.PRICING, env.PRICING_KEY ?? 'cache'),
   const openrouterModelCount = (): number =>
     loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
 
@@ -100,7 +94,7 @@ const merged = {
     loader,
     calculator,
     pricingPaths: [], // disk paths N/A in Workers
-    openrouterCachePath: env.OPENROUTER_CACHE_PATH ?? 'openrouter',
+    openrouterCachePath: 'kv',
     refreshSeconds: 0,
     gpuProfiles,
     modelProfiles,
