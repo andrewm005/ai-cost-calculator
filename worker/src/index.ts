@@ -97,7 +97,7 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
     loader,
     calculator,
     pricingPaths: [], // disk paths N/A in Workers
-    openrouterCachePath: null, // disk path N/A in Workers
+    openrouterCachePath: env.OPENROUTER_CACHE_PATH ?? 'openrouter',
     refreshSeconds: 0,
     gpuProfiles,
     modelProfiles,
