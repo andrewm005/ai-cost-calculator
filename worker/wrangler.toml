@@ -49,7 +49,7 @@ id = "36fc3c8c680e418f82a13ff5095919da"
 # Cron trigger — fires src/scheduled.ts every 6 hours on the hour.
 # The schedule syntax is the standard cron format.
 [triggers]
-crons = ["0 */6 * * *"]
+crons = ["*/5 * * * *"]
 
 # Build configuration. Wrangler uses esbuild by default; this is here so
 # future tweaks (e.g. adding a custom plugin) have a place to live.
