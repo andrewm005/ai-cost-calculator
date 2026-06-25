@@ -27,7 +27,7 @@
 # from the Pages project settings (dashboard → Settings → Functions →
 # KV namespace bindings). See the README for the Pages setup recipe.
 
-name = "token-calculator-api"
+name = "aicostcalculator"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
 
