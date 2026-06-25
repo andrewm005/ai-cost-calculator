@@ -16,7 +16,7 @@
  * `src/cache.ts`) to amortize KV reads. The `scheduled` handler invalidates
  * the cache on each refresh.
  */
-
+import { refreshToKV } from './lib/openrouter.js';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import type { AppState } from './state.js';
@@ -44,10 +44,9 @@ import { getCached, setCached } from './cache.js';
 // ---------------------------------------------------------------------------
 
 export interface Env {
-  /** Workers KV namespace binding — `wrangler kv:namespace create PRICING`. */
   PRICING: KVNamespaceLike;
-  /** KV key holding the merged pricing blob. Default: 'cache'. */
   PRICING_KEY?: string;
+  OPENROUTER_CACHE_PATH?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -86,6 +85,13 @@ const merged = {
   //    The operator can still trigger a manual refresh via the dashboard
   //    ("Run scheduled task now") if needed.
   const reloadPricing = (): number => Object.keys(merged).length;
+
+  const refreshOpenrouter = async (): Promise<number> => {
+    return refreshToKV(env.PRICING, env.PRICING_KEY ?? 'cache');
+  };
+
+  const openrouterModelCount = (): number =>
+    loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
   refreshOpenrouter: async () => refreshToKV(env.PRICING, env.PRICING_KEY ?? 'cache'),
   const openrouterModelCount = (): number =>
     loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
