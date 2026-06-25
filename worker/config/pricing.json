@@ -1,18 +1,4 @@
-/**
- * Baked-in copy of worker/config/pricing.json (13 hand-curated models).
- *
- * The Cloudflare Workers runtime has no fs module, so we embed the
- * hand-curated pricing as a TypeScript object literal. This serves as the
- * baseline pricing before the first cron-triggered OpenRouter refresh writes
- * to KV.
- *
- * If you edit worker/config/pricing.json, regenerate this file by running:
- *     node scripts/bake_pricing_assets.mjs
- *
- * (Source-of-truth: worker/config/pricing.json. Worker bundle: this file.)
- */
-
-export const PRICING_BLOB = {
+{
   "_meta": {
     "schema_version": "1.1",
     "currency": "USD",
@@ -28,12 +14,12 @@ export const PRICING_BLOB = {
       "provider": "openai",
       "display_name": "OpenAI: GPT-4o",
       "input_per_1m": 2.5,
-      "output_per_1m": 10,
+      "output_per_1m": 10.0,
       "cached_input_per_1m": 1.25,
       "context_window": 128000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
+      "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.002125,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
@@ -48,8 +34,8 @@ export const PRICING_BLOB = {
       "context_window": 128000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0.000075,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 7.5e-05,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -57,14 +43,14 @@ export const PRICING_BLOB = {
     "openai/o3": {
       "provider": "openai",
       "display_name": "OpenAI: o3",
-      "input_per_1m": 2,
-      "output_per_1m": 8,
+      "input_per_1m": 2.0,
+      "output_per_1m": 8.0,
       "cached_input_per_1m": 0.5,
       "context_window": 200000,
       "supports_reasoning": true,
-      "reasoning_per_1m": 40,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0,
+      "reasoning_per_1m": 40.0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 0.0,
       "notes": "OpenRouter $2/$8 — lower than OpenAI list $10/$40; OR may route to a cheaper variant. Refreshed daily.",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -72,13 +58,13 @@ export const PRICING_BLOB = {
     "anthropic/claude-opus-4": {
       "provider": "anthropic",
       "display_name": "Anthropic: Claude Opus 4",
-      "input_per_1m": 15,
-      "output_per_1m": 75,
+      "input_per_1m": 15.0,
+      "output_per_1m": 75.0,
       "cached_input_per_1m": 1.5,
       "context_window": 200000,
       "supports_reasoning": true,
-      "reasoning_per_1m": 75,
-      "tool_call_cost": 0,
+      "reasoning_per_1m": 75.0,
+      "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0048,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
@@ -87,13 +73,13 @@ export const PRICING_BLOB = {
     "anthropic/claude-sonnet-4": {
       "provider": "anthropic",
       "display_name": "Anthropic: Claude Sonnet 4",
-      "input_per_1m": 3,
-      "output_per_1m": 15,
+      "input_per_1m": 3.0,
+      "output_per_1m": 15.0,
       "cached_input_per_1m": 0.3,
       "context_window": 1000000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
+      "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.00096,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
@@ -102,13 +88,13 @@ export const PRICING_BLOB = {
     "anthropic/claude-haiku-4": {
       "provider": "anthropic",
       "display_name": "Anthropic: Claude Haiku 4.5",
-      "input_per_1m": 1,
-      "output_per_1m": 5,
+      "input_per_1m": 1.0,
+      "output_per_1m": 5.0,
       "cached_input_per_1m": 0.09999999999999999,
       "context_window": 200000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
+      "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.00024,
       "notes": "OpenRouter $1/$5 — maps to Claude Haiku 4.5 (current generation). Auto-refreshed daily.",
       "last_verified": "2026-06-23",
@@ -118,13 +104,13 @@ export const PRICING_BLOB = {
       "provider": "google",
       "display_name": "Google: Gemini 2.5 Pro",
       "input_per_1m": 1.25,
-      "output_per_1m": 10,
+      "output_per_1m": 10.0,
       "cached_input_per_1m": 0.125,
       "context_window": 1048576,
       "supports_reasoning": true,
-      "reasoning_per_1m": 10,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0.00000125,
+      "reasoning_per_1m": 10.0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 1.25e-06,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -138,8 +124,8 @@ export const PRICING_BLOB = {
       "context_window": 1048576,
       "supports_reasoning": true,
       "reasoning_per_1m": 2.5,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 3e-7,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 3e-07,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -153,8 +139,8 @@ export const PRICING_BLOB = {
       "context_window": 131072,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 0.0,
       "notes": "OpenRouter $0.20/$0.80 — DeepSeek V3 (latest). Auto-refreshed daily.",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -168,8 +154,8 @@ export const PRICING_BLOB = {
       "context_window": 163840,
       "supports_reasoning": true,
       "reasoning_per_1m": 2.19,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 0.0,
       "notes": "OpenRouter $0.70/$2.50 — R1 list. Auto-refreshed daily.",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -177,14 +163,14 @@ export const PRICING_BLOB = {
     "mistral/mistral-large": {
       "provider": "mistralai",
       "display_name": "Mistral Large",
-      "input_per_1m": 2,
-      "output_per_1m": 6,
+      "input_per_1m": 2.0,
+      "output_per_1m": 6.0,
       "cached_input_per_1m": 0.19999999999999998,
       "context_window": 128000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 0.0,
       "notes": "OpenRouter public list price (auto-refreshed daily)",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -198,8 +184,8 @@ export const PRICING_BLOB = {
       "context_window": 262144,
       "supports_reasoning": true,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
-      "image_input_cost_per_image": 0,
+      "tool_call_cost": 0.0,
+      "image_input_cost_per_image": 0.0,
       "notes": "OpenRouter $0.15/$0.60 — Mistral Small 4 (current). Auto-refreshed daily.",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
@@ -207,17 +193,17 @@ export const PRICING_BLOB = {
     "openrouter/auto": {
       "provider": "openrouter",
       "display_name": "OpenRouter Auto (router picks best)",
-      "input_per_1m": 2,
-      "output_per_1m": 8,
+      "input_per_1m": 2.0,
+      "output_per_1m": 8.0,
       "cached_input_per_1m": 0.5,
       "context_window": 200000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
-      "tool_call_cost": 0,
+      "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.001,
       "notes": "Price is dynamic — OpenRouter auto-router picks a different model per request. Reference rate shown; real cost depends on chosen upstream.",
       "last_verified": "2026-06-23",
       "verification_source": "openrouter"
     }
   }
-} as const;
+}

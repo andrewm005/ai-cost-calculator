@@ -3,8 +3,8 @@
  *
  * Multi-file merge: load_pricing_files(...paths) reads multiple JSON files in
  * order and returns a single {model_id: ModelPricing} dict. Later files
- * override earlier ones on collision (so config/openrouter.json loaded after
- * config/pricing.json replaces any placeholder OpenRouter entries with live
+ * override earlier ones on collision (so worker/config/openrouter.json loaded after
+ * worker/config/pricing.json replaces any placeholder OpenRouter entries with live
  * data).
  *
  * Two storage backends:
@@ -155,8 +155,8 @@ export class PricingLoader {
  * Read multiple pricing JSON files from disk and merge them.
  *
  * Later files override earlier ones on collision (matches Python
- * `load_pricing_files` semantics — `config/openrouter.json` loaded after
- * `config/pricing.json` replaces any placeholder OpenRouter entries).
+ * `load_pricing_files` semantics — `worker/config/openrouter.json` loaded after
+ * `worker/config/pricing.json` replaces any placeholder OpenRouter entries).
  */
 export function loadPricingFromDisk(
   paths: string[],
@@ -191,7 +191,7 @@ export const PRICING_KV_KEY = 'cache';
 /**
  * Read the merged pricing blob from a Workers KV namespace.
  *
- * The blob is the same shape as `config/openrouter.json`:
+ * The blob is the same shape as `worker/config/openrouter.json`:
  *   { _meta: {...}, models: { model_id: {...} } }
  *
  * Returns `{}` if the key is missing or the blob is malformed — the caller
@@ -214,7 +214,7 @@ export async function loadPricingFromKV(
 }
 
 /**
- * Read hand-curated pricing (config/pricing.json) baked into the worker bundle
+ * Read hand-curated pricing (worker/config/pricing.json) baked into the worker bundle
  * as a JS object literal. Used as the fallback before KV is populated by the
  * first scheduled refresh.
  *

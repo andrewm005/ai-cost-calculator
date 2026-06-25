@@ -7,7 +7,7 @@
  *
  * Namespacing: all incoming model ids are prefixed with `openrouter/` UNLESS
  * they already start with `openrouter/`. Prevents collisions with the
- * hand-curated vendor models in config/pricing.json.
+ * hand-curated vendor models in worker/config/pricing.json.
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
@@ -148,7 +148,7 @@ export async function fetchModels(
  * namespace. Returns the number of models written.
  *
  * Shape written: `{ _meta: {...}, models: { model_id: {...} } }` — same as
- * `config/openrouter.json` on disk, so `loadPricingFromKV` reads it back
+ * `worker/config/openrouter.json` on disk, so `loadPricingFromKV` reads it back
  * with no transformation.
  */
 export async function refreshToKV(

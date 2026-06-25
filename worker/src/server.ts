@@ -1,7 +1,7 @@
 /**
  * Node entry — port of app/main.py:create_app() + the lifespan refresh loop.
  *
- * Resolves paths (defaults to ../config + ../data), builds the PricingLoader,
+ * Resolves paths (defaults to worker/config + data), builds the PricingLoader,
  * Calculator, and Hono app, starts the Node server, and sets up the
  * OpenRouter refresh interval (default 6h, env: OPENROUTER_REFRESH_SECONDS,
  * 0 disables).
@@ -33,8 +33,8 @@ import { refreshToDisk, refreshToKV } from './lib/openrouter.js';
 
 const REPO_ROOT = resolve(import.meta.dirname, '..', '..');
 
-const DEFAULT_PRICING_PATH = env.PRICING_CONFIG ?? resolve(REPO_ROOT, 'config', 'pricing.json');
-const DEFAULT_OPENROUTER_PATH = resolve(REPO_ROOT, 'config', 'openrouter.json');
+const DEFAULT_PRICING_PATH = env.PRICING_CONFIG ?? resolve(REPO_ROOT, 'worker', 'config', 'pricing.json');
+const DEFAULT_OPENROUTER_PATH = resolve(REPO_ROOT, 'worker', 'config', 'openrouter.json');
 const DEFAULT_REFRESH_SECONDS = 21600;
 const DEFAULT_GPU_PROFILES_PATH = resolve(REPO_ROOT, 'data', 'local_gpu_profiles.json');
 const DEFAULT_MODEL_PROFILES_PATH = resolve(REPO_ROOT, 'data', 'local_model_profiles.json');

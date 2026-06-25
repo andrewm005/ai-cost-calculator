@@ -7,7 +7,7 @@
  *                    / (tokens_per_second * utilization)
  *
  * Per AGENTS.md decision #2, local Ollama is NOT merged with cloud Ollama —
- * the latter would only land as a normal config/pricing.json entry with
+ * the latter would only land as a normal worker/config/pricing.json entry with
  * provider="ollama" if/when Ollama publishes public prices.
  */
 
