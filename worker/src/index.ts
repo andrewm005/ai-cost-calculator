@@ -57,17 +57,17 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
   const gpuProfiles = loadGpuProfilesFromObject(GPU_PROFILES_RAW);
   const modelProfiles = loadModelProfilesFromObject(MODEL_PROFILES_RAW);
 
-  const reloadPricing = (): number => Object.keys(merged).length;
+const reloadPricing = (): number => Object.keys(merged).length;
 
-  const refreshOpenrouter = async (): Promise<number> => {
-    const count = await refreshToKV(env.PRICING, key);
-    invalidateCache();
-    return count;
-  };
+const refreshOpenrouter = async (): Promise<number> => {
+  const count = await refreshToKV(env.PRICING, env.PRICING_KEY ?? 'cache');
+  invalidateCache();
+  return count;
+};
 
-  const openrouterModelCount = (): number =>
-    loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
-
+const openrouterModelCount = (): number =>
+  loader.listModelIds().filter((id) => id.startsWith('openrouter/')).length;
+  
   return {
     loader,
     calculator,
@@ -80,7 +80,6 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
     refreshOpenrouter,
     openrouterModelCount,
   };
-}
 
 const outer = new Hono<{ Bindings: Env }>();
 
