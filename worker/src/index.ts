@@ -80,6 +80,7 @@ const openrouterModelCount = (): number =>
     refreshOpenrouter,
     openrouterModelCount,
   };
+}
 
 const outer = new Hono<{ Bindings: Env }>();
 
