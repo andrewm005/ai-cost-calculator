@@ -27,6 +27,7 @@ import {
   MODEL_PROFILES_RAW,
 } from './lib/local_data_assets.js';
 import { PRICING_BLOB } from './lib/pricing_data_assets.js';
+import { OPENROUTER_BLOB } from './lib/openrouter_data_assets.js';
 import { getCached, setCached, invalidateCache } from './cache.js';
 
 export interface Env {
@@ -39,10 +40,12 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
   const key = env.PRICING_KEY ?? 'cache';
 
   const baked = loadPricingFromObject(PRICING_BLOB);
+  const openrouterBaked = loadPricingFromObject(OPENROUTER_BLOB);
   const live = await loadPricingFromKV(env.PRICING, key);
 
   const merged = {
     ...baked,
+    ...openrouterBaked,
     ...live,
   };
 
