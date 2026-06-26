@@ -79,7 +79,7 @@ const openrouterModelCount = (): number =>
     reloadPricing,
     refreshOpenrouter,
     openrouterModelCount,
-  };
+};
 }
 
 const outer = new Hono<{ Bindings: Env }>();
