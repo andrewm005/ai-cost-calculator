@@ -19,8 +19,11 @@ from datetime import datetime
 from pathlib import Path
 
 API = os.environ.get("API", "https://aicostcalculator.net")
-OUT_DIR = Path("/home/vboxuser/vaults/star-command/Projects/token-calculator/frontend/compare")
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+# ponytail: 2026-09-22 — compare pages deleted as part of AdSense cleanup.
+# OUT_DIR disabled so accidental runs can't recreate the directory or files.
+# Re-enable below + the __main__ block at the bottom to bring compare pages back.
+# OUT_DIR = Path(__file__).resolve().parent.parent / "frontend" / "compare"
+# OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # (model_a_id, model_b_id) pairs — the most-searched comparisons
 # for LLM pricing. Add more as needed; the script handles any pair.
@@ -386,7 +389,7 @@ def render_pair(a, b):
 
   <footer class="foot">
     <p>
-      AI Cost Calculator &middot; <a href="../">Calculator</a> &middot; <a href="../about.html">About</a> &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../status.html">Status</a>
+      AI Cost Calculator &middot; <a href="../">Calculator</a> &middot; <a href="../about.html">About</a> &middot; <a href="../terms.html">Terms</a> &middot; <a href="../disclaimer.html">Disclaimer</a> &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../contact.html">Contact</a>
     </p>
   </footer>
 </body>
@@ -422,5 +425,11 @@ def main():
         print(f"skipped: {skipped}")
 
 
+# ponytail: 2026-09-22 — compare pages deleted as part of AdSense cleanup
+# (same scaled-content signal as the model pages). Generator preserved for
+# reference but disabled. Re-enable to regenerate if you want them back.
 if __name__ == "__main__":
-    main()
+    print("scripts/build_compares.py: disabled. Compare pages were removed on")
+    print("2026-09-22 as part of an AdSense compliance cleanup. Re-enable the")
+    print("'main()' line below if you want to regenerate compare pages.")
+    raise SystemExit(0)

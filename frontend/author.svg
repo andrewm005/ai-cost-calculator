@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Author avatar for AI Cost Calculator.
+
+  Drop a real photo at this path (and update width/height if needed) when
+  one is available; this SVG is the default fallback. Designed to match
+  the brand palette (warm paper background, deep teal text, DM Serif
+  Display) so the about page doesn't show a broken-image icon before a
+  real photo exists.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Andrew Morgado, the operator of AI Cost Calculator">
+  <defs>
+    <style>
+      .bg { fill: #f7f3ec; }
+      .ring { fill: none; stroke: #14544d; stroke-width: 3; }
+      .monogram { font-family: 'DM Serif Display', 'Iowan Old Style', Georgia, serif; font-size: 110px; fill: #14544d; text-anchor: middle; dominant-baseline: central; letter-spacing: -0.04em; }
+      .tag { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 14px; fill: #6b6660; text-anchor: middle; letter-spacing: 0.18em; text-transform: uppercase; }
+    </style>
+  </defs>
+  <rect class="bg" width="240" height="240" rx="16"/>
+  <rect class="ring" x="8" y="8" width="224" height="224" rx="12"/>
+  <text class="monogram" x="120" y="118">AM</text>
+  <text class="tag" x="120" y="206">aicostcalculator.net</text>
+</svg>

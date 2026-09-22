@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Free AI Cost Calculator</title>
-  <meta name="description" content="Free AI cost calculator with live OpenRouter pricing across 349 models. Compare Claude vs GPT, Gemini, Llama, DeepSeek costs side-by-side. Token pricing per million, agentic workflow cost, RAG pipeline estimates. No signup, refreshed every 6 hours.">
+  <title>Free AI Cost Calculator: 80 curated models, live OpenRouter pricing</title>
+  <meta name="description" content="Free AI cost calculator with live OpenRouter pricing across 300+ models. 80 curated model pages. Compare Claude vs GPT, Gemini, Llama, DeepSeek costs side-by-side. Token pricing per million, agentic workflow cost, RAG pipeline estimates. No signup, refreshed every 6 hours.">
   <meta name="keywords" content="AI token calculator, LLM token calculator, GPT pricing calculator, Claude cost calculator, OpenRouter pricing, compare LLM costs, AI API pricing, token cost estimator, GPT-4o cost, Claude Sonnet pricing, Gemini pricing, Llama cost, DeepSeek pricing">
   <meta name="author" content="AI Cost Calculator">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -15,8 +15,8 @@
 
   <!-- Open Graph (Facebook, LinkedIn, Slack previews) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Free AI Cost Calculator: Live OpenRouter Pricing for 349 Models | AI Cost Calculator</title>
-  <meta property="og:description" content="Free token calculator with live OpenRouter pricing across 349 models. Compare GPT, Claude, Gemini, Llama, and DeepSeek side-by-side. No signup.">
+  <meta property="og:title" content="Free AI Cost Calculator: 80 curated models, live OpenRouter pricing</title>
+  <meta property="og:description" content="Free token calculator with live OpenRouter pricing across 300+ models, plus 80 dedicated model pages. Compare GPT, Claude, Gemini, Llama, and DeepSeek side-by-side. No signup.">
   <meta property="og:url" content="https://aicostcalculator.net/">
   <meta property="og:site_name" content="AI Cost Calculator">
   <meta property="og:image" content="https://aicostcalculator.net/og-image.png">
@@ -24,8 +24,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free AI Cost Calculator: Live OpenRouter Pricing for 349 Models | AI Cost Calculator</title>
-  <meta name="twitter:description" content="Free token calculator with live OpenRouter pricing across 349 models. Compare GPT, Claude, Gemini side-by-side.">
+  <meta name="twitter:title" content="Free AI Cost Calculator: 80 curated models, live OpenRouter pricing</title>
+  <meta name="twitter:description" content="Free token calculator with live OpenRouter pricing across 300+ models, plus 80 dedicated model pages. Compare GPT, Claude, Gemini side-by-side.">
   <meta name="twitter:image" content="https://aicostcalculator.net/og-image.png">
 
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -45,7 +45,7 @@
         "@type": "WebApplication",
         "name": "AI Cost Calculator: AI Token Calculator",
         "url": "https://aicostcalculator.net/",
-        "description": "Free AI token calculator with live OpenRouter pricing across 349 models.",
+        "description": "Free AI token calculator with live OpenRouter pricing across 300+ models, plus 80 dedicated model pages with workload breakdowns and FAQs.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any (web browser)",
         "offers": {
@@ -54,7 +54,8 @@
           "priceCurrency": "USD"
         },
         "featureList": [
-          "Live OpenRouter pricing for 349 models",
+          "Live OpenRouter pricing for 300+ models",
+          "80 curated model pages with workload breakdowns",
           "Compare 2-5 models side-by-side",
           "Project presets (LangChain, RAG, AutoGen, code review)",
           "Cached input and reasoning token pricing",
@@ -135,8 +136,7 @@
     </a>
     <nav class="topbar__nav" aria-label="Primary">
       <a href="./">Calculator</a>
-      <a href="./models/">All models</a>
-      <a href="./compare/">Compare</a>
+
       <a href="./blog/">Blog</a>
       <a href="./about.html">About</a>
     </nav>
@@ -207,7 +207,7 @@
           <!-- Row 1 — Popular (v2.4: one-click default model selection;
                v2.2 was a per-company popover; v2.1 was a horizontal scroll strip).
                Each card is a <button> rendered by renderPopular() in app.js.
-               v2.9: label now reads "Popular · 8 of 349" so the row reads as
+               v2.9: label now reads "Popular · 8 of 300+" so the row reads as
                a curated subset, not the whole catalog. The denominator is
                updated by setPopularCount() after loadAll() so the number
                tracks the live OpenRouter feed. -->
@@ -242,7 +242,7 @@
                   <input type="text" class="combo__search" id="combo-search"
                          placeholder="Search any model. Try Claude, GPT, Llama, Gemini…"
                          autocomplete="off" spellcheck="false"
-                         aria-label="Search any of the 349 models by name, provider, or id"
+                         aria-label="Search any of the 300+ models by name, provider, or id"
                          aria-controls="combo-list" aria-autocomplete="list">
                   <button type="button" class="combo__clear" id="combo-clear" aria-label="Clear search" hidden>×</button>
                   <button type="button" class="fav-toggle" id="fav-toggle"
@@ -253,7 +253,7 @@
                   </button>
                 </div>
                 <p class="combo__hint" id="combo-hint">
-                  Type to filter the 349 models by name, provider, or model id.
+                  Type to filter the 300+ models by name, provider, or model id.
                 </p>
                 <ul class="combo__list" id="combo-list" role="listbox" aria-label="All models"></ul>
                 <p class="combo__empty" id="combo-empty" hidden>No matches.</p>
@@ -540,13 +540,8 @@
         against vendor pages before quoting.
       </p>
       <p>
-        <strong>Popular head-to-head comparisons:</strong>
-        <a href="./compare/openai-gpt-4o-vs-anthropic-claude-sonnet-4.html">GPT-4o vs Claude Sonnet 4</a> ·
-        <a href="./compare/openai-gpt-4o-mini-vs-anthropic-claude-haiku-4.html">GPT-4o mini vs Claude Haiku</a> ·
-        <a href="./compare/openai-gpt-4o-vs-openrouter-meta-llama-llama-3.3-70b-instruct.html">GPT-4o vs Llama 3.3 70B</a> ·
-        <a href="./compare/openai-gpt-4o-vs-deepseek-deepseek-chat.html">GPT-4o vs DeepSeek V3</a> ·
-        <a href="./compare/anthropic-claude-opus-4-vs-openai-gpt-4o.html">Claude Opus 4 vs GPT-4o</a> ·
-        <a href="./compare/">see all 12 →</a>
+        <strong>From the top-20 guide:</strong>
+        <a href="./blog/top-20-ai-models-2026.html">Top 20 AI models in 2026, compared and ranked</a> — a curated look at the models worth knowing, with cited sources and methodology.
       </p>
       <p>
         <strong>From the blog:</strong>
@@ -641,7 +636,7 @@
 
   <footer class="foot">
     <p>
-      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./blog/">Blog</a> · <a href="./about.html">About</a> · <a href="./privacy.html">Privacy</a> · <a href="./status.html">Status</a>
+      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./blog/">Blog</a> · <a href="./about.html">About</a> · <a href="./terms.html">Terms</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./privacy.html">Privacy</a> · <a href="./contact.html">Contact</a>
     </p>
   </footer>
 

@@ -2365,8 +2365,10 @@ def render_page(model: dict, all_models: dict, related: list[dict], today: str) 
     <a href="./">All models</a> &middot;
     <a href="../compare/">Compare</a> &middot;
     <a href="../about.html">About</a> &middot;
+    <a href="../terms.html">Terms</a> &middot;
+    <a href="../disclaimer.html">Disclaimer</a> &middot;
     <a href="../privacy.html">Privacy</a> &middot;
-    <a href="../status.html">Status</a>
+    <a href="../contact.html">Contact</a>
     <br><small class="model-foot__src">Pricing data via <a href="https://openrouter.ai/" rel="noopener">OpenRouter</a> &middot; refreshed every 6 hours</small>
   </footer>
   <!-- generated={today} visible_words={word_count} slug={slug} template={ctx["template"]} -->
@@ -2966,8 +2968,10 @@ def render_index(models: list[dict], today: str) -> str:
     <a href="./">All models</a> &middot;
     <a href="../compare/">Compare</a> &middot;
     <a href="../about.html">About</a> &middot;
+    <a href="../terms.html">Terms</a> &middot;
+    <a href="../disclaimer.html">Disclaimer</a> &middot;
     <a href="../privacy.html">Privacy</a> &middot;
-    <a href="../status.html">Status</a>
+    <a href="../contact.html">Contact</a>
     <br><small class="model-foot__src">Pricing data via <a href="https://openrouter.ai/" rel="noopener">OpenRouter</a> &middot; refreshed every 6 hours</small>
   </footer>
 
@@ -3481,5 +3485,12 @@ def main() -> int:
     return 0
 
 
+# ponytail: 2026-09-22 — model pages deleted as part of AdSense cleanup
+# (scaled-content signal). The generator is preserved for reference but
+# disabled so accidental runs can't recreate the pages. To bring model
+# pages back: re-enable this entry point, regenerate, and update sitemap.xml.
 if __name__ == "__main__":
-    sys.exit(main())
+    print("scripts/generate_model_pages.py: disabled. Model pages were removed")
+    print("on 2026-09-22 as part of an AdSense compliance cleanup. Re-enable the")
+    print("'sys.exit(main())' line below if you want to regenerate model pages.")
+    sys.exit(0)

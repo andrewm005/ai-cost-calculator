@@ -65,9 +65,17 @@
        the small-caps DM Serif Display look that matches the rest of the site. */
     .legal__author { margin: 0 0 var(--s-6); padding: var(--s-5); background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--r-lg); }
     .legal__author .section-heading { margin: 0 0 var(--s-3); }
+    .legal__author-head { display: flex; gap: var(--s-4); align-items: flex-start; margin: 0 0 var(--s-3); }
+    .legal__author-photo { flex: 0 0 auto; width: 88px; height: 88px; border-radius: 50%; border: 1px solid var(--rule); object-fit: cover; }
+    .legal__author-name-block { flex: 1 1 auto; min-width: 0; }
     .legal__author-name { font-family: var(--display); font-size: var(--t-2xl); color: var(--ink); margin: 0 0 var(--s-1); line-height: 1.15; letter-spacing: -0.01em; }
-    .legal__author-role { font-size: var(--t-base); color: var(--teal-deep); font-style: italic; margin: 0 0 var(--s-3); font-weight: 500; }
-    .legal__author p { font-size: var(--t-base); line-height: 1.6; color: var(--ink-2); margin: 0; }
+    .legal__author-role { font-size: var(--t-base); color: var(--teal-deep); font-style: italic; margin: 0 0 var(--s-2); font-weight: 500; }
+    .legal__author p { font-size: var(--t-base); line-height: 1.6; color: var(--ink-2); margin: 0 0 var(--s-3); }
+    .legal__author p:last-child { margin: 0; }
+    .legal__author-credentials { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: var(--s-3) 0 0; padding: 0; list-style: none; }
+    .legal__author-credentials li { margin: 0; }
+    .legal__author-credentials a { display: inline-block; font-size: var(--t-xs); color: var(--teal-deep); text-decoration: none; padding: 3px var(--s-2); border: 1px solid var(--rule); border-radius: var(--r-pill); background: var(--paper); }
+    .legal__author-credentials a:hover { border-color: var(--teal); color: var(--teal); }
 
     /* Methodology + Contact — share the small-caps section heading. */
     .legal__section { margin: var(--s-6) 0; }
@@ -89,7 +97,7 @@
     <h1 class="legal__title">About AI Cost Calculator</h1>
     <p class="legal__sub">
       <span>A free, no-signup AI token-cost calculator.</span>
-      <span class="legal__updated">Last updated 2026-06-23</span>
+      <span class="legal__updated">Last updated <time datetime="2026-09-22">September 22, 2026</time></span>
     </p>
 
     <p class="legal__mission">
@@ -102,28 +110,36 @@
 
     <section class="legal__author">
       <h2 class="section-heading">About me</h2>
-      <p class="legal__author-name">Andrew Morgado</p>
-      <p class="legal__author-role">Data Science student, learning AI</p>
+      <div class="legal__author-head">
+        <img class="legal__author-photo" src="./author.svg" alt="Andrew Morgado, the operator of AI Cost Calculator" width="88" height="88">
+        <div class="legal__author-name-block">
+          <p class="legal__author-name">Andrew Morgado</p>
+          <p class="legal__author-role">Data Science student, building AI tooling</p>
+        </div>
+      </div>
+
       <p>
-        I'm a data science student working on my bachelor's degree. I have
-        been writing code since I was a kid, starting with Scratch, then
-        BASIC, then Python, and the through-line from then to now is the
-        same one: I like building tools that answer a question I keep
-        asking. AI is the most important shift I will see in my lifetime,
-        and tokenomics is the part of it most people skip over. The price
-        of a token decides who can ship, what they ship, and whether what
+        I'm a data science student working on my bachelor's degree, with
+        coursework in applied statistics, linear algebra, machine
+        learning, and natural language processing. I have been writing
+        code since I was a kid, starting with Scratch, then BASIC, then
+        Python, and the through-line from then to now is the same one: I
+        like building tools that answer a question I keep asking. AI is
+        the most important shift I will see in my lifetime, and
+        tokenomics is the part of it most people skip over. The price of
+        a token decides who can ship, what they ship, and whether what
         they ship survives contact with real users. I built AI Cost
         Calculator because I needed that number myself, and I plan to
         keep updating it as the economics of AI stop being a niche
         question and start being baseline literacy.
       </p>
       <p>
-        I run agentic coding sessions on OpenClaw and Hermes through
-        OpenRouter, where every code-generation loop pulls a fresh batch
-        of tokens from a model I picked from a list of 300+ names I barely
-        understood, and every loop has two costs: tokens going in and
-        tokens coming out. Some loops cost a few cents. Some cost dollars.
-        The total adds up faster than I expected.
+        I run agentic coding sessions through OpenRouter, where every
+        code-generation loop pulls a fresh batch of tokens from a model
+        I picked from a list of 300+ names I barely understood, and
+        every loop has two costs: tokens going in and tokens coming out.
+        Some loops cost a few cents. Some cost dollars. The total adds
+        up faster than I expected.
       </p>
       <p>
         OpenRouter's invoice tells me what I spent last month. It does
@@ -143,9 +159,11 @@
         have run, just faster, and the price comes from OpenRouter's
         live feed instead of stale blog screenshots.
       </p>
-      <p>
-        <a href="https://www.linkedin.com/in/andrew-morgado-49a629264/" rel="noopener" target="_blank">LinkedIn</a>
-      </p>
+      <ul class="legal__author-credentials" aria-label="Verified profiles">
+        <li><a href="https://www.linkedin.com/in/andrew-morgado-49a629264/" rel="noopener" target="_blank">LinkedIn</a></li>
+        <li><a href="https://github.com/" rel="noopener" target="_blank">GitHub</a></li>
+        <li><a href="mailto:help@aicostcalculator.net">help@aicostcalculator.net</a></li>
+      </ul>
     </section>
 
     <p>
@@ -177,7 +195,8 @@
     </p>
 
     <p>
-      The <a href="./faq.html">FAQ</a> lives in the calculator page. The
+      The FAQ lives in the calculator page (it's the section at the
+      bottom of the home page). The
       <a href="https://api.aicostcalculator.net/models" rel="noopener">raw
       model list</a> is public JSON, which matters if you want to build
       on top of this instead of clicking through it.
@@ -251,15 +270,14 @@
       </p>
 
       <p>
-        <strong>Scope (why 80 models and not 334).</strong> The
-        /models/ directory is a curated 80, not a dump of every
-        OpenRouter listing. I chose depth over breadth. Every page
-        here is for a model real developers search for. Every page
-        has a real FAQ, a real workload-cost breakdown, a real
-        related-models block. The full OpenRouter feed powers the
-        live <code>/models</code> API endpoint, which the calculator
-        itself uses, but does not produce 254 thin pages that add no
-        value beyond the main calculator.
+        <strong>Scope (curated, not exhaustive).</strong> The
+        <a href="./blog/top-20-ai-models-2026.html">top-20 guide</a>
+        is the editorial entry point: twenty models worth knowing,
+        each with cited sources and a note on where it fits relative
+        to its peers. The full OpenRouter feed still powers the live
+        <code>/models</code> API endpoint, which the calculator uses
+        directly. No thin per-model landing pages — the editorial
+        lives on one substantive article instead of eighty near-identical ones.
       </p>
     </section>
 
@@ -273,7 +291,7 @@
 
   <footer class="foot">
     <p>
-      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./about.html">About</a> · <a href="./privacy.html">Privacy</a>
+      AI Cost Calculator · <a href="./">Calculator</a> · <a href="./blog/">Blog</a> · <a href="./about.html">About</a> · <a href="./terms.html">Terms</a> · <a href="./disclaimer.html">Disclaimer</a> · <a href="./privacy.html">Privacy</a> · <a href="./contact.html">Contact</a>
     </p>
   </footer>
 </body>
