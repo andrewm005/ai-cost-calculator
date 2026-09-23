@@ -100,7 +100,7 @@
     // `cache_last_synced_at` + `cache_age_seconds`, which is the field
     // users actually care about here.
     (async function () {
-      const API = (window.TOKENTALLY_API || 'https://aicostcalculator.net').replace(/\/$/, '');
+      const API = (window.TOKENTALLY_API || 'https://aicostcalculator-api.andrewsagents.workers.dev').replace(/\/$/, '');
       const $ = (s) => document.querySelector(s);
       const dot = document.querySelector('#backend-status .status-dot');
       const val = $('#backend-status');
