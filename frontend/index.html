@@ -10,7 +10,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#f7f3ec">
 
-  <!-- Canonical — set to the production domain. Update when domain is finalized. -->
+  <!-- Canonical, set to the production domain. Update when domain is finalized. -->
   <link rel="canonical" href="https://aicostcalculator.net/">
 
   <!-- Open Graph (Facebook, LinkedIn, Slack previews) -->
@@ -157,7 +157,7 @@
       <h2 class="section-heading" id="calc-heading">Estimate</h2>
 
       <!-- v2.9: mode toggle (Single vs Compare). Pinned right below the
-           Estimate heading so it stays in place when switching modes —
+           Estimate heading so it stays in place when switching modes.
            the selection-bar (single) and compare-tray (compare) below
            it swap, but the toggle itself never moves. Default = single. -->
       <div class="mode-toggle" role="tablist" aria-label="Calculator mode">
@@ -171,12 +171,12 @@
         </button>
       </div>
 
-      <!-- v2.1 selection bar — prominent "what you picked" indicator,
+      <!-- v2.1 selection bar, prominent "what you picked" indicator,
            shown only in single mode. The compare-tray below replaces
            this visually when in compare mode. -->
       <div class="selection-bar" id="selection-bar" aria-live="polite">
         <span class="selection-bar__label">Selected</span>
-        <span class="selection-bar__name" id="selection-bar-name">—</span>
+        <span class="selection-bar__name" id="selection-bar-name">-</span>
         <span class="selection-bar__provider" id="selection-bar-provider"></span>
         <span class="selection-bar__price" id="selection-bar-price"></span>
       </div>
@@ -204,7 +204,7 @@
             <span>Model</span>
           </legend>
 
-          <!-- Row 1 — Popular (v2.4: one-click default model selection;
+          <!-- Row 1, Popular (v2.4: one-click default model selection;
                v2.2 was a per-company popover; v2.1 was a horizontal scroll strip).
                Each card is a <button> rendered by renderPopular() in app.js.
                v2.9: label now reads "Popular · 8 of 300+" so the row reads as
@@ -219,7 +219,7 @@
             <div class="popular" id="popular-row"><!-- populated by app.js --></div>
           </div>
 
-          <!-- Row 2 — All models (searchable). v2.1: label promoted for visibility -->
+          <!-- Row 2, All models (searchable). v2.1: label promoted for visibility -->
           <div class="picker__row picker__row--search">
             <p class="picker__row-label picker__row-label--primary">
               <span>All models</span>
@@ -265,7 +265,7 @@
         </fieldset>
 
         <!-- ============================================================
-             PROJECT + THINKING (v2.7b — simplified main form)
+             PROJECT + THINKING (v2.7b, simplified main form)
              Casual users see only Model + Project + Thinking + Calculate.
              Iterations / token overrides / num runs live in the
              "Customize" disclosure below. A live assumption caption
@@ -275,7 +275,7 @@
              ============================================================ -->
         <div class="form-row form-row--2">
 
-          <!-- 2 — Project -->
+          <!-- 2, Project -->
           <div class="field">
             <label class="field__label" for="project_id">
               <span class="picker__step">2</span> Project
@@ -303,7 +303,7 @@
             <p class="field__hint" id="project-hint">Auto-fills input/output tokens + Iterations from typical workload.</p>
           </div>
 
-          <!-- 3 — Thinking -->
+          <!-- 3, Thinking -->
           <div class="field">
             <label class="field__label" for="thinking_level">
               <span class="picker__step">3</span> Thinking
@@ -329,7 +329,7 @@
         </p>
 
         <!-- ============================================================
-             CUSTOMIZE (v2.7b — replaces "Advanced")
+             CUSTOMIZE (v2.7b, replaces "Advanced")
              Replaces the old Task size dropdown + task_type dropdown
              + Agentic toggle from prior briefs with a single Workflow
              type dropdown. Each preset bundles sys prompt tokens +
@@ -392,7 +392,7 @@
             </div>
 
             <!-- Token counter (heuristic: chars ÷ 4, no library).
-                 Pure client-side UX helper — textarea content is never sent
+                 Pure client-side UX helper, textarea content is never sent
                  to the backend. "Use this number" writes the estimate into
                  the existing input_tokens field above. -->
             <div class="field token-counter">
@@ -431,6 +431,21 @@
         <p class="result__multiline" id="result-multiline"></p>
         <p class="result__caveat" id="result-caveat"></p>
       </output>
+
+      <!-- v3.0: share button. Copies a URL that reproduces the current
+           calculation setup (model + project + workload inputs). -->
+      <div class="share-row" id="share-row" hidden>
+        <p class="share-row__freshness">
+          OpenRouter list prices as of <time id="share-row-freshness-time">—</time>.
+          Includes a small platform fee;
+          <a href="./about.html">see methodology</a>.
+        </p>
+        <button type="button" class="share-row__btn" id="share-btn"
+                aria-label="Copy a link to this estimate">
+          <span class="share-row__label">Copy link to this estimate</span>
+        </button>
+        <span class="share-row__status" id="share-status" aria-live="polite"></span>
+      </div>
 
       <!-- v2.9: compare-results. Horizontal row of 3-5 cards, sorted by
            total_cost ascending, cheapest card teal-bordered with badge.
@@ -541,7 +556,7 @@
       </p>
       <p>
         <strong>From the top-20 guide:</strong>
-        <a href="./blog/top-20-ai-models-2026.html">Top 20 AI models in 2026, compared and ranked</a> — a curated look at the models worth knowing, with cited sources and methodology.
+        <a href="./blog/top-20-ai-models-2026.html">Top 20 AI models in 2026, compared and ranked</a>, a curated look at the models worth knowing, with cited sources and methodology.
       </p>
       <p>
         <strong>From the blog:</strong>

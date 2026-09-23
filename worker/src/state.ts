@@ -14,6 +14,11 @@ export interface AppState {
   pricingPaths: string[];
   openrouterCachePath: string | null;
   refreshSeconds: number;
+  // ISO timestamp of when the price cache was last successfully refreshed.
+  // null if the worker has only the baked-in baseline and the KV/cache has
+  // never been populated. Used by the meta endpoint so the UI can show
+  // "OpenRouter prices as of <date>" and the user can spot stale data.
+  cacheLastSyncedAt: string | null;
   gpuProfiles: Record<string, GpuProfile>;
   modelProfiles: Record<string, ModelProfile>;
   reloadPricing: () => number;

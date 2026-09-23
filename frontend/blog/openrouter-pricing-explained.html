@@ -114,8 +114,8 @@
       input-times-rate-times-output calculation. Cache rates,
       free tiers, per-tool-call surcharges, and reasoning
       fields each add a multiplier. There are enough quirks
-      — caching, system prompt reuse, free tiers, per-tool-call
-      surcharges — that a deployed bill is rarely the headline
+     , caching, system prompt reuse, free tiers, per-tool-call
+      surcharges, that a deployed bill is rarely the headline
       rate times the token counts. This article walks through
       what OpenRouter actually charges for, where the savings
       live, and where the surprises are.
@@ -189,7 +189,7 @@
       free tier is a prototyping tool, not a billing tool.
     </p>
 
-    <h2>Cache pricing — the largest line item most teams miss</h2>
+    <h2>Cache pricing, the largest line item most teams miss</h2>
     <p>
       The largest single source of variance in a deployed
       LLM bill is the cache rate. Anthropic's Claude Sonnet
@@ -219,7 +219,7 @@
 
     <h2>System prompts and the per-call tax</h2>
     <p>
-      Most deployed prompts include a system prompt —
+      Most deployed prompts include a system prompt.
       persona, instructions, examples, tool definitions,
       retrieved context. A typical system prompt runs 500 to
       3,000 tokens. That is a fixed per-call cost on every
@@ -298,7 +298,7 @@
       API). Second, when the workload is latency-sensitive
       and the OpenRouter routing layer adds too much
       variance. Third, when negotiating an enterprise
-      discount directly with the vendor — OpenRouter's
+      discount directly with the vendor, OpenRouter's
       pricing is the published rate card, not a negotiated
       rate.
     </p>

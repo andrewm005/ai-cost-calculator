@@ -1,11 +1,11 @@
 /* =========================================================================
-   AI Cost Calculator — frontend stylesheet (v2)
+   AI Cost Calculator, frontend stylesheet (v2)
    --------------------------------------------------------------------------
-   Palette: warm paper, warm ink, deep teal accent (v2.4 — was softened
+   Palette: warm paper, warm ink, deep teal accent (v2.4, was softened
             coral/terra-cotta through v2.3; Andrew said the coral looked
             "like Claude's" and asked to swap it for something distinct).
    Type:    DM Serif Display (display) + system-ui (body). v2.4 swap from
-            Fraunces — Andrew said the hero "feels a little bit off".
+            Fraunces, Andrew said the hero "feels a little bit off".
    Layout:  centered column, 720px max, generous whitespace.
    Motion:  ease-out-quart on transform/opacity only.
    v2 adds: two-tier model picker (popular row + searchable combobox),
@@ -17,7 +17,7 @@
    ========================================================================= */
 
 :root {
-  /* Surface — warm tinted neutrals (never pure white/black) */
+  /* Surface, warm tinted neutrals (never pure white/black) */
   --paper:        #f7f3ec;
   --paper-2:      #efe9dc;
   --paper-3:      #e7dfcd;
@@ -27,12 +27,12 @@
   --ink-4:        #b5ac9a;
   --rule:         #d8cfba;
 
-  /* Accent — deep teal (v2.4, replacing v2.3's softened coral).
-     Andrew said "literally the one that claude uses" — the coral was Claude's
+  /* Accent, deep teal (v2.4, replacing v2.3's softened coral).
+     Andrew said "literally the one that claude uses", the coral was Claude's
      brand color. Swapped to #0c4a52 (deep teal): cool, professional, distinct
      from every LLM brand. Warm paper / cool accent tension preserved.
      The popular-row card top-strips keep their per-company brand colors
-     (OpenAI black, Anthropic terra cotta, Google blue, etc.) — only the
+     (OpenAI black, Anthropic terra cotta, Google blue, etc.), only the
      page-wide accent role (Calculate, selection bar, selected highlight,
      result number) moves to teal. */
   --teal:         #0c4a52;
@@ -44,10 +44,10 @@
   --ok:           #2f8a4f;
   --warn:         #b15c00;
 
-  /* Type — v2.4 swap from Fraunces to DM Serif Display (high-contrast Didone).
+  /* Type, v2.4 swap from Fraunces to DM Serif Display (high-contrast Didone).
      Andrew said the Fraunces hero "feels a little bit off" and asked for a new font.
      DM Serif Display is a single-weight (400) display serif with strong vertical
-     contrast — the editorial / Vogue-class look. Heavier stroke weight than Fraunces
+     contrast, the editorial / Vogue-class look. Heavier stroke weight than Fraunces
      at the same body size; the result number reads as a real focal point. */
   --display:      'DM Serif Display', 'Iowan Old Style', 'Palatino Linotype', 'Charter', Georgia, serif;
   --sans:         ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -95,7 +95,7 @@
 
   /* Layout */
   --col: 720px;
-  --col-wide: 880px;    /* v2.3: reverted from 1200px (v2.2) — the popular
+  --col-wide: 880px;    /* v2.3: reverted from 1200px (v2.2), the popular
                             row is now CONTAINED inside .calc again, so
                             the page only needs to be as wide as the
                             widest container element. */
@@ -198,7 +198,7 @@ body {
 .topbar__nav a:hover {
   color: var(--teal);
 }
-/* v2.9: topbar now only contains the brand wordmark — the meta-strip
+/* v2.9: topbar now only contains the brand wordmark, the meta-strip
    ("N models (M live via OpenRouter) · refresh 6h" + green dot) was
    removed because it read as an "AI status pill" and duplicated the
    hero subtext + picker label. */
@@ -221,7 +221,7 @@ body {
                                           laptop viewports (1366×768 + chrome). */
 }
 .hero__mark {
-  width: 132px;       /* v2.4: down from 168px — smaller, still readable, ~36px less vertical */
+  width: 132px;       /* v2.4: down from 168px, smaller, still readable, ~36px less vertical */
   height: 66px;
   color: var(--teal);
   margin-bottom: var(--s-2);   /* v2.4: was var(--s-3) */
@@ -263,7 +263,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Ad slots (placeholders — ad injection is operator's job)
+   Ad slots (placeholders, ad injection is operator's job)
    ------------------------------------------------------------------------- */
 .ad-slot {
   display: flex;
@@ -290,7 +290,7 @@ body {
   width: 100%;
   max-width: 728px;
   aspect-ratio: 728 / 90;
-  min-height: 56px;   /* v2.1: down from 64px — below the fold so a bit shorter is fine */
+  min-height: 56px;   /* v2.1: down from 64px, below the fold so a bit shorter is fine */
   padding: var(--s-3);
 }
 .ad-slot--side {
@@ -324,7 +324,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Selection bar — prominent "selected model" indicator (v2.1).
+   Selection bar, prominent "selected model" indicator (v2.1).
    v2.4: tightened padding (var(--s-2) var(--s-3)) and a single-row
    layout (white-space:nowrap + overflow-x:auto on small screens).
    Uses --teal-soft so it ties to the accent without being aggressive.
@@ -406,7 +406,7 @@ body {
   gap: var(--s-3);   /* v2.4: tighter (was var(--s-4)) */
 }
 
-/* Inline form rows — 2-col, 3-col, etc. Saves vertical space. */
+/* Inline form rows, 2-col, 3-col, etc. Saves vertical space. */
 .form-row {
   display: flex;
   flex-direction: column;
@@ -456,7 +456,7 @@ body {
   margin: 0;
   font-size: var(--t-xs);
   color: var(--ink-3);
-  min-height: 1em;   /* v2.4: down from 1.2em — tight hint lines save ~3px per row */
+  min-height: 1em;   /* v2.4: down from 1.2em, tight hint lines save ~3px per row */
   line-height: 1.35;
 }
 .field__hint.is-warn { color: var(--warn); }
@@ -498,7 +498,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Picker — two-tier model picker (v2 headline change)
+   Picker, two-tier model picker (v2 headline change)
    ------------------------------------------------------------------------- */
 .picker {
   border: 0;
@@ -527,7 +527,7 @@ body {
   padding: 0;
 }
 .picker__selected {
-  /* v2.1: removed from HTML — selection-bar is the prominent "selected model" indicator now. */
+  /* v2.1: removed from HTML, selection-bar is the prominent "selected model" indicator now. */
 }
 .picker__step {
   display: inline-flex;
@@ -567,7 +567,7 @@ body {
   justify-content: space-between;
   gap: var(--s-3);
 }
-/* v2.1: "All models" label promoted — primary affordance for the escape hatch. */
+/* v2.1: "All models" label promoted, primary affordance for the escape hatch. */
 .picker__row-label--primary {
   font-family: var(--display);
   font-size: var(--t-lg);
@@ -592,7 +592,7 @@ body {
   font-weight: 400;
 }
 
-/* Popular row — v2.4: one-click default model selection.
+/* Popular row, v2.4: one-click default model selection.
    Each card represents a COMPANY and is the primary affordance for
    picking a model. The card body shows:
      - brand-color shape icon + company name (head)
@@ -622,7 +622,7 @@ body {
      that lets the .popular sit inside the 832px .calc and scroll internally. */
   min-width: 0;
   /* Subtle fade on the right edge to hint that more cards scroll in.
-     Pure decoration — uses an inset mask so the gradient sits on top
+     Pure decoration, uses an inset mask so the gradient sits on top
      of the cards without intercepting clicks. */
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
           mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
@@ -661,7 +661,7 @@ body {
               background-color 160ms var(--ease-out),
               box-shadow 160ms var(--ease-out);
 }
-/* Brand-color top accent strip — the visual signature of each company.
+/* Brand-color top accent strip, the visual signature of each company.
    Uses background-image on the ::before so the brand color is per-card
    via the --pop-brand CSS variable set inline by JS. */
 .pop::before {
@@ -684,7 +684,7 @@ body {
 }
 /* v2.4: the SELECTED state uses the page-wide teal accent, NOT the
    per-card brand color. Andrew said "follow through with that color in
-   the selected model highlight as well" — every card's selected state
+   the selected model highlight as well", every card's selected state
    should look the same (consistent teal ring + soft teal bg), even
    though each card's top strip + shape icon keep their own brand color.
    This gives the page one coherent accent voice for "you picked this"
@@ -737,7 +737,7 @@ body {
    Brand-tinted focus ring + teal-soft selected-state matching the rest of
    the page's accent vocabulary. The trigger's text is the <select>'s own
    selected <option>'s textContent (which we set in JS to "{name} · $price"),
-   so no JS-driven label updates are needed when state changes — the browser
+   so no JS-driven label updates are needed when state changes, the browser
    re-renders the closed state from the <option>'s text on .value change. */
 .pop__select {
   appearance: none;
@@ -1006,7 +1006,7 @@ body {
 /* v2.6 (t_c2b63a6e): avg-cost-per-model label on each combobox option.
    Same metric as .pop__avg (5k in + 2k out, no reasoning) so users see
    consistent numbers across both affordances. Right-aligned, mono, smaller
-   than the price badge — secondary info, the per-1M price is the headline. */
+   than the price badge, secondary info, the per-1M price is the headline. */
 .combo__option-avg {
   font-family: var(--mono);
   font-size: 0.68rem;
@@ -1038,11 +1038,11 @@ body {
   color: var(--ink-3);
 }
 
-/* v2.8.1: panel foot — hint + favorites toggle.
+/* v2.8.1: panel foot, hint + favorites toggle.
    Sits between the search bar and the option list. The hint makes the
    "search any model" affordance explicit (was just placeholder text
    before; users missed the escape-hatch). The toggle is the v2.8
-   primary control for filtering to favorites — designed to feel like
+   primary control for filtering to favorites, designed to feel like
    a deliberate action even in the OFF state: teal-soft border, teal
    text, gold star. The bar background was --paper-2 (muted beige,
    read as a "section divider"); it now uses --paper to continue the
@@ -1121,7 +1121,7 @@ body {
   color: white;
 }
 /* v2.8.2: at narrow widths, trim the toggle so search + toggle still
-   share one row. Hint stays on its own line below — it's a caption,
+   share one row. Hint stays on its own line below, it's a caption,
    not a footer, so it doesn't need to fit beside the toggle. */
 @media (max-width: 480px) {
   .combo__search-wrap {
@@ -1192,7 +1192,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Thinking dropdown — disabled state for non-off options
+   Thinking dropdown, disabled state for non-off options
    ------------------------------------------------------------------------- */
 .field__select.is-thinking-locked option[value="low"],
 .field__select.is-thinking-locked option[value="medium"],
@@ -1241,7 +1241,7 @@ body {
   border-top: 1px solid var(--rule);
 }
 
-/* Token counter — heuristic chars÷4 estimator (no library, no WASM).
+/* Token counter, heuristic chars÷4 estimator (no library, no WASM).
    Pure client-side UX helper: textarea content is never sent to the API. */
 .token-counter__textarea {
   resize: vertical;
@@ -1293,7 +1293,7 @@ body {
   cursor: not-allowed;
 }
 /* Brief teal flash on input_tokens after "Use this number", so the user
-   sees the value land — especially on long pages where the input_tokens
+   sees the value land, especially on long pages where the input_tokens
    field is far from the counter button. The animation overrides the
    field's background just long enough to draw the eye. */
 .field__input.is-flash {
@@ -1305,7 +1305,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   CTA — Calculate button (the bold accent surface)
+   CTA, Calculate button (the bold accent surface)
    ------------------------------------------------------------------------- */
 .calc-btn {
   appearance: none;
@@ -1363,7 +1363,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Result panel — focal point
+   Result panel, focal point
    ------------------------------------------------------------------------- */
 .result {
   display: block;
@@ -1429,7 +1429,51 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   v2.9 — Mode toggle (Single vs Compare)
+   v3.0, Share row
+   Small button below the result that copies a URL reproducing the
+   current calculation setup (model + project + workload inputs).
+   ------------------------------------------------------------------------- */
+.share-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  flex-wrap: wrap;
+}
+.share-row__freshness {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.share-row__freshness time { color: var(--ink-2); font-weight: 500; }
+.share-row__btn {
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  color: var(--teal-deep);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+  border-radius: var(--r-pill);
+  padding: 6px var(--s-3);
+  cursor: pointer;
+  transition: background 120ms var(--ease-out), border-color 120ms var(--ease-out);
+}
+.share-row__btn:hover {
+  background: var(--teal-soft);
+  border-color: var(--teal);
+}
+.share-row__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.share-row__status {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+}
+
+/* -------------------------------------------------------------------------
+   v2.9, Mode toggle (Single vs Compare)
    Pill switch above the picker. Two buttons share a rounded container;
    the active one gets the teal-soft fill + teal text. Same vocabulary
    as .fav-toggle so the page has one coherent "small toggle" feel.
@@ -1471,7 +1515,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   v2.9 — Compare tray (visible only in Compare mode).
+   v2.9, Compare tray (visible only in Compare mode).
    Horizontal strip of chips. "Comparing:" label + chips + "Remove all"
    link on the right. Chips wrap to multiple rows on narrow viewports.
    Sits above the picker where the selection-bar used to live.
@@ -1594,7 +1638,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   v2.9 — Compare results: horizontal row of cards.
+   v2.9, Compare results: horizontal row of cards.
    Single-mode .result block stays untouched (still drives the Single
    flow). Compare-mode rendering goes here. The grid is 5-column on
    wide screens; 3-column on tablet; vertical stack on phones.
@@ -1621,7 +1665,7 @@ body {
 .compare-results__grid {
   display: grid;
   gap: var(--s-3);
-  /* 5 columns on wide viewports — fits 5 cards in a single row. The
+  /* 5 columns on wide viewports, fits 5 cards in a single row. The
      spec caps at 5 models; with 2-5 cards the grid uses auto-fit so
      the row is always evenly distributed. */
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1812,7 +1856,7 @@ body {
 }
 
 /* v2.9: FAQ section. Uses native <details>/<summary> so the closed
-   state is the default — visitors who want it expand, others don't
+   state is the default, visitors who want it expand, others don't
    see the answers. Headings use the display serif for visual weight;
    the answers are sans, like the blurb body. */
 .faq {
@@ -1919,7 +1963,7 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   Responsive — mobile (≤480)
+   Responsive, mobile (≤480)
    ------------------------------------------------------------------------- */
 @media (max-width: 480px) {
   .page { padding: var(--s-5) var(--s-4) var(--s-7); }
@@ -1943,7 +1987,7 @@ body {
   }
 }
 
-/* v2.7b: Project picker — custom dropdown with tabs */
+/* v2.7b: Project picker, custom dropdown with tabs */
 .proj-picker {
   position: relative;
 }

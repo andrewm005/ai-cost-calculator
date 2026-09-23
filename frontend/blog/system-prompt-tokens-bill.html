@@ -63,8 +63,8 @@
       A 5,000-token system prompt on GPT-4o is a $3,750/month line item
       at one million calls per month. The bill arrives before the user
       message, before the output, before any cache check. The system
-      prompt is the instruction block that ships on every API call —
-      persona, examples, tool definitions, retrieved context — and it
+      prompt is the instruction block that ships on every API call.
+      persona, examples, tool definitions, retrieved context, and it
       bills at the input rate like any other token. Most teams do not
       see it because it is mixed in with the user message under a single
       "input tokens" line item on the bill. It is the most expensive
@@ -125,7 +125,7 @@
       Claude
       Sonnet 4 at $3.00 per 1M, the same prompt is $0.00450.
       On Gemini 2.5
-      Pro at $1.25 per 1M, the same prompt is $0.00188 — the
+      Pro at $1.25 per 1M, the same prompt is $0.00188, the
       cheapest flagship on input by a meaningful margin. At volume,
       the per-call tax scales linearly. One million calls per month
       on GPT-4o is $3,750. Ten million calls is $37,500. One
@@ -145,7 +145,7 @@
       The cheapest flagship on input (Gemini 2.5 Pro) pays 60% less
       than the most expensive (Claude Opus 4) for the same system
       prompt. The choice of model is therefore not a quality decision
-      in isolation — it is a quality decision multiplied by a fixed
+      in isolation, it is a quality decision multiplied by a fixed
       per-call line item. The
       GPT-4o
       vs Claude Sonnet 4 comparison shows the same prefix treated
@@ -188,7 +188,7 @@
       prompt, that is 450 tokens saved, or $1,125/month at 1M calls
       on GPT-4o. Most teams find that 70% of the system prompt is
       genuinely necessary, 20% is redundant and trimmable, and 10%
-      is actively harmful — instructions that confuse the model or
+      is actively harmful, instructions that confuse the model or
       fight the model's defaults.
     </p>
     <p>
@@ -196,7 +196,7 @@
       cache rate is 10% of input. Claude Sonnet 4's input is $3.00,
       so the cache is $0.30. A 1,500-token system prompt on every
       call, cached, is $0.00045 per call versus $0.00450 without
-      caching — a 10x reduction. At 1M calls per month, that is
+      caching, a 10x reduction. At 1M calls per month, that is
       $4,050/month saved. OpenAI's cache rate is 50% off input on
       the GPT-4.1 family; GPT-4o does not have a published cache
       rate in mid-2026. The

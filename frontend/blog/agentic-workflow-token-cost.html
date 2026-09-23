@@ -63,7 +63,7 @@
       An agent that loops ten times is roughly 15x the cost of a
       single chat call. The bill grows with the loop count, the
       conversation history, and the reasoning tokens on each loop
-      — none of which are visible in a single-call estimate. A
+     , none of which are visible in a single-call estimate. A
       coding agent modeled on Claude Code or Cursor's agent mode
       loops five to twelve times per user request to fix a bug.
       Each loop is a full API call with the prior transcript
@@ -112,7 +112,7 @@
       Claude
       Sonnet 4 at $3.00 input and $15.00 output per 1M
       tokens. The cache is enabled on the system prompt. This is
-      the standard shape — most deployed coding agents look like
+      the standard shape, most deployed coding agents look like
       this with small parameter variations.
     </p>
 
@@ -148,7 +148,7 @@
       variable input at the full rate). By loop 10, history is
       7,500 tokens and the loop's input cost is $0.0225. Output
       stays constant at $0.0045 per loop. The cost grows because
-      the conversation history grows — the variable portion of
+      the conversation history grows, the variable portion of
       the input compounds on every loop.
     </p>
 
@@ -171,7 +171,7 @@
       grows. Roughly 70% of the input tokens on loop 10 of the
       agent are prior transcript, not new information. The cache
       covers the system prompt, but it does not cover the
-      conversation history — that varies every loop. Therefore
+      conversation history, that varies every loop. Therefore
       the variable portion of the input is the lever, and the
       lever is the conversation growth. Clearly, the agent bill
       is a function of the transcript, not the per-call rate.
@@ -179,8 +179,8 @@
 
     <h2>Reasoning tokens on top</h2>
     <p>
-      If the agent runs on a reasoning model — OpenAI o1, Claude
-      with extended thinking, Gemini 2.5 Pro, DeepSeek R1 —
+      If the agent runs on a reasoning model, OpenAI o1, Claude
+      with extended thinking, Gemini 2.5 Pro, DeepSeek R1.
       every loop pays the reasoning tax. A 10-loop agent on
       OpenAI o1 with 2,000 reasoning tokens per loop is paying
       $0.12 per loop just for reasoning tokens. Total per task:
@@ -249,7 +249,7 @@
       loop. For a 10-loop agent that adds 0.5 to 2 seconds of
       total latency. For real-time chat agents that is painful;
       for batch agents that is fine. Therefore the right pattern
-      depends on the latency budget — the multi-model win on
+      depends on the latency budget, the multi-model win on
       cost is real but it has a real latency cost too.
     </p>
 

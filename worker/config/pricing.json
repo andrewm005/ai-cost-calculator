@@ -2,11 +2,11 @@
   "_meta": {
     "schema_version": "1.1",
     "currency": "USD",
-    "notes": "All prices in USD per 1,000,000 tokens. Hand-curated models reflect current OpenRouter public list pricing; verified daily. OpenRouter models are loaded separately from worker/config/openrouter.json (auto-managed via live /api/v1/models sync).",
-    "last_updated": "2026-06-22",
+    "notes": "All prices in USD per 1,000,000 tokens. Hand-curated overrides for ~13 models where OpenRouter's price matches the vendor's list price. Used as fallback when the OpenRouter cache lookup fails for a model id. OpenRouter cache is in worker/config/openrouter.json (synced from /api/v1/models).",
+    "last_updated": "2026-09-23",
     "openrouter_cache": "worker/config/openrouter.json",
-    "how_to_update": "Edit this file. The API reloads it on each request. No code changes needed for price updates. To refresh OpenRouter: POST /admin/openrouter/refresh.",
-    "last_verified": "2026-06-23",
+    "how_to_update": "Edit this file. The API reloads it on each request. To refresh the OpenRouter cache: python3 scripts/sync_openrouter.py",
+    "verification_cadence": "spot-checked against OR live API on updates; OpenRouter cache auto-syncs every 6h in production via cron",
     "placeholder_models": 0
   },
   "models": {
@@ -21,9 +21,9 @@
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.002125,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Matches OR and OpenAI list price.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+openai"
     },
     "openai/gpt-4o-mini": {
       "provider": "openai",
@@ -35,10 +35,10 @@
       "supports_reasoning": false,
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
-      "image_input_cost_per_image": 7.5e-05,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "image_input_cost_per_image": 0.000075,
+      "notes": "Matches OR and OpenAI list price.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+openai"
     },
     "openai/o3": {
       "provider": "openai",
@@ -51,8 +51,8 @@
       "reasoning_per_1m": 40.0,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0,
-      "notes": "OpenRouter $2/$8 — lower than OpenAI list $10/$40; OR may route to a cheaper variant. Refreshed daily.",
-      "last_verified": "2026-06-23",
+      "notes": "OpenRouter $2/$8 — lower than OpenAI list $10/$40 because OR may route to a cheaper variant.",
+      "last_verified": "2026-09-23",
       "verification_source": "openrouter"
     },
     "anthropic/claude-opus-4": {
@@ -66,9 +66,9 @@
       "reasoning_per_1m": 75.0,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0048,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Matches OR and Anthropic list price.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+anthropic"
     },
     "anthropic/claude-sonnet-4": {
       "provider": "anthropic",
@@ -81,114 +81,114 @@
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.00096,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Matches OR and Anthropic list price.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+anthropic"
     },
-    "anthropic/claude-haiku-4": {
+    "anthropic/claude-haiku-4.5": {
       "provider": "anthropic",
       "display_name": "Anthropic: Claude Haiku 4.5",
       "input_per_1m": 1.0,
       "output_per_1m": 5.0,
-      "cached_input_per_1m": 0.09999999999999999,
+      "cached_input_per_1m": 0.1,
       "context_window": 200000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.00024,
-      "notes": "OpenRouter $1/$5 — maps to Claude Haiku 4.5 (current generation). Auto-refreshed daily.",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Renamed from claude-haiku-4 on 2026-09-23 (vendor discontinued the -4 name; current generation is 4.5).",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+anthropic"
     },
     "google/gemini-2.5-pro": {
       "provider": "google",
       "display_name": "Google: Gemini 2.5 Pro",
       "input_per_1m": 1.25,
       "output_per_1m": 10.0,
-      "cached_input_per_1m": 0.125,
+      "cached_input_per_1m": 0.31,
       "context_window": 1048576,
       "supports_reasoning": true,
       "reasoning_per_1m": 10.0,
       "tool_call_cost": 0.0,
-      "image_input_cost_per_image": 1.25e-06,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "image_input_cost_per_image": 0.00000125,
+      "notes": "Cached-input corrected on 2026-09-23 (was 0.125, vendor list is 0.31 for context <=200k).",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+google"
     },
     "google/gemini-2.5-flash": {
       "provider": "google",
       "display_name": "Google: Gemini 2.5 Flash",
       "input_per_1m": 0.3,
       "output_per_1m": 2.5,
-      "cached_input_per_1m": 0.03,
+      "cached_input_per_1m": 0.075,
       "context_window": 1048576,
       "supports_reasoning": true,
       "reasoning_per_1m": 2.5,
       "tool_call_cost": 0.0,
-      "image_input_cost_per_image": 3e-07,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "image_input_cost_per_image": 0.0000003,
+      "notes": "Cached-input corrected on 2026-09-23 (was 0.03, vendor list is 0.075).",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+google"
     },
     "deepseek/deepseek-chat": {
       "provider": "deepseek",
       "display_name": "DeepSeek: DeepSeek V3",
-      "input_per_1m": 0.20020000000000002,
-      "output_per_1m": 0.8000999999999999,
+      "input_per_1m": 0.20,
+      "output_per_1m": 0.80,
       "cached_input_per_1m": 0.07,
       "context_window": 131072,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0,
-      "notes": "OpenRouter $0.20/$0.80 — DeepSeek V3 (latest). Auto-refreshed daily.",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "DeepSeek V3 list price. Float precision cleaned up on 2026-09-23 (was 0.20020000000000002).",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+deepseek"
     },
     "deepseek/deepseek-r1": {
       "provider": "deepseek",
       "display_name": "DeepSeek: R1",
-      "input_per_1m": 0.7,
-      "output_per_1m": 2.5,
+      "input_per_1m": 0.70,
+      "output_per_1m": 2.50,
       "cached_input_per_1m": 0.14,
       "context_window": 163840,
       "supports_reasoning": true,
       "reasoning_per_1m": 2.19,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0,
-      "notes": "OpenRouter $0.70/$2.50 — R1 list. Auto-refreshed daily.",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "DeepSeek R1 list price.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+deepseek"
     },
-    "mistral/mistral-large": {
+    "mistral/mistral-large-2407": {
       "provider": "mistralai",
-      "display_name": "Mistral Large",
+      "display_name": "Mistral Large 2407",
       "input_per_1m": 2.0,
       "output_per_1m": 6.0,
-      "cached_input_per_1m": 0.19999999999999998,
+      "cached_input_per_1m": 0.2,
       "context_window": 128000,
       "supports_reasoning": false,
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0,
-      "notes": "OpenRouter public list price (auto-refreshed daily)",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Pinned to -2407 variant on 2026-09-23 (the bare 'mistral-large' id now routes to -2512 at $0.50/$1.50 which is a different product).",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+mistral"
     },
-    "mistral/mistral-small": {
+    "mistral/mistral-small-2603": {
       "provider": "mistralai",
-      "display_name": "Mistral: Mistral Small 4",
+      "display_name": "Mistral Small 2603",
       "input_per_1m": 0.15,
-      "output_per_1m": 0.6,
+      "output_per_1m": 0.60,
       "cached_input_per_1m": 0.015,
       "context_window": 262144,
       "supports_reasoning": true,
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.0,
-      "notes": "OpenRouter $0.15/$0.60 — Mistral Small 4 (current). Auto-refreshed daily.",
-      "last_verified": "2026-06-23",
-      "verification_source": "openrouter"
+      "notes": "Pinned to -2603 variant on 2026-09-23.",
+      "last_verified": "2026-09-23",
+      "verification_source": "openrouter+mistral"
     },
     "openrouter/auto": {
       "provider": "openrouter",
@@ -201,8 +201,8 @@
       "reasoning_per_1m": null,
       "tool_call_cost": 0.0,
       "image_input_cost_per_image": 0.001,
-      "notes": "Price is dynamic — OpenRouter auto-router picks a different model per request. Reference rate shown; real cost depends on chosen upstream.",
-      "last_verified": "2026-06-23",
+      "notes": "Price is dynamic, OR auto-router picks a different model per request. Reference rate shown; real cost depends on chosen upstream.",
+      "last_verified": "2026-09-23",
       "verification_source": "openrouter"
     }
   }

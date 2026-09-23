@@ -163,10 +163,10 @@
     <p class="blog-post__meta">Published <time datetime="2026-09-22">September 22, 2026</time> · Updated <time datetime="2026-09-22">September 22, 2026</time> · 18 min read</p>
 
     <p>
-      Most "top AI models" lists rank models on a single dimension — usually a benchmark score or a price-per-token number — and call that a ranking. That's a mistake. A model that's the cheapest per token is often the most expensive in the bill if it makes mistakes you have to fix downstream. A model that tops a coding benchmark might be worse than a cheaper alternative on the actual workload you ship. The right question is not "which model is best" but "which model is best <em>for this job, at this volume, in this tier</em>." This guide is built around that question.
+      Most "top AI models" lists rank models on a single dimension, usually a benchmark score or a price-per-token number, and call that a ranking. That's a mistake. A model that's the cheapest per token is often the most expensive in the bill if it makes mistakes you have to fix downstream. A model that tops a coding benchmark might be worse than a cheaper alternative on the actual workload you ship. The right question is not "which model is best" but "which model is best <em>for this job, at this volume, in this tier</em>." This guide is built around that question.
     </p>
     <p>
-      Twenty models. Not eighty, not three hundred. Twenty is the number that covers the actual decisions real developers and procurement teams face in 2026: the flagship of each major lab, the second-tier workhorse, the cheap model you reach for at high volume, and a handful of specialty models that earn their slot for specific use cases. Each entry has three cited sources — the vendor's own page, the OpenRouter listing, and one third-party reference — and a note on where the model sits relative to its peers.
+      Twenty models. Not eighty, not three hundred. Twenty is the number that covers the actual decisions real developers and procurement teams face in 2026: the flagship of each major lab, the second-tier workhorse, the cheap model you reach for at high volume, and a handful of specialty models that earn their slot for specific use cases. Each entry has three cited sources, the vendor's own page, the OpenRouter listing, and one third-party reference, and a note on where the model sits relative to its peers.
     </p>
     <p>
       <strong>What this guide deliberately does not do:</strong> it does not list per-token prices. Prices move, regions differ, batch discounts aren't modeled, and the right number for a specific decision is the number the vendor publishes today. Open the <a href="../">calculator</a> for that. This guide tells you which models are worth the conversation.
@@ -176,11 +176,11 @@
       <p class="blog-post__toc-title">On this page</p>
       <ul>
         <li><a href="#how-we-compare">How we compare</a></li>
-        <li><a href="#tier-flagship">Tier 1 — flagship reasoning</a></li>
-        <li><a href="#tier-frontier">Tier 2 — frontier workhorses</a></li>
-        <li><a href="#tier-mid">Tier 3 — mid-tier defaults</a></li>
-        <li><a href="#tier-budget">Tier 4 — high-volume budget</a></li>
-        <li><a href="#tier-specialty">Tier 5 — specialty models</a></li>
+        <li><a href="#tier-flagship">Tier 1, flagship reasoning</a></li>
+        <li><a href="#tier-frontier">Tier 2, frontier workhorses</a></li>
+        <li><a href="#tier-mid">Tier 3, mid-tier defaults</a></li>
+        <li><a href="#tier-budget">Tier 4, high-volume budget</a></li>
+        <li><a href="#tier-specialty">Tier 5, specialty models</a></li>
         <li><a href="#methodology">Methodology: how pricing data is collected</a></li>
         <li><a href="#what-we-dont-compare">What we don't compare</a></li>
         <li><a href="#revisit">When to revisit this list</a></li>
@@ -198,13 +198,13 @@
       <strong>2. Use case fit.</strong> What the model is actually good at, and where it loses to alternatives. A model that's optimized for long-document analysis is not the right pick for a coding agent. We name one or two primary fits and one or two anti-fits.
     </p>
     <p>
-      <strong>3. Price band.</strong> Not the per-token number — the band. Cheap, mid, premium, flagship. The exact price is on the <a href="../">calculator</a>. The band tells you what kind of workload this model is economically sensible for.
+      <strong>3. Price band.</strong> Not the per-token number, the band. Cheap, mid, premium, flagship. The exact price is on the <a href="../">calculator</a>. The band tells you what kind of workload this model is economically sensible for.
     </p>
     <p>
       With those three axes fixed, a side-by-side comparison becomes possible: a flagship at a flagship tier against another flagship; a budget model at a budget tier against another budget model. Cross-tier comparisons are noted as such and treated separately.
     </p>
 
-    <h2 id="tier-flagship">Tier 1 — flagship reasoning</h2>
+    <h2 id="tier-flagship">Tier 1, flagship reasoning</h2>
     <p>
       These are the most expensive models in their providers' catalogs. They exist to win hard benchmarks, handle the longest contexts, and produce the answers that mid-tier models get wrong. They cost the most per token and they earn that cost on workloads where wrong answers are expensive.
     </p>
@@ -220,7 +220,7 @@
     <div class="blog-post__model">
       <h3>2. OpenAI o3</h3>
       <span class="blog-post__model-tier">Flagship reasoning · OpenAI</span>
-      <p>OpenAI's strongest reasoning model. Designed for problems where the model spends visible "thinking" budget before producing an answer — math, multi-step logic, scientific reasoning. Slower than non-reasoning models and more expensive, but produces answers that other models miss. Best used where the question has a single right answer and the alternative is to spend hours on it yourself.</p>
+      <p>OpenAI's strongest reasoning model. Designed for problems where the model spends visible "thinking" budget before producing an answer, math, multi-step logic, scientific reasoning. Slower than non-reasoning models and more expensive, but produces answers that other models miss. Best used where the question has a single right answer and the alternative is to spend hours on it yourself.</p>
       <p><strong>Compare to:</strong> Claude Opus 4 (similar capability tier, different reasoning style), Gemini 2.5 Pro (cheaper, comparable on many reasoning benchmarks), DeepSeek R1 (open-weight reasoning alternative at much lower cost).</p>
       <p class="blog-post__sources">Sources: <a href="https://openai.com/index/openai-o3/" rel="noopener">OpenAI announcement</a> · <a href="https://openrouter.ai/openai/o3" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/OpenAI_o3" rel="noopener">Wikipedia</a></p>
     </div>
@@ -233,7 +233,7 @@
       <p class="blog-post__sources">Sources: <a href="https://blog.google/technology/google-deepmind/google-gemini-updates/" rel="noopener">Google announcement</a> · <a href="https://openrouter.ai/google/gemini-2.5-pro" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/Gemini_(language_model)" rel="noopener">Wikipedia</a></p>
     </div>
 
-    <h2 id="tier-frontier">Tier 2 — frontier workhorses</h2>
+    <h2 id="tier-frontier">Tier 2, frontier workhorses</h2>
     <p>
       The models that handle 80% of real production workloads. Not the absolute best, but close enough that the cost difference isn't worth it for most teams. This is the tier most companies should default to unless they have a specific reason not to.
     </p>
@@ -241,7 +241,7 @@
     <div class="blog-post__model">
       <h3>4. Anthropic Claude Sonnet 4</h3>
       <span class="blog-post__model-tier">Frontier · Anthropic</span>
-      <p>Anthropic's mid-tier default and the model most developers reach for first. The flagship Opus is more capable on hard reasoning, but Sonnet handles the majority of real workloads — coding agents, document analysis, multi-turn conversations — at substantially lower cost. The 1M-token context window on the API makes it the default for long-document work.</p>
+      <p>Anthropic's mid-tier default and the model most developers reach for first. The flagship Opus is more capable on hard reasoning, but Sonnet handles the majority of real workloads, coding agents, document analysis, multi-turn conversations, at substantially lower cost. The 1M-token context window on the API makes it the default for long-document work.</p>
       <p><strong>Compare to:</strong> Claude Opus 4 (one tier up, ~5x the cost for marginal quality gains on most tasks), GPT-4o (similar tier, different strengths), Gemini 2.5 Pro (similar tier, similar pricing band).</p>
       <p class="blog-post__sources">Sources: <a href="https://www.anthropic.com/news/claude-sonnet-4" rel="noopener">Anthropic announcement</a> · <a href="https://openrouter.ai/anthropic/claude-sonnet-4" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/Claude_(language_model)" rel="noopener">Wikipedia</a></p>
     </div>
@@ -249,7 +249,7 @@
     <div class="blog-post__model">
       <h3>5. OpenAI GPT-4o</h3>
       <span class="blog-post__model-tier">Frontier · OpenAI</span>
-      <p>OpenAI's mid-tier workhorse. Multimodal (text, vision, audio), strong general capability, and the broadest tooling ecosystem of any hosted model — most third-party libraries default to a GPT-4o–compatible interface. The right default for teams building on OpenAI's API surface; less obviously optimal when comparing across providers on raw capability.</p>
+      <p>OpenAI's mid-tier workhorse. Multimodal (text, vision, audio), strong general capability, and the broadest tooling ecosystem of any hosted model, most third-party libraries default to a GPT-4o–compatible interface. The right default for teams building on OpenAI's API surface; less obviously optimal when comparing across providers on raw capability.</p>
       <p><strong>Compare to:</strong> Claude Sonnet 4 (similar tier, similar pricing, different writing style), Gemini 2.5 Pro (cheaper, comparable on many tasks), GPT-4o mini (one tier down in OpenAI's lineup, much cheaper).</p>
       <p class="blog-post__sources">Sources: <a href="https://openai.com/index/hello-gpt-4o/" rel="noopener">OpenAI announcement</a> · <a href="https://openrouter.ai/openai/gpt-4o" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/GPT-4o" rel="noopener">Wikipedia</a></p>
     </div>
@@ -257,7 +257,7 @@
     <div class="blog-post__model">
       <h3>6. Google Gemini 2.5 Flash</h3>
       <span class="blog-post__model-tier">Frontier budget · Google</span>
-      <p>The fast, cheaper sibling of Gemini 2.5 Pro. Same family, less reasoning depth, substantially faster and cheaper. The right default for high-throughput production workloads where the per-call latency budget is tight — chat assistants, classification pipelines, retrieval augmentation on long contexts.</p>
+      <p>The fast, cheaper sibling of Gemini 2.5 Pro. Same family, less reasoning depth, substantially faster and cheaper. The right default for high-throughput production workloads where the per-call latency budget is tight, chat assistants, classification pipelines, retrieval augmentation on long contexts.</p>
       <p><strong>Compare to:</strong> Gemini 2.5 Pro (one tier up in Google's lineup), Claude Haiku 4 (similar pricing band, similar fit), GPT-4o mini (similar pricing band, similar fit).</p>
       <p class="blog-post__sources">Sources: <a href="https://blog.google/technology/google-deepmind/gemini-model-updates/" rel="noopener">Google announcement</a> · <a href="https://openrouter.ai/google/gemini-2.5-flash" rel="noopener">OpenRouter listing</a> · <a href="https://deepmind.google/technologies/gemini/" rel="noopener">DeepMind page</a></p>
     </div>
@@ -273,12 +273,12 @@
     <div class="blog-post__model">
       <h3>8. DeepSeek R1</h3>
       <span class="blog-post__model-tier">Frontier reasoning · DeepSeek</span>
-      <p>DeepSeek's reasoning model, comparable to OpenAI o3 on many math and logic benchmarks at a much lower per-token price. The model that made "reasoning model at frontier cost" a real category rather than an OpenAI-only capability. Same compliance caveats as V3 — hosted outside Western providers, different data-residency properties.</p>
+      <p>DeepSeek's reasoning model, comparable to OpenAI o3 on many math and logic benchmarks at a much lower per-token price. The model that made "reasoning model at frontier cost" a real category rather than an OpenAI-only capability. Same compliance caveats as V3, hosted outside Western providers, different data-residency properties.</p>
       <p><strong>Compare to:</strong> OpenAI o3 (similar reasoning tier, much cheaper), Claude Opus 4 (similar reasoning capability, higher price), Gemini 2.5 Pro (similar capability band, comparable price).</p>
       <p class="blog-post__sources">Sources: <a href="https://api-docs.deepseek.com/news/deepseek-r1" rel="noopener">DeepSeek announcement</a> · <a href="https://openrouter.ai/deepseek/deepseek-r1" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/DeepSeek" rel="noopener">Wikipedia</a></p>
     </div>
 
-    <h2 id="tier-mid">Tier 3 — mid-tier defaults</h2>
+    <h2 id="tier-mid">Tier 3, mid-tier defaults</h2>
     <p>
       The workhorses. Models that are cheaper than the frontier tier and noticeably better than the budget tier. The right default for teams shipping production features where capability matters but the cost difference to the flagship isn't justified.
     </p>
@@ -310,14 +310,14 @@
     <div class="blog-post__model">
       <h3>12. xAI Grok 3</h3>
       <span class="blog-post__model-tier">Mid-tier · xAI</span>
-      <p>xAI's hosted model. Real-time web access is the differentiator — Grok can pull live information when other models are stuck on their training cutoff. The right pick for workloads where freshness matters: news aggregation, real-time research, social-media analysis. Capability tier is comparable to the other mid-tier hosted models.</p>
+      <p>xAI's hosted model. Real-time web access is the differentiator, Grok can pull live information when other models are stuck on their training cutoff. The right pick for workloads where freshness matters: news aggregation, real-time research, social-media analysis. Capability tier is comparable to the other mid-tier hosted models.</p>
       <p><strong>Compare to:</strong> GPT-4o (similar tier, similar pricing, no native real-time web), Claude Sonnet 4 (similar tier, similar pricing, no native real-time web), Perplexity Sonar (alternative with similar real-time web focus).</p>
       <p class="blog-post__sources">Sources: <a href="https://x.ai/news/grok-3" rel="noopener">xAI announcement</a> · <a href="https://openrouter.ai/x-ai/grok-3" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/Grok_(chatbot)" rel="noopener">Wikipedia</a></p>
     </div>
 
-    <h2 id="tier-budget">Tier 4 — high-volume budget</h2>
+    <h2 id="tier-budget">Tier 4, high-volume budget</h2>
     <p>
-      The cheapest models that still produce useful output. Used at scale for classification, extraction, routing, and any workload where the per-call cost dominates the bill. Quality variance is higher than the mid-tier — these models are right for "good enough at volume," not "best possible answer."
+      The cheapest models that still produce useful output. Used at scale for classification, extraction, routing, and any workload where the per-call cost dominates the bill. Quality variance is higher than the mid-tier, these models are right for "good enough at volume," not "best possible answer."
     </p>
 
     <div class="blog-post__model">
@@ -344,9 +344,9 @@
       <p class="blog-post__sources">Sources: <a href="https://blog.google/technology/developers/google-gemma/" rel="noopener">Google announcement</a> · <a href="https://openrouter.ai/google/gemma-4" rel="noopener">OpenRouter listing</a> · <a href="https://en.wikipedia.org/wiki/Gemma_(language_model)" rel="noopener">Wikipedia</a></p>
     </div>
 
-    <h2 id="tier-specialty">Tier 5 — specialty models</h2>
+    <h2 id="tier-specialty">Tier 5, specialty models</h2>
     <p>
-      Models that earn their place by doing one thing unusually well. Not defaults — pick these when the workload fits.
+      Models that earn their place by doing one thing unusually well. Not defaults, pick these when the workload fits.
     </p>
 
     <div class="blog-post__model">
@@ -385,14 +385,14 @@
       <h3>20. The "free" tier models on OpenRouter</h3>
       <span class="blog-post__model-tier">Specialty · Free tier</span>
       <p>Several models on OpenRouter are offered at zero per-token cost, typically with rate limits and weaker guarantees. The right use is experimentation and prototyping, not production. The list changes frequently; the OpenRouter <a href="https://openrouter.ai/models" rel="noopener">models endpoint</a> is the live source. Worth knowing exists so you don't pay for prototypes that don't need paying-for capability.</p>
-      <p><strong>Compare to:</strong> Nothing at the same price. The trade-off is rate limits and availability — not capability per dollar.</p>
+      <p><strong>Compare to:</strong> Nothing at the same price. The trade-off is rate limits and availability, not capability per dollar.</p>
       <p class="blog-post__sources">Sources: <a href="https://openrouter.ai/models" rel="noopener">OpenRouter models index</a> · <a href="https://openrouter.ai/docs/api-reference/list-available-models" rel="noopener">OpenRouter API docs</a> · <a href="https://openrouter.ai/" rel="noopener">OpenRouter homepage</a></p>
     </div>
 
     <h2 id="methodology">Methodology: how pricing data is collected</h2>
     <div class="blog-post__methodology">
       <p><strong>This article deliberately doesn't quote per-token prices.</strong> Prices move on a six-hour cycle for most hosted models, region to region differs, batch discounts aren't modeled by anyone outside the vendor, and enterprise contracts are private. The right number for a specific decision is the number the vendor publishes today, not a number captured at the time this article was written.</p>
-      <p>For day-of pricing, the <a href="../">calculator</a> reads live from OpenRouter's public <code>/api/v1/models</code> endpoint and refreshes every six hours. Hand-curated entries for direct-API vendors (Anthropic, OpenAI, Google direct, Mistral, Cohere, xAI) are cross-checked against each vendor's pricing page on the same cycle. The calculator never invents prices — if a model disappears from the upstream feed, it disappears from the calculator on the next refresh.</p>
+      <p>For day-of pricing, the <a href="../">calculator</a> reads live from OpenRouter's public <code>/api/v1/models</code> endpoint and refreshes every six hours. Hand-curated entries for direct-API vendors (Anthropic, OpenAI, Google direct, Mistral, Cohere, xAI) are cross-checked against each vendor's pricing page on the same cycle. The calculator never invents prices, if a model disappears from the upstream feed, it disappears from the calculator on the next refresh.</p>
       <p>The full methodology, including what the calculator does not model (batch discounts, fine-tuning cost, self-hosted GPU cost variability, regional pricing, enterprise contracts, credits and rebates), is on the <a href="../about.html">About</a> page. The <a href="../disclaimer.html">disclaimer</a> covers the legal posture for treating the calculator's output as a reference rather than a quote.</p>
     </div>
 
@@ -414,7 +414,7 @@
 
     <h2 id="revisit">When to revisit this list</h2>
     <p>
-      AI model economics move faster than most software categories. A model that's the right pick today can be obsolete three months later — either because the lab shipped a successor, because a competitor closed the capability gap, or because the price changed in a way that flips the tier trade-off. This guide is reviewed quarterly. The signals that trigger an out-of-cycle revision:
+      AI model economics move faster than most software categories. A model that's the right pick today can be obsolete three months later, either because the lab shipped a successor, because a competitor closed the capability gap, or because the price changed in a way that flips the tier trade-off. This guide is reviewed quarterly. The signals that trigger an out-of-cycle revision:
     </p>
     <ul>
       <li>A major lab ships a new flagship or a new tier (e.g., GPT-5, Claude 5, Gemini 3).</li>

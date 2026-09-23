@@ -112,6 +112,17 @@ function buildState(): AppState {
     pricingPaths: PRICING_PATHS,
     openrouterCachePath: OPENROUTER_CACHE_PATH,
     refreshSeconds: REFRESH_SECONDS,
+    // Node dev path: read the cache file's mtime as a stand-in for the
+    // "last synced" timestamp the KV path exposes. The UI uses this to show
+    // "OpenRouter prices as of <date>" under the result.
+    cacheLastSyncedAt: (() => {
+      try {
+        if (!OPENROUTER_CACHE_PATH) return null;
+        const fs = require('node:fs') as typeof import('node:fs');
+        const m = fs.statSync(OPENROUTER_CACHE_PATH).mtime;
+        return m.toISOString();
+      } catch { return null; }
+    })(),
     gpuProfiles,
     modelProfiles,
     reloadPricing,

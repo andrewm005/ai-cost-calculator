@@ -121,8 +121,8 @@
       effective per-call cost by 5x to 10x. The question is not
       whether to use reasoning models. It is how to cap the chain.
       Reasoning models emit an internal scratchpad before the
-      visible answer — OpenAI's o-series, Anthropic's Claude with
-      extended thinking, Google's Gemini 2.5 Pro, DeepSeek's R1 —
+      visible answer, OpenAI's o-series, Anthropic's Claude with
+      extended thinking, Google's Gemini 2.5 Pro, DeepSeek's R1.
       and every token of that scratchpad lands on the bill under
       output. Any team paying for o1 calls without a thinking
       budget is paying for reasoning it cannot see.
@@ -150,7 +150,7 @@
       precise in a way the model cannot reliably produce in a
       single pass. Generating a legal contract clause, producing a
       unit-tested code function, writing a multi-step data
-      pipeline — these all benefit from a chain-of-thought that
+      pipeline, these all benefit from a chain-of-thought that
       lets the model verify its own work. The reasoning tokens are
       an insurance policy against the embarrassing failure mode of
       an LLM producing fluent, plausible, but wrong output.
@@ -259,7 +259,7 @@
       Pro) sits in the middle. The right choice depends on whether
       the workload needs frontier reasoning quality or just
       competent chain-of-thought. Therefore the cost decision is
-      inseparable from the quality bar — pick the cheapest
+      inseparable from the quality bar, pick the cheapest
       reasoning model that clears the bar.
     </p>
 
@@ -285,7 +285,7 @@
       The model will still spend what it spends. The budget is a
       ceiling, not a target. But the ceiling stops runaway chains
       from generating 10,000 reasoning tokens on a single user
-      request — a real failure mode when the prompt is open-ended.
+      request, a real failure mode when the prompt is open-ended.
       Obviously, the budget is the difference between a
       predictable line item and an open-ended one.
     </p>

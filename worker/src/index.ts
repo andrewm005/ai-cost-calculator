@@ -43,6 +43,19 @@ async function buildStateFromKV(env: Env): Promise<AppState> {
   const openrouterBaked = loadPricingFromObject(OPENROUTER_BLOB);
   const live = await loadPricingFromKV(env.PRICING, key);
 
+  // Capture the freshest cache timestamp we have. KV is the live data and
+  // wins when present; otherwise we report the baked blob's timestamp so
+  // the UI can still show a real date instead of "never".
+  let cacheLastSyncedAt: string | null = null;
+  try {
+    const liveRaw = (await env.PRICING.get(key, 'json')) as { _meta?: { last_synced_at?: string } } | null;
+    if (liveRaw?._meta?.last_synced_at) cacheLastSyncedAt = liveRaw._meta.last_synced_at;
+  } catch { /* ignore */ }
+  if (!cacheLastSyncedAt) {
+    const bakedMeta = (PRICING_BLOB as { _meta?: { last_updated?: string } })?._meta?.last_updated;
+    cacheLastSyncedAt = bakedMeta ?? null;
+  }
+
   const merged = {
     ...baked,
     ...openrouterBaked,
@@ -77,6 +90,7 @@ const openrouterModelCount = (): number =>
     pricingPaths: [],
     openrouterCachePath: 'kv',
     refreshSeconds: 0,
+    cacheLastSyncedAt,
     gpuProfiles,
     modelProfiles,
     reloadPricing,

@@ -19,13 +19,13 @@ import type { KVNamespaceLike } from './lib/pricing.js';
 
 /** Cloudflare Env bindings (the same shape used by the fetch handler). */
 export interface Env {
-  /** Workers KV namespace binding — `wrangler kv:namespace create PRICING`. */
+  /** Workers KV namespace binding - `wrangler kv:namespace create PRICING`. */
   PRICING: KVNamespaceLike;
   /** KV key holding the merged pricing blob. Default: 'cache'. */
   PRICING_KEY?: string;
 }
 
-/** Cron event payload — see Cloudflare docs. */
+/** Cron event payload - see Cloudflare docs. */
 interface ScheduledEvent {
   /** ISO timestamp of when the trigger fired. */
   scheduledTime: number;
@@ -33,7 +33,7 @@ interface ScheduledEvent {
   cron: string;
 }
 
-/** Workers ExecutionContext — passed to scheduled() for `ctx.waitUntil`. */
+/** Workers ExecutionContext - passed to scheduled() for `ctx.waitUntil`. */
 interface ExecutionContext {
   waitUntil(promise: Promise<unknown>): void;
   passThroughOnException(): void;

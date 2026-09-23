@@ -1,7 +1,7 @@
-// AI Cost Calculator frontend v2 — vanilla, no deps.
+// AI Cost Calculator frontend v2, vanilla, no deps.
 // All API endpoints are same-origin (the backend has CORS=*).
 // API base is overridable via window.TOKENTALLY_API for non-default deployments.
-// Empty default ('') means "same origin" — works automatically when the API
+// Empty default ('') means "same origin", works automatically when the API
 // is deployed on Cloudflare Pages as a Pages Function (see /functions/api/).
 const API = (window.TOKENTALLY_API || 'https://aicostcalculator-api.andrewsagents.workers.dev/').replace(/\/$/, '');
 
@@ -29,21 +29,21 @@ const els = {
   allCount:         $('#all-count'),
   popularCount:     $('#popular-count'),          // v2.9
   modelHint:        $('#model-hint'),
-  // v2.9 — mode toggle (Single vs Compare)
+  // v2.9, mode toggle (Single vs Compare)
   modeSingle:      $('#mode-single'),
   modeCompare:     $('#mode-compare'),
   compareTray:     $('#compare-tray'),
   compareTrayChips:$('#compare-tray-chips'),
   compareTrayClear:$('#compare-tray-clear'),
-  // v2.9 — compare results
+  // v2.9, compare results
   compareResults:      $('#compare-results'),
   compareResultsGrid:  $('#compare-results-grid'),
   compareResultsCaveat:$('#compare-results-caveat'),
   // form
   projectSelect:    $('#project_id'),
   projectHint:      $('#project-hint'),
-  iterations:       $('#iterations'),       // v2.9 (was "quantity") — v2.7b: lives in Customize now
-  iterationsHint:   $('#iterations-hint'),  // v2.9 — v2.7b: lives in Customize now
+  iterations:       $('#iterations'),       // v2.9 (was "quantity"), v2.7b: lives in Customize now
+  iterationsHint:   $('#iterations-hint'),  // v2.9, v2.7b: lives in Customize now
   workflowType:     $('#workflow_type'),    // v2.7b: replaces task_size + task_type + Agentic toggle
   workflowHint:     $('#workflow-hint'),
   assumptionHint:   $('#assumption-hint'),  // v2.7b: live caption under project dropdown
@@ -62,6 +62,11 @@ const els = {
   resultMulti:      $('#result-multiline'),
   resultCaveat:     $('#result-caveat'),
   formError:        $('#form-error'),
+  // v3.0, share row
+  shareRow:         $('#share-row'),
+  shareBtn:         $('#share-btn'),
+  shareStatus:      $('#share-status'),
+  shareFreshness:   $('#share-row-freshness-time'),
   // local
   localToggle:      $('#local-toggle'),
   localPanel:       $('#local-panel'),
@@ -77,7 +82,7 @@ const els = {
   localAmount:      $('#local-amount'),
   localBreak:       $('#local-breakdown'),
   localCaveat:      $('#local-caveat'),
-  // token counter (heuristic chars÷4 — no library, no WASM)
+  // token counter (heuristic chars÷4, no library, no WASM)
   promptText:          $('#prompt-text'),
   tokenCounterNum:     $('#token-counter-num'),
   tokenCounterChars:   $('#token-counter-chars'),
@@ -99,18 +104,18 @@ const state = {
   comboOpen: false,
   comboActiveIdx: -1,       // highlighted option in open list
   comboFiltered: [],        // currently filtered list
-  // v2.8: favorites — persisted in localStorage so a starred model
+  // v2.8: favorites, persisted in localStorage so a starred model
   // survives reloads. IDs only; everything else is looked up against
   // state.models on each render. Stale IDs (model disappeared from
   // /models) are pruned on load.
   favorites: new Set(),
   favoritesOnly: false,     // when true, combo list is filtered to favorites
-  // v2.9 — compare mode. compareMode toggles between Single (existing
+  // v2.9, compare mode. compareMode toggles between Single (existing
   // behavior: one selectedId, /calculate, single-result panel) and
   // Compare (ordered list of 2-5 model_ids, /calculate/compare, card
   // grid). compareIds is FIFO-ordered: pushing past 5 evicts index 0.
   // compareInitDone gates the "default to GPT-4o + Claude Sonnet 4 +
-  // Gemini 2.5 Pro on first entry" behavior — toggling back and forth
+  // Gemini 2.5 Pro on first entry" behavior, toggling back and forth
   // shouldn't reset the tray unless it's empty.
   compareMode: false,
   compareIds: [],
@@ -120,7 +125,7 @@ const state = {
 // v2.8: localStorage persistence for favorites. Key is namespaced so it
 // doesn't collide with other apps on the same origin. Read is wrapped in
 // try/catch (Safari private mode, disabled storage, quota errors all
-// throw — we silently degrade to a session-only Set).
+// throw, we silently degrade to a session-only Set).
 const FAV_KEY = 'aicostcalculator.favorites.v1';
 function loadFavorites() {
   try {
@@ -190,7 +195,7 @@ function updateSelectionBarStar() {
 // Some endpoints return {id}; others return {model_id}. Accept both.
 function idOf(m) { return m.model_id || m.id; }
 
-// Task size multipliers — same math as v1 (documented in HTML hint).
+// Task size multipliers, same math as v1 (documented in HTML hint).
 // MUST match the backend's TASK_SIZE_PRESETS semantic: tiny/small/medium/large/huge.
 // The backend uses absolute token counts in TASK_SIZE_PRESETS (200/100, 1k/500, 5k/2k,
 // 20k/8k, 100k/30k); the frontend uses these multipliers against the project preset's
@@ -200,7 +205,7 @@ function idOf(m) { return m.model_id || m.id; }
 // back to TASK_SIZE_PRESETS[task_size].
 // v2.7b: TASK_SIZE is no longer a user-facing field. The frontend still uses
 // these multipliers when auto-filling input/output tokens from a project
-// preset — the preset's `typical_task_size` is the implicit multiplier.
+// preset, the preset's `typical_task_size` is the implicit multiplier.
 const TASK_SIZE_MULT = {
   tiny: 0.04,
   small: 0.2,
@@ -321,7 +326,7 @@ async function loadPopular() {
   return r.json();
 }
 
-// ---- Popular row (Row 1) — v2.5: per-card model dropdown -------------
+// ---- Popular row (Row 1), v2.5: per-card model dropdown -------------
 // Each card represents a COMPANY. The card body shows the brand mark +
 // company name; below that is a styled <select> listing every model from
 // that provider (sorted by display_name). The select doubles as both
@@ -383,7 +388,7 @@ function renderPopular() {
     const usable = !!(defaultM && count > 0);
 
     // The card outer is a <div role="button"> (not a <button>) so we can
-    // nest a real <select> inside — putting a <select> inside a <button>
+    // nest a real <select> inside, putting a <select> inside a <button>
     // is invalid HTML and breaks the click target. The keyboard handler
     // (Enter/Space) restores the button's affordance for keyboard users.
     const card = document.createElement('div');
@@ -394,7 +399,7 @@ function renderPopular() {
     card.setAttribute('tabindex', usable ? '0' : '-1');
     card.setAttribute('aria-label',
       `${p.provider_label}: ${defaultM ? (defaultM.display_name || p.default_model) : 'no default'}. ` +
-      `${count} model${count === 1 ? '' : 's'} available — click to pick the default, or use the dropdown to browse all ${count}.`);
+      `${count} model${count === 1 ? '' : 's'} available, click to pick the default, or use the dropdown to browse all ${count}.`);
     card.style.setProperty('--pop-brand', p.brand_color);
     if (!usable) card.classList.add('is-empty');
 
@@ -471,7 +476,7 @@ function renderPopular() {
     if (usable) {
       // One-click default-selection: click anywhere on the card except
       // the <select> picks the company's flagship. The <select> has its
-      // own change handler below — we don't want a parent click to also
+      // own change handler below, we don't want a parent click to also
       // re-select the default after the user just picked something
       // different from the dropdown. Native <select> doesn't bubble
       // click events up to the card reliably across browsers, so we
@@ -482,7 +487,7 @@ function renderPopular() {
       sel.addEventListener('keydown',   (e) => e.stopPropagation());
       sel.addEventListener('change', () => {
         const id = sel.value;
-        // v2.9: route through handlePickerPick — in Compare mode this
+        // v2.9: route through handlePickerPick, in Compare mode this
         // ADDs to the tray instead of replacing the single selection.
         if (id) handlePickerPick(id, { source: 'card-select' });
       });
@@ -561,7 +566,7 @@ function renderCombo() {
 }
 
 // v2.8: the combo's "what to show" rule, given the current search query.
-// Honors state.favoritesOnly — when on, restrict to starred models.
+// Honors state.favoritesOnly, when on, restrict to starred models.
 function computeComboList(query) {
   const needle = (query || '').trim().toLowerCase();
   let list = state.models;
@@ -584,7 +589,7 @@ function paintCombo() {
     // the user knows what to do. The hint is one line below the search
     // bar already; the empty state just needs to be informative.
     if (state.favoritesOnly && state.favorites.size === 0) {
-      els.comboEmpty.textContent = 'No favorites yet — click ☆ on any model to add it.';
+      els.comboEmpty.textContent = 'No favorites yet, click ☆ on any model to add it.';
     } else if (state.favoritesOnly) {
       els.comboEmpty.textContent = 'No favorites match your search.';
     } else {
@@ -662,7 +667,7 @@ function paintCombo() {
     li.addEventListener('mousedown', (e) => {
       // Use mousedown so the click registers before the input blurs + closes panel.
       e.preventDefault();
-      // v2.9: route through handlePickerPick — in Compare mode this
+      // v2.9: route through handlePickerPick, in Compare mode this
       // ADDs to the tray instead of replacing the single selection.
       handlePickerPick(idOf(m), { source: 'combo' });
       closeCombo();
@@ -744,7 +749,7 @@ function onComboKey(e) {
     e.preventDefault();
     const opt = state.comboFiltered[state.comboActiveIdx];
     if (opt) {
-      // v2.9: route through handlePickerPick — in Compare mode this
+      // v2.9: route through handlePickerPick, in Compare mode this
       // ADDs to the tray instead of replacing the single selection.
       handlePickerPick(idOf(opt), { source: 'combo' });
       closeCombo();
@@ -773,11 +778,11 @@ function selectModel(modelId, _opts) {
   els.comboButtonText.textContent = `${m.display_name || modelId}  ·  ${m.provider || ''}`;
   els.comboButtonText.classList.remove('is-placeholder');
 
-  // v2.1 selection-bar — the prominent "what you picked" indicator
+  // v2.1 selection-bar, the prominent "what you picked" indicator
   els.selectionBarName.textContent = m.display_name || modelId;
   els.selectionBarProv.textContent = m.provider ? `· ${m.provider}` : '';
   els.selectionBarPrice.textContent = priceBadge(m);
-  // v2.8: favorite star prefix on the selection bar — drawn as a
+  // v2.8: favorite star prefix on the selection bar, drawn as a
   // separate span so the rest of the bar layout is unaffected.
   updateSelectionBarStar();
 
@@ -825,7 +830,7 @@ function syncThinkingSupport() {
   }
   // v2.9: when a reasoning model is selected, default thinking to "Low"
   // so users see the realistic cost (reasoning models charge for the
-  // thinking tokens by default). Only nudges if currently "off" — we
+  // thinking tokens by default). Only nudges if currently "off", we
   // don't override an explicit user choice of medium/high/extreme.
   if (supports && els.thinkingSelect.value === 'off') {
     els.thinkingSelect.value = 'low';
@@ -835,9 +840,9 @@ function syncThinkingSupport() {
     : 'This model does not publish reasoning-token pricing; non-Off options are visual only.';
 }
 
-// ---- v2.9 — Compare mode -----------------------------------------------
+// ---- v2.9, Compare mode -----------------------------------------------
 // Compare mode keeps state.selectedId (single-mode model) but layers a
-// second ordered list — state.compareIds — on top. In compare mode the
+// second ordered list, state.compareIds, on top. In compare mode the
 // picker adds to the tray instead of selecting the single model. The
 // Calculate button submits to /calculate/compare and renders a row of
 // cards sorted by total_cost. Toggling back to Single restores the
@@ -886,7 +891,7 @@ function setMode(mode) {
     els.compareResults.hidden = state.compareResultsGrid.childElementCount === 0;
   } else {
     // Single mode: re-hide compare results, re-show selection-bar.
-    // Keep state.compareIds intact — toggling back to Compare restores
+    // Keep state.compareIds intact, toggling back to Compare restores
     // the tray as the user left it.
     els.compareResults.hidden = true;
     // Refresh selection-bar so the user sees the single-mode pick
@@ -934,7 +939,7 @@ function clearCompare() {
 function renderCompareTray() {
   els.compareTrayChips.innerHTML = '';
   if (state.compareIds.length === 0) {
-    // Empty tray — show a hint inside the chip area instead of nothing,
+    // Empty tray, show a hint inside the chip area instead of nothing,
     // so the user knows the picker below is how they add models.
     const hint = document.createElement('span');
     hint.className = 'compare-tray__hint';
@@ -993,7 +998,7 @@ function handlePickerPick(modelId, source) {
   }
 }
 
-// ---- Projects (Row 1 — preset dropdown) --------------------------------
+// ---- Projects (Row 1, preset dropdown) --------------------------------
 // v2.7b: Project picker is now a custom dropdown with category tabs
 // (Web / Games / Code / Data). The hidden #project_id input holds the
 // selected value so applyProjectPreset() (which reads els.projectSelect.value)
@@ -1159,7 +1164,7 @@ function applyProjectPreset() {
   }
   // v2.9: auto-fill Iterations and Task size from the preset's typical
   // values. This is what makes the realistic "real-world" cost show up
-  // by default — e.g. an animated 3D site defaults to 5 iterations ×
+  // by default, e.g. an animated 3D site defaults to 5 iterations ×
   // large task size, not the 1×medium of the raw preset tokens. User
   // can override either field after.
   const typicalIter = parseInt(opt.dataset.typicalIterations, 10) || 1;
@@ -1183,7 +1188,7 @@ function applyProjectPreset() {
   // output_tokens (the preset math below).
   const mult = TASK_SIZE_MULT[typicalSize] || 1;
   // v2.7b: Iterations still scales the preset's per-unit tokens (same as
-  // v2.9) — the field just moved into Customize in the simplified form.
+  // v2.9), the field just moved into Customize in the simplified form.
   const iter = Math.max(1, parseInt(els.iterations?.value, 10) || 1);
   const inTok  = Math.max(0, Math.round(baseIn  * mult * iter));
   const outTok = Math.max(0, Math.round(baseOut * mult * iter));
@@ -1191,7 +1196,7 @@ function applyProjectPreset() {
   if (!outputDirty) els.outputTokens.value = outTok || '';
   els.inputTokens.placeholder  = inTok  ? '' : '0';
   els.outputTokens.placeholder = outTok ? '' : '0';
-  // Preset fills are NOT user edits — clear the dirty flag so the next
+  // Preset fills are NOT user edits, clear the dirty flag so the next
   // Custom switch correctly resets to medium preset instead of preserving
   // these preset values.
   inputDirty  = false;
@@ -1270,7 +1275,7 @@ function updateAssumptionCaption() {
 
 // ---- Meta strip ---------------------------------------------------------
 // v2.9: the topbar meta-strip ("348 models (336 live via OpenRouter) ·
-// refresh 6h" + green dot) was removed — it read as "AI status pill" and
+// refresh 6h" + green dot) was removed, it read as "AI status pill" and
 // duplicated info already in the hero subtext and the picker label.
 // setMeta() is kept as a no-op stub in case we ever add a status pill
 // somewhere subtler (a small refresh-time caption under the hero, etc.).
@@ -1303,7 +1308,7 @@ async function onCalculate(e) {
   const thinking = els.thinkingSelect.value || 'off';
   const explicitIn  = els.inputTokens.value.trim();
   const explicitOut = els.outputTokens.value.trim();
-  // v2.7b: workflow overhead — bundles sys prompt + tool calls + retry
+  // v2.7b: workflow overhead, bundles sys prompt + tool calls + retry
   // multiplier. Maps to backend agentic + system_prompt_tokens +
   // tool_call_count (single-chat is the only "no overhead" preset; every
   // other preset flips agentic=True).
@@ -1312,7 +1317,7 @@ async function onCalculate(e) {
   const body = {
     model_id: state.selectedId,
     // task_size is still sent (brief keeps it in payload) but the user
-    // can't edit it — it's a backend fallback in case input/output
+    // can't edit it, it's a backend fallback in case input/output
     // tokens are omitted. We always send them explicitly.
     task_size: 'medium',
     num_runs: Math.max(1, parseInt(els.numRuns.value, 10) || 1),
@@ -1324,7 +1329,7 @@ async function onCalculate(e) {
     tool_call_count: ov.tool_call_count,
   };
   // v2.1 fix: backend reasoning_level enum is low/medium/high/extreme only
-  // (no "off" — that was a v2 handoff oversight; the API returned 422).
+  // (no "off", that was a v2 handoff oversight; the API returned 422).
   // Omit the field entirely when off; backend defaults to no-reasoning.
   if (thinking !== 'off') body.reasoning_level = thinking;
   if (explicitIn)  body.input_tokens  = Math.max(0, parseInt(explicitIn, 10));
@@ -1381,11 +1386,11 @@ function renderResult(d) {
 
   // v2.7b: per-toggle impact statements. Each active multiplier shows
   // the marginal cost it added so the user can see WHY the total is what
-  // it is — without re-running the calc without the toggle. Style: same
+  // it is, without re-running the calc without the toggle. Style: same
   // muted caption as resultCaveat (no new colors, no new classes).
   //
   // Use the ACTUAL values from the backend's response (assumptions dict)
-  // instead of the workflow constants — the backend hardcodes the retry
+  // instead of the workflow constants, the backend hardcodes the retry
   // multiplier to AGENTIC_MULTIPLIER (1.4×) whenever agentic=True, so the
   // requested per-workflow multipliers (1.0/1.2/1.1/1.4/1.6) only affect
   // sys-prompt + tool-call values. Showing the requested multiplier when
@@ -1423,7 +1428,7 @@ function renderResult(d) {
   // Reasoning impact: marginal output-token cost from the multiplier.
   // Only show when reasoning is on (medium/high/extreme). Reasoning models
   // additionally bill reasoning_tokens at the dedicated reasoning_per_1m
-  // rate — that's already in the main breakdown, so we surface just the
+  // rate, that's already in the main breakdown, so we surface just the
   // output-multiplier delta here.
   const rMult = d.assumptions?.reasoning_level_multiplier;
   if (rMult && rMult > 1 && (d.output_cost || 0) > 0) {
@@ -1440,9 +1445,119 @@ function renderResult(d) {
 
   els.result.hidden = false;
   els.result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // v3.0: reveal the share row + show when prices were last refreshed
+  renderFreshness();
+  els.shareRow.hidden = false;
 }
 
-function hideResult() { els.result.hidden = true; }
+// v3.0: render 'OpenRouter prices as of <date>' in the share row.
+// Pulls from state.root.cache_last_synced_at (set by the meta endpoint).
+// Shows a relative phrase if the cache is old (>= 7 days), which is the
+// honest signal the user needs to spot stale data.
+function renderFreshness() {
+  const iso = state.root?.cache_last_synced_at;
+  if (!iso) { els.shareFreshness.textContent = '\u2014'; return; }
+  const ageSec = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+  if (Number.isNaN(ageSec)) { els.shareFreshness.textContent = iso.slice(0, 10); return; }
+  els.shareFreshness.textContent = formatFreshness(ageSec, iso);
+}
+
+function formatFreshness(ageSec, iso) {
+  const d = new Date(iso);
+  const dateStr = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  const day = 86400;
+  const hour = 3600;
+  let rel = '';
+  if (ageSec < 60) rel = 'just now';
+  else if (ageSec < hour) rel = `${Math.floor(ageSec / 60)}m ago`;
+  else if (ageSec < day) rel = `${Math.floor(ageSec / hour)}h ago`;
+  else if (ageSec < 7 * day) rel = `${Math.floor(ageSec / day)}d ago`;
+  else rel = `${Math.floor(ageSec / day)} days ago (stale)`;
+  return rel ? `${dateStr} (${rel})` : dateStr;
+}
+
+function hideResult() {
+  els.result.hidden = true;
+  els.shareRow.hidden = true;
+}
+
+// v3.0, Monthly projection removed: the per-call cost already contains
+// project preset iterations + system prompt + tool calls, so multiplying
+// by an outer "calls per day" produced numbers that didn't match what
+// users expected (e.g. $20k/mo for workloads that aren't actually that big).
+// The project preset + num_runs inputs already cover real planning needs.
+
+// v3.0, Build a stable string that identifies the current workload so
+// the share URL can encode it. Format: "model|in|out|cached|reasoning|tools|images|n"
+function workloadKey() {
+  return [
+    state.selectedId || '',
+    els.projectSelect?.value || '',
+    els.workflowType?.value || '',
+    els.thinkingSelect?.value || '',
+    els.iterations?.value || 1,
+    els.inputTokens.value,
+    els.outputTokens.value,
+    els.numRuns.value || 1,
+  ].join('|');
+}
+
+// v3.0, Encode the current estimate as URL params so it can be linked.
+// Params: m=model_id, in=, out=, cached=, reasoning=, tools=, images=, n=, calls=
+function buildShareURL() {
+  const params = new URLSearchParams();
+  if (state.selectedId)            params.set('m',     state.selectedId);
+  if (els.projectSelect?.value)    params.set('p',     els.projectSelect.value);
+  if (els.workflowType?.value)     params.set('w',     els.workflowType.value);
+  if (els.thinkingSelect?.value)   params.set('t',     els.thinkingSelect.value);
+  if (els.iterations?.value && els.iterations.value !== '1')
+                                   params.set('i',     els.iterations.value);
+  if (els.inputTokens.value)       params.set('in',    els.inputTokens.value);
+  if (els.outputTokens.value)      params.set('out',   els.outputTokens.value);
+  if (els.numRuns.value && els.numRuns.value !== '1')
+                                   params.set('n',     els.numRuns.value);
+  const u = new URL(window.location.href);
+  u.search = params.toString();
+  u.hash = '';
+  return u.toString();
+}
+
+// v3.0, Reverse of buildShareURL. Called once on init.
+function applyShareParams() {
+  const p = new URLSearchParams(window.location.search);
+  if (!p.has('m')) return false;  // nothing to apply
+
+  state.pendingModel = p.get('m');
+  if (p.has('p'))     els.projectSelect.value    = p.get('p');
+  if (p.has('w'))     els.workflowType.value     = p.get('w');
+  if (p.has('t'))     els.thinkingSelect.value   = p.get('t');
+  if (p.has('i'))     els.iterations.value       = p.get('i');
+  if (p.has('in'))    els.inputTokens.value      = p.get('in');
+  if (p.has('out'))   els.outputTokens.value     = p.get('out');
+  if (p.has('n'))     els.numRuns.value          = p.get('n');
+  return true;
+}
+
+// v3.0, Copy a link to the current estimate. Falls back to a manual
+// prompt if the Clipboard API is unavailable (older browsers, http://).
+async function onShareClick() {
+  const url = buildShareURL();
+  const status = els.shareStatus;
+  const btn = els.shareBtn;
+  btn.disabled = true;
+  status.textContent = '';
+  try {
+    await navigator.clipboard.writeText(url);
+    status.textContent = 'Copied.';
+  } catch (e) {
+    // Fallback: show the URL so the user can copy it manually.
+    window.prompt('Copy this link to share the estimate:', url);
+    status.textContent = 'Copy the link from the dialog.';
+  } finally {
+    btn.disabled = false;
+    setTimeout(() => { status.textContent = ''; }, 3000);
+  }
+}
 function setBusy(b) {
   state.busy = b;
   els.calcBtn.disabled = b;
@@ -1457,7 +1572,7 @@ function hideError() {
   els.formError.textContent = '';
 }
 
-// ---- v2.9 — Compare calculate + result ---------------------------------
+// ---- v2.9, Compare calculate + result ---------------------------------
 // Same workload (tokens, task_size, task_type, reasoning_level, num_runs)
 // applied to all models in the tray. POSTs model_ids[] to /calculate/compare
 // and renders a row of cards sorted cheapest-first.
@@ -1475,7 +1590,7 @@ async function onCalculateCompare() {
   const thinking = els.thinkingSelect.value || 'off';
   const explicitIn  = els.inputTokens.value.trim();
   const explicitOut = els.outputTokens.value.trim();
-  // v2.7b: same workflow overhead mapping as onCalculate — applies to
+  // v2.7b: same workflow overhead mapping as onCalculate, applies to
   // every model in the comparison.
   const wt = els.workflowType?.value || 'single-chat';
   const ov = WORKFLOW_OVERHEAD[wt] || WORKFLOW_OVERHEAD['single-chat'];
@@ -1587,7 +1702,7 @@ function renderCompareResult(data, requestBody) {
   if (ov.retry_mult > 1 || ov.system_prompt_tokens > 0 || ov.tool_call_count > 0) {
     caveatBits.push(`${ov.label.toLowerCase()} overhead applied`);
   }
-  let caveat = 'Same workload applied to all models — cheapest card highlighted.';
+  let caveat = 'Same workload applied to all models, cheapest card highlighted.';
   if (caveatBits.length) caveat += ' ' + caveatBits.join(' · ') + '.';
   caveat += ' Estimate: verify against vendor pricing before quoting.';
   els.compareResultsCaveat.textContent = caveat;
@@ -1598,7 +1713,7 @@ function renderCompareResult(data, requestBody) {
 
 // Form submit dispatcher: in single mode call onCalculate; in compare
 // mode call onCalculateCompare. Both handlers do their own validation.
-// We always preventDefault here so the form never submits as a GET —
+// We always preventDefault here so the form never submits as a GET.
 // both handlers are async (fetch) and don't want the browser to
 // navigate away before they complete.
 function onCalcSubmit(e) {
@@ -1724,7 +1839,7 @@ function init() {
   // v2.9: Iterations input re-runs the preset on change. Same trigger
   // v2.9.2: when the user edits Iterations or Task size, just recompute
   // the math (input_tokens, output_tokens) WITHOUT calling applyProjectPreset.
-  // v2.7b: Task size dropdown is gone — the implicit multiplier is the
+  // v2.7b: Task size dropdown is gone, the implicit multiplier is the
   // preset's typical_task_size. Iterations still scales the math. We
   // also refresh the live assumption caption so the user sees the
   // updated workflow overhead as they type.
@@ -1751,11 +1866,11 @@ function init() {
   els.iterations.addEventListener('input',  recomputeFromForm);
   // Track manual edits to the Advanced token fields. The dirty flag is set on
   // 'input' (every keystroke). applyProjectPreset() clears it whenever a
-  // preset fills the field — preset fills are not "user edits", and the next
+  // preset fills the field, preset fills are not "user edits", and the next
   // switch to Custom should reset to medium preset, not preserve stale values.
   els.inputTokens.addEventListener('input',  () => { inputDirty  = true;  });
   els.outputTokens.addEventListener('input', () => { outputDirty = true;  });
-  // Token counter: heuristic chars÷4 estimator. Pure client-side UX —
+  // Token counter: heuristic chars÷4 estimator. Pure client-side UX.
   // the textarea content is NEVER sent to the API. "Use this number"
   // writes the estimate into input_tokens so the user can price their
   // actual prompt without re-typing a number. Empty textarea disables
@@ -1765,11 +1880,11 @@ function init() {
     const numEl = els.tokenCounterNum;
     const chrEl = els.tokenCounterChars;
     const apply = els.tokenCounterApply;
-    if (!ta || !numEl || !chrEl || !apply) return; // defensive — block missing
+    if (!ta || !numEl || !chrEl || !apply) return; // defensive, block missing
     function update() {
       const text  = ta.value;
       const chars = text.length;
-      // Math.ceil(length / 4) — the rule-of-thumb estimator. Real tokenizers
+      // Math.ceil(length / 4), the rule-of-thumb estimator. Real tokenizers
       // for English prose land within ±20%; code and CJK tokenize heavier
       // (so we undercount there); JSON / structured data tokenizes lighter
       // (so we overcount). The hint above the count makes this trade-off
@@ -1840,8 +1955,11 @@ function init() {
   els.localForm.addEventListener('submit', onLocalCalculate);
   els.localToggle.addEventListener('click', onLocalToggle);
 
+  // v3.0: share button. Copies a URL reproducing the current calculation.
+  els.shareBtn.addEventListener('click', onShareClick);
+
   // v2.9: mode toggle + compare-tray clear button. The mode toggle is
-  // a flat switch — no need for aria-controls wiring beyond the role
+  // a flat switch, no need for aria-controls wiring beyond the role
   // already on the pills. The clear button calls clearCompare() which
   // is a no-op when the tray is empty (so we don't need to disable it).
   els.modeSingle.addEventListener('click',  () => setMode('single'));
@@ -1889,13 +2007,27 @@ async function loadAll() {
     pruneFavorites();
     updateFavCount();
 
+    // v3.0: read URL params first so a shared link overrides the default
+    // selection. applyShareParams also fills workload inputs + calls/day.
+    const hadShareParams = applyShareParams();
+
     // Default selection: first popular whose default_model exists in /models,
     // else first model overall. v2.2: popular cards are no longer pinned to
-    // a specific model_id — we use the popular entry's `default_model` field
+    // a specific model_id, we use the popular entry's `default_model` field
     // for the first-load selection (typically the company's flagship).
     const firstPopular = popular.find((p) => p.default_model && state.byId.has(p.default_model));
     const defaultId = firstPopular ? firstPopular.default_model : idOf(models[0]);
-    if (defaultId) selectModel(defaultId, { source: 'init' });
+    const initialId = (hadShareParams && state.byId.has(state.pendingModel))
+      ? state.pendingModel
+      : defaultId;
+    if (initialId) selectModel(initialId, { source: 'init' });
+
+    // If we came in via a shared link, kick off a calculation so the
+    // recipient sees the result immediately rather than an empty form.
+    if (hadShareParams) {
+      // Run after the current event loop so selectModel's paint settles.
+      setTimeout(() => els.calcForm.requestSubmit(), 50);
+    }
 
     // v2.9.1: trigger the project change handler so Iterations and Task
     // size get auto-filled from the selected project's typical_* values.

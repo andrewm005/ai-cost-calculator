@@ -29,7 +29,7 @@
     {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aicostcalculator.net/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aicostcalculator.net/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Reduce Claude and GPT API Costs", "item": "https://aicostcalculator.net/blog/reduce-claude-gpt-api-costs.html"}]},
     {"@type": "FAQPage", "mainEntity": [
       {"@type": "Question", "name": "What is the single biggest cost saver for Claude and GPT API bills?", "acceptedAnswer": {"@type": "Answer", "text": "Prompt caching. Anthropic's cache rate is 10% of input (Claude Sonnet 4: $0.30 cache versus $3.00 input per 1M). OpenAI's cache rate is 50% off input on supported models (GPT-4.1: $0.50 versus $2.00). For any application with a long system prompt that ships on every call, prompt caching is the difference between a small bill and a six-figure annual line item."}},
-      {"@type": "Question", "name": "Is Haiku really much cheaper than Opus for similar tasks?", "acceptedAnswer": {"@type": "Answer", "text": "On the published rates, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output — a 15x reduction on input and output. Haiku is not a substitute for Opus on tasks that require deep reasoning, but for classification, extraction, summarization, and short-form generation it does the work at a fraction of the bill."}},
+      {"@type": "Question", "name": "Is Haiku really much cheaper than Opus for similar tasks?", "acceptedAnswer": {"@type": "Answer", "text": "On the published rates, yes. Claude Opus 4 is $15.00 per 1M input and $75.00 per 1M output. Claude Haiku 4.5 is $1.00 input and $5.00 output, a 15x reduction on input and output. Haiku is not a substitute for Opus on tasks that require deep reasoning, but for classification, extraction, summarization, and short-form generation it does the work at a fraction of the bill."}},
       {"@type": "Question", "name": "Does the OpenAI Batch API cut costs by 50%?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. OpenAI's Batch API accepts asynchronous jobs with a 24-hour turnaround and charges 50% of the synchronous rate. For workloads that do not need real-time responses (bulk classification, overnight document processing, eval generation), Batch is the cheapest reliable path on the OpenAI stack."}},
       {"@type": "Question", "name": "Should I downgrade from GPT-4o to GPT-4o mini?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the workload. GPT-4o mini at $0.15/$0.60 is 17x cheaper on input and output than GPT-4o at $2.50/$10.00. For chat replies, simple extraction, and most short-form generation, mini does the work and the savings are immediate. For long-context synthesis, complex code review, or any task where the flagship's stronger reasoning is the point, mini does not match. See the GPT-4o vs GPT-4o mini comparison for the side-by-side."}}
     ]}
@@ -84,7 +84,7 @@
       cached input is $0.30 per 1M. If the application ships a
       2,000-token system prompt on every call, the system prompt
       alone is $0.006 per call at the input rate and $0.0006 per
-      call at the cache rate — a 10x reduction. At one million
+      call at the cache rate, a 10x reduction. At one million
       calls per month, the system prompt is $6,000 at the input
       rate and $600 at the cache rate. The difference is $5,400
       per month, $64,800 per year, from a one-line config change.

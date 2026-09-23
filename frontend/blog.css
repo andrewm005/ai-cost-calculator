@@ -1,5 +1,5 @@
 /* =========================================================================
-   AI Cost Calculator Blog — shared stylesheet (SEO-2, 2026-06-23)
+   AI Cost Calculator Blog, shared stylesheet (SEO-2, 2026-06-23)
    --------------------------------------------------------------------------
    Loads on every /blog/<article>.html page. Color tokens mirror app.css
    exactly so the articles sit visually inside the rest of the site without
@@ -11,7 +11,7 @@
    ========================================================================= */
 
 :root {
-  /* Surface — copied verbatim from app.css */
+  /* Surface, copied verbatim from app.css */
   --paper:        #f7f3ec;
   --paper-2:      #efe9dc;
   --paper-3:      #e7dfcd;
@@ -21,7 +21,7 @@
   --ink-4:        #b5ac9a;
   --rule:         #d8cfba;
 
-  /* Accent — deep teal */
+  /* Accent, deep teal */
   --teal:         #0c4a52;
   --teal-deep:    #093438;
   --teal-soft:    #dde8ea;
@@ -75,7 +75,7 @@ body {
   background: var(--paper);
   color: var(--ink-2);
   font-family: var(--sans);
-  font-size: 1.0625rem;       /* ~17px — slightly larger than app's 1rem for long-form readability */
+  font-size: 1.0625rem;       /* ~17px, slightly larger than app's 1rem for long-form readability */
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

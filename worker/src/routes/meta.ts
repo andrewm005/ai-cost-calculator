@@ -16,6 +16,13 @@ export function metaRoute(state: AppState) {
       local_gpus: Object.keys(state.gpuProfiles).length,
       local_models: Object.keys(state.modelProfiles).length,
       refresh_seconds: state.refreshSeconds,
+      // ISO timestamp of when the OpenRouter price cache was last refreshed.
+      // null only on a brand-new deploy that has never had a successful
+      // KV write from the cron. UI surfaces this under the result panel.
+      cache_last_synced_at: state.cacheLastSyncedAt,
+      cache_age_seconds: state.cacheLastSyncedAt
+        ? Math.floor((Date.now() - new Date(state.cacheLastSyncedAt).getTime()) / 1000)
+        : null,
       endpoints: [
         'GET /health',
         'GET /models',

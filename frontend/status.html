@@ -56,19 +56,19 @@
       </div>
       <div class="status-card__row">
         <span class="status-card__label">Models loaded</span>
-        <span class="status-card__value" id="models-loaded">—</span>
+        <span class="status-card__value" id="models-loaded">-</span>
       </div>
       <div class="status-card__row">
         <span class="status-card__label">OpenRouter models in feed</span>
-        <span class="status-card__value" id="openrouter-models">—</span>
+        <span class="status-card__value" id="openrouter-models">-</span>
       </div>
       <div class="status-card__row">
         <span class="status-card__label">Pricing refresh interval</span>
-        <span class="status-card__value" id="refresh-seconds">—</span>
+        <span class="status-card__value" id="refresh-seconds">-</span>
       </div>
       <div class="status-card__row">
         <span class="status-card__label">Last page load</span>
-        <span class="status-card__value" id="last-check">—</span>
+        <span class="status-card__value" id="last-check">-</span>
       </div>
     </div>
 
@@ -97,7 +97,7 @@
       const setDot = (cls) => $('span', $id => $id.className) // unused; inline below
       const dot = document.querySelector('#backend-status .status-dot');
       const val = $('#backend-status');
-      const fmt = (n) => n ? `${(n/3600).toFixed(1)}h` : '—';
+      const fmt = (n) => n ? `${(n/3600).toFixed(1)}h` : '-';
       const now = new Date();
       $('#last-check').textContent = now.toLocaleString();
       try {
