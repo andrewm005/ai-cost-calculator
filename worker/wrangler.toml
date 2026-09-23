@@ -41,10 +41,17 @@ compatibility_flags = ["nodejs_compat"]
 # KV namespace binding. The `id` MUST be replaced with a real namespace ID
 # (from `wrangler kv:namespace create PRICING`) before the first deploy.
 # The `preview_id` is only used by `wrangler dev`.
-[[kv_namespaces]]
-binding = "PRICING"
-id = "36fc3c8c680e418f82a13ff5095919da"
-# preview_id = "REPLACE_WITH_PREVIEW_KV_NAMESPACE_ID"
+#
+# ponytail: KV binding removed 2026-09-23 — namespace ID in this file was
+# stale (no matching namespace in the Cloudflare account), and the cron
+# that would populate it has been failing for ~90 days anyway. The Worker
+# runs fine on the baked `OPENROUTER_BLOB` + `PRICING_BLOB` fallback alone.
+# To re-enable KV-backed refresh: create the namespace with
+# `npx wrangler kv:namespace create PRICING`, paste the new ID here, and
+# redeploy.
+# [[kv_namespaces]]
+# binding = "PRICING"
+# id = "REPLACE_WITH_KV_NAMESPACE_ID"
 
 # Cron trigger — fires src/scheduled.ts every 6 hours on the hour.
 # The schedule syntax is the standard cron format.
