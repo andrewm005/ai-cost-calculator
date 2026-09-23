@@ -50,3 +50,7 @@ dist/
 .coverage
 .coverage.*
 htmlcov/
+
+# Operator / transient files (not source)
+.paste-buffer/
+aicostdata.pdf

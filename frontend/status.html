@@ -30,6 +30,7 @@
     .status-dot--ok { background: var(--ok); }
     .status-dot--warn { background: var(--warn); }
     .status-dot--err { background: color-mix(in srgb, var(--teal-deep) 80%, #c00); }
+    .status-freshness-stale { color: color-mix(in srgb, var(--teal-deep) 80%, #c00); font-weight: 500; }
     .status-note { font-size: var(--t-sm); color: var(--ink-3); line-height: 1.6; margin-top: var(--s-5); }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4936505875423628" crossorigin="anonymous"></script>
@@ -67,6 +68,10 @@
         <span class="status-card__value" id="refresh-seconds">-</span>
       </div>
       <div class="status-card__row">
+        <span class="status-card__label">Pricing data last refreshed</span>
+        <span class="status-card__value" id="cache-freshness">-</span>
+      </div>
+      <div class="status-card__row">
         <span class="status-card__label">Last page load</span>
         <span class="status-card__value" id="last-check">-</span>
       </div>
@@ -89,19 +94,45 @@
   </footer>
 
   <script>
-    // Hit /health on the API base and fill the card. The API base is
-    // window.TOKENTALLY_API or the production default.
+    // Hit / (meta) on the API base and fill the card. The API base is
+    // window.TOKENTALLY_API or the production default. We fetch / instead
+    // of /health because the meta endpoint also exposes
+    // `cache_last_synced_at` + `cache_age_seconds`, which is the field
+    // users actually care about here.
     (async function () {
       const API = (window.TOKENTALLY_API || 'https://aicostcalculator.net').replace(/\/$/, '');
       const $ = (s) => document.querySelector(s);
-      const setDot = (cls) => $('span', $id => $id.className) // unused; inline below
       const dot = document.querySelector('#backend-status .status-dot');
       const val = $('#backend-status');
       const fmt = (n) => n ? `${(n/3600).toFixed(1)}h` : '-';
       const now = new Date();
       $('#last-check').textContent = now.toLocaleString();
+
+      // Render the freshness field for any case (success or failure).
+      // 'never' means KV is empty AND there's no baked fallback; rare.
+      function renderFreshness(d) {
+        const el = $('#cache-freshness');
+        if (!d || !d.cache_last_synced_at) {
+          el.textContent = 'never (cache not initialized)';
+          el.classList.add('status-freshness-stale');
+          return;
+        }
+        const age = Number(d.cache_age_seconds);
+        const date = new Date(d.cache_last_synced_at);
+        const dateStr = date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+        const timeStr = date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        let rel;
+        if (age < 60) rel = 'just now';
+        else if (age < 3600) rel = `${Math.floor(age / 60)}m ago`;
+        else if (age < 86400) rel = `${Math.floor(age / 3600)}h ago`;
+        else rel = `${Math.floor(age / 86400)}d ago`;
+        el.textContent = `${dateStr}, ${timeStr} (${rel})`;
+        // Mark stale if >7 days. Same threshold the calculator UI uses.
+        if (age > 7 * 86400) el.classList.add('status-freshness-stale');
+      }
+
       try {
-        const r = await fetch(`${API}/health`, { headers: { 'Accept': 'application/json' } });
+        const r = await fetch(`${API}/`, { headers: { 'Accept': 'application/json' } });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         const d = await r.json();
         dot.className = 'status-dot status-dot--ok';
@@ -109,9 +140,11 @@
         $('#models-loaded').textContent = `${d.models_loaded} models`;
         $('#openrouter-models').textContent = `${d.openrouter_models} from OpenRouter`;
         $('#refresh-seconds').textContent = fmt(d.refresh_seconds);
+        renderFreshness(d);
       } catch (err) {
         dot.className = 'status-dot status-dot--err';
         val.innerHTML = '<span class="status-dot status-dot--err"></span>unreachable';
+        $('#cache-freshness').textContent = 'unknown (backend unreachable)';
       }
     })();
   </script>
